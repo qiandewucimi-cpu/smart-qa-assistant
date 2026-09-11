@@ -55,7 +55,16 @@ def reset_state():
             d = json.loads(p.read_text(encoding="utf-8"))
             d[key] = {}
             p.write_text(json.dumps(d, ensure_ascii=False, indent=2), encoding="utf-8")
-    print("已重置 file-snapshot / ingest-cache")
+    # 清空 review.json：其「affectedPages」会引用旧 wiki 页面，重导清空 wiki 后
+    # 这些引用失效，会导致 worker 在 review 步骤卡死（实测 02 文件卡 6 小时）。
+    # 重导必须一并清空 review + file-change-queue，否则残留失效引用。
+    rp = LLM / "review.json"
+    if rp.exists():
+        rp.write_text("[]", encoding="utf-8")
+    fq = LLM / "file-change-queue.json"
+    if fq.exists():
+        fq.write_text(json.dumps({"version": 1, "tasks": []}, ensure_ascii=False), encoding="utf-8")
+    print("已重置 file-snapshot / ingest-cache / review / file-change-queue")
 
 
 def collect_files():
