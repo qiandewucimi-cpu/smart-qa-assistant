@@ -23,7 +23,7 @@ import sys
 from pathlib import Path
 
 from clean_text import (
-    BANK_ACCT_RE, CONTRACT_RE, IP_RE,
+    BANK_ACCT_RE, CONTRACT_RE,
     CLIENT_MAP, COMPANY_MAP, NAME_MAP,
 )
 from config import BASE
@@ -42,10 +42,14 @@ REAL_TERMS = sorted(
     key=len, reverse=True,
 )
 
+# 巡检用的 IP 正则：**排除回环/占位地址**。文档与配置里大量出现 127.0.0.1:19828
+# （本地 API 地址）、0.0.0.0（监听地址），它们不是敏感信息，否则每次巡检都是噪声。
+IP_RE_AUDIT = re.compile(r"\b(?!127\.)(?!0\.0\.0\.0\b)\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b")
+
 # 结构化规则：真实词表覆盖不到的形态
 STRUCT_RULES = [
     ("内部合同号", CONTRACT_RE),
-    ("内网IP", IP_RE),
+    ("内网IP", IP_RE_AUDIT),
     ("银行账号", BANK_ACCT_RE),
 ]
 

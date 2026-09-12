@@ -39,7 +39,8 @@ if CLIENT_NAMES:
 else:
     CLIENT_ORDER_RE = re.compile(r"(?!)")  # 无客户名时永不匹配
 
-# 内部合同号：公司/系列前缀 + 款号编码，如 AB1CDE23-0059。
+# 内部合同号：公司/系列前缀 + 款号编码，如 AB1CDE23-XXXX（尾段 4 位数字）。
+# （示例尾段刻意写成 XXXX：既说明形态，又不会让 audit_leaks 把自己的文档当残留）
 # 客户订单号规则要求「客户名 + 长数字」，覆盖不到这种内部编号，故单列一条，
 # 前缀泛化为任意 2 位大写字母，换公司/换系列都不用改代码。
 CONTRACT_RE = re.compile(r"\b[A-Z]{2}\d[A-Z]{3}\d{2}-\d{4}\b")
@@ -62,7 +63,7 @@ CN_ENTITY_RE = re.compile(
     r"[\u4e00-\u9fa5]){2,6}"
     r"(?:国贸|实业|集团有限公司|有限公司|集团)"
 )
-# 银行账号：形如 0000-486217-837
+# 银行账号：形如 0000-XXXXXX-XXX（3~4 位-6 位-2~5 位数字）
 BANK_ACCT_RE = re.compile(r"\b\d{3,4}-\d{6}-\d{2,5}\b")
 # SWIFT/BIC 码：**必须上下文锚定**。裸的 8/11 位大写串会误伤正常业务词——
 # 实测 SHIPPING / STANDARD / MATERIAL / PRODUCTS 这类正常业务词全部符合 BIC 的字面格式。
