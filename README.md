@@ -18,6 +18,22 @@
 - **可复现**：清洗 → 分批 → 重导 → 评测每一步都有独立脚本，参数化、幂等。
 - **量化评测**：22 题评测集（概念/对比/流程/操作/报价配比/机制），按「命中 / 答偏 / 幻觉」三档打分，形成可对比的质量报告（`eval/`）。
 
+## 量化结果（实测，均可复算）
+
+| 维度 | 结果 | 口径 / 来源 |
+|---|---|---|
+| 语料 | **121 份 / 105.2 万字符**（源 173 份 / 153MB） | `corpus_stats.py` |
+| 脱敏 | 命中 **4,667 处**，残留 **0** | `corpus_stats.py` / `audit_leaks.py` |
+| 知识库 | **119/119** 编译完成，**819 页**结构化 Wiki | `wiki_status.py` |
+| 命中率 | **85.7%**（18/21）｜有效 **94.7%**（18/19） | `eval/评测报告_v0.3_复测.md` |
+| 幻觉 | **0/21**（95% 置信上界 **13.3%**） | 同上 |
+| 拒答 | 语料外 **8/8** 正确拒答、0 编造；语料内对照 **5/5** 无误拒 | `eval/拒答评测报告.md` |
+| 引用可溯源 | **90.9%**（20/22） | `eval/评测结果_raw.json` |
+| 延迟 | P50 **61.5s**（**未达标**，架构性 trade-off，已如实标注） | 同上 |
+
+> 完整复盘（目标 vs 结果逐条对照 / 归因 / 踩坑 / 方法论沉淀 / 数字来源索引）见 [`docs/复盘报告.md`](docs/复盘报告.md)。
+> 质量维度对标企业参考门槛见 [`docs/质量门槛对标.md`](docs/质量门槛对标.md)。
+
 ## 整体流程
 
 ```text
@@ -66,7 +82,8 @@
 | 效果评测 | `scripts/eval_chat.py` | 22 题 → `eval/评测结果_raw.json` |
 | 拒答评测 | `scripts/eval_refusal.py` | 语料外问题（应拒答）+ 语料内冷门模块对照（应回答），量化**拒答率 / 误拒率 / 拒答幻觉率** |
 | 拒答题库校验 | `scripts/check_refusal_bank.py` | 验证「语料外」题的关键词在 119 份语料中确实命中为 0（拒答测试成立的前提） |
-| 飞书机器人 | `scripts/feishu_bot.py` | 飞书消息 → LLM-Wiki 问答 → 卡片回复（多轮会话 / 进度更新 / 超时重试；`--selftest`、`--ask` 可离线验证） |
+| 飞书机器人 | `scripts/feishu_bot.py` | 飞书消息 → LLM-Wiki 问答 → 卡片回复（多轮会话 / 进度更新 / 超时重试 / **用量埋点**；`--selftest`、`--ask` 可离线验证） |
+| 用量统计 | `scripts/usage_stats.py` | 读 `data/usage_log.jsonl`：提问数 / 去重提问数 / **唯一会话数（人数近似）** / 延迟分位 / 拒答率 / 多轮占比 |
 
 ## 目录结构
 
@@ -93,8 +110,9 @@
 │   ├── bench_models.py # 模型耗时对比
 │   ├── eval_chat.py    # 机器评测（22 题）
 │   ├── eval_refusal.py # 拒答评测（语料外 vs 语料内对照）
+│   ├── usage_stats.py  # 用量统计（读机器人埋点，出真实用量）
 │   └── feishu_bot.py   # 飞书机器人（需 pip install lark-oapi）
-├── docs/               # 需求、计划、运行手册等文档
+├── docs/               # 需求、计划、运行手册、复盘报告等文档
 ├── eval/               # 评测集、评测报告
 └── README.md
 ```
@@ -169,10 +187,19 @@ python scripts/feishu_bot.py --ask "什么是短溢装"
 
 # 启动机器人（长连接，阻塞；群内 @机器人 提问）
 python scripts/feishu_bot.py
+
+# 统计真实用量（机器人跑起来、有人提问后即可出数）
+python scripts/usage_stats.py           # 飞书群聊用量
+python scripts/usage_stats.py --md      # 额外输出 Markdown 表
 ```
 
 > 需在 `scripts/.env` 里追加 `FEISHU_APP_ID` / `FEISHU_APP_SECRET`；飞书后台配置见 `docs/机器人接入调研.md`。
 > 支持多轮追问（同一会话 1 小时）、`/reset` 开新对话；调参用 `BOT_WIKI_TIMEOUT` / `BOT_WIKI_RETRIES` / `BOT_SESSION_TTL` / `BOT_CARD_MAX_CHARS`。
+>
+> **用量埋点**：每次问答会向 `data/usage_log.jsonl`（已 gitignore）追加一行元数据——
+> 耗时 / 引用来源数 / 拒答标记 / 会话与问题的**单向哈希**。
+> **只记元数据、不记问题原文**（业务提问可能含敏感信息，与脱敏口径一致），
+> 因此可统计「提问数 / 人数近似 / 延迟分布」，但无法还原提问内容。
 
 ## 数据脱敏
 

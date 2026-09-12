@@ -38,8 +38,12 @@
         ③ 多轮对话：复用 LLM Wiki /chat 的原生 session（回传 sessionId）；
         ④ @识别：群聊剥离 <at> 标记（群聊仅在 @机器人 时才会收到事件）；
         ⑤ 超时重试：超时/网络错误按退避自动重试；
-        ⑥ 命令：/help（帮助）、/reset（新对话）。
+        ⑥ 命令：/help（帮助）、/reset（新对话）；
+        ⑦ 用量埋点：每次问答追加一行元数据到 data/usage_log.jsonl
+           （只记耗时/来源数/拒答标记等，**不记问题原文**），
+           供 scripts/usage_stats.py 统计真实用量。
 """
+import hashlib
 import json
 import queue
 import re
@@ -48,14 +52,18 @@ import threading
 import time
 import urllib.error
 import urllib.request
+from datetime import datetime
 
 import lark_oapi as lark
 
-from config import API_BASE, load_token, load_feishu, load_bot_settings
+from config import API_BASE, BASE, load_token, load_feishu, load_bot_settings
 
 TOKEN = load_token()
 APP_ID, APP_SECRET = load_feishu()
 CFG = load_bot_settings()
+
+# 用量埋点文件（data/ 已被 .gitignore 忽略，不会入库）
+USAGE_LOG = BASE / "data" / "usage_log.jsonl"
 
 WIKI_PROJECT = "training-qa"          # 本项目唯一的知识库项目名
 WIKI_TIMEOUT = CFG["wiki_timeout"]
@@ -67,6 +75,8 @@ CARD_MAX = CFG["card_max_chars"]
 _AT_RE = re.compile(r"<at\b[^>]*>.*?</at>", re.S)
 # 卡片不支持 markdown 标题，把 # 标题降级为加粗
 _HEAD_RE = re.compile(r"^#{1,6}\s*(.+?)\s*$", re.M)
+# 拒答信号词（与 eval_refusal.py 口径保持一致，取最强信号）
+_REFUSAL_HINT = re.compile(r"未能找到|未找到|未涉及|没有找到|缺少以下信息|无法回答|无法确定|知识库中未")
 
 HELP_TEXT = (
     "**智能问答助手** 使用说明\n"
@@ -75,6 +85,28 @@ HELP_TEXT = (
     "- `/reset` 或 「新对话」：清空上下文，重新开始。\n"
     "- `/help` 或 「帮助」：显示本说明。"
 )
+
+
+# ---------------------------------------------------------------------------
+# 用量埋点：只落「元数据」，绝不落问题原文
+# ---------------------------------------------------------------------------
+# 为什么记元数据不记原文：业务提问可能自带客户名/订单号等敏感信息，
+# 与项目「脱敏后才落盘」的口径保持一致。这里只记长度与单向哈希，
+# 既能统计去重提问数、又不会把敏感内容写进日志文件。
+def _h(text: str) -> str:
+    """单向短哈希：用于会话/问题去重，不落原文。"""
+    return hashlib.sha1((text or "").encode("utf-8")).hexdigest()[:10]
+
+
+def _log_usage(**rec) -> None:
+    """追加一行用量记录；任何异常都吞掉，绝不影响问答主链路。"""
+    try:
+        rec["ts"] = datetime.now().astimezone().isoformat(timespec="seconds")
+        USAGE_LOG.parent.mkdir(parents=True, exist_ok=True)
+        with USAGE_LOG.open("a", encoding="utf-8") as f:
+            f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+    except Exception as ex:
+        print("[bot] 用量埋点写入失败（已忽略）:", ex)
 
 
 # ---------------------------------------------------------------------------
@@ -307,14 +339,24 @@ def _worker(client):
 
             # 2) 调知识库（带重试）
             t0 = time.time()
-            answer, refs, sess = ask_wiki(text, _get_session(chat_id))
+            sid = _get_session(chat_id)
+            answer, refs, sess = ask_wiki(text, sid)
+            elapsed = round(time.time() - t0, 1)
             _set_session(chat_id, sess)
-            card = _card_answer(answer, refs, round(time.time() - t0, 1))
+            card = _card_answer(answer, refs, elapsed)
+
+            # 用量埋点（元数据；失败不影响回复）
+            _log_usage(source="feishu", chat=_h(chat_id), q_hash=_h(text),
+                       q_len=len(text), latency_s=elapsed, n_refs=len(refs),
+                       multi_turn=bool(sid), refused=bool(_REFUSAL_HINT.search(answer or "")),
+                       ok=True)
 
             # 3) 原地更新进度卡片；失败则退回「新消息回复」
             if not prog_id or not _patch_card(client, prog_id, card):
                 _reply_card(client, message_id, card)
         except Exception as ex:    # 任何异常都回一条提示，别让用户干等
+            _log_usage(source="feishu", chat=_h(chat_id), q_hash=_h(text),
+                       q_len=len(text or ""), ok=False, error=str(ex)[:120])
             try:
                 _reply_card(client, message_id, _card_status(f"❌ 问答出错了：{ex}", "red"))
             except Exception:
@@ -363,10 +405,15 @@ def _ask_once(question):
     print(f"提问：{question}")
     t0 = time.time()
     answer, refs, sess = ask_wiki(question)
-    print(f"（耗时 {round(time.time() - t0, 1)}s，sessionId={sess}）\n")
+    elapsed = round(time.time() - t0, 1)
+    print(f"（耗时 {elapsed}s，sessionId={sess}）\n")
     print(answer or "（知识库里没有找到相关内容）")
     if refs:
         print("\n📎 来源：" + "、".join(refs[:3]))
+    # 命令行自测也埋点，但标 source=cli，避免与真实群聊用量混在一起
+    _log_usage(source="cli", chat=_h(question), q_hash=_h(question), q_len=len(question),
+               latency_s=elapsed, n_refs=len(refs), multi_turn=False,
+               refused=bool(_REFUSAL_HINT.search(answer or "")), ok=True)
 
 
 def main():
