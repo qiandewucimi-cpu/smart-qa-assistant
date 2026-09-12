@@ -96,12 +96,18 @@ def resolve_project_id():
 PROJECT_ID = resolve_project_id()
 
 
-def chat(message, timeout=180):
-    """调用 chat API，对网关抖动/限流/超时做指数退避重试。"""
+def chat(message, timeout=180, session_id=None):
+    """调用 chat API，对网关抖动/限流/超时做指数退避重试。
+
+    session_id：传入则续接同一会话（框架 8 步上限续跑的关键——见 chat_resilient）。
+    """
     path = (f"/api/v1/projects/{PROJECT_ID}/chat" if PROJECT_ID
             else "/api/v1/projects/current/chat")
     url = f"{API_BASE}{path}"
-    payload = json.dumps({"message": message, "stream": False, "topK": TOP_K}).encode("utf-8")
+    payload = {"message": message, "stream": False, "topK": TOP_K}
+    if session_id:
+        payload["sessionId"] = session_id
+    payload = json.dumps(payload).encode("utf-8")
     last_err = None
     for attempt in range(RETRY_MAX):
         req = urllib.request.Request(
@@ -127,6 +133,71 @@ def chat(message, timeout=180):
             continue
         raise RuntimeError(f"chat 失败（已重试 {attempt + 1} 次）：{last_err}")
     raise RuntimeError(f"chat 失败：{last_err}")
+
+
+# ---------------------------------------------------------------------------
+# 框架失败续跑（v1.2）
+#
+# 背景：应用 agent 有 8 步工具迭代硬上限，且应用配置里没有任何可配项
+# （已核对 %APPDATA%/com.llmwiki.app/app-state.json，无 agent/步数字段）。
+# 但框架返回了 sessionId，且失败文案明说 "ask it to continue from the latest
+# result" —— 实测：撞上限后带同一 sessionId 补一句「请直接给出最终答案」，
+# 能在 ~23s 内拿到完整正确答案（对照组不带 sessionId 则答「没有收到问题」）。
+#
+# 所以正解不是换模型（那要在**所有**题上多付 3.4× 延迟），
+# 而是**只对撞上限的那一小部分题补一轮**。
+# ---------------------------------------------------------------------------
+CONTINUE_MAX = 2          # 撞上限后最多补几轮
+# ⚠️ 提示语必须带「证据不足就说明缺什么」——第一版只写「请直接给出最终答案」，
+# A/B 实测把 2 次「框架无答案」变成了 2 次**自信的错答案**（与语料相反）。
+CONTINUE_PROMPT = (
+    "请基于上面已检索到的内容直接给出最终答案，不要再调用任何工具。"
+    "如果已检索到的内容不足以回答，请明确说明缺少什么，不要推测或编造。"
+)
+LIMIT_MARK = "tool-iteration limit"
+RAW_DUMP_MARK = "I found the following relevant project context"
+JSON_DUMP_MARKS = ('```json', '{"action"')
+
+
+def _answer_text(data):
+    m = data.get("message") or {}
+    return (m.get("content") or data.get("answer") or "")
+
+
+def framework_failure(data):
+    """判断一次回答是否属于「框架没给出答案」——两种已观测到的模式。
+
+    返回 None 表示正常；否则返回失败类型：
+      - 'limit'    ：撞 8 步工具迭代上限，无答案
+      - 'raw_dump' ：「原文直吐」——把检索片段原样吐出来，没有生成回答
+      - 'json_dump'：把 agent loop 的 {"action":"final",...} 原样吐出来
+                     （内容可能对，但用户看到的是裸 JSON，属失败）
+    """
+    a = _answer_text(data)
+    if LIMIT_MARK in a:
+        return "limit"
+    s = a.lstrip()
+    if s.startswith(RAW_DUMP_MARK):
+        return "raw_dump"
+    if s.startswith(JSON_DUMP_MARKS):
+        return "json_dump"
+    return None
+
+
+def chat_resilient(message, timeout=180, max_continue=CONTINUE_MAX):
+    """提问；若框架失败则带 sessionId 补跑，直到拿到答案或用尽补跑次数。"""
+    data = chat(message, timeout=timeout)
+    sid = data.get("sessionId")
+    reasons = []
+    while sid and len(reasons) < max_continue:
+        why = framework_failure(data)
+        if not why:
+            break
+        reasons.append(why)
+        print(f"    ↻ 框架失败（{why}），带 sessionId 补第 {len(reasons)} 轮")
+        data = chat(CONTINUE_PROMPT, timeout=timeout, session_id=sid)
+        sid = data.get("sessionId") or sid
+    return data, reasons
 
 
 def extract_answer(data):
@@ -189,6 +260,9 @@ def main():
         TOP_K = int(sys.argv[sys.argv.index("--topk") + 1])
     print(f"检索深度 topK = {TOP_K}")
 
+    enable_continue = "--no-continue" not in sys.argv
+    print(f"框架失败续跑 = {'开' if enable_continue else '关（对照臂）'}")
+
     keys = [target] if target else list(QUESTIONS.keys())
     if only:
         unknown = [k for k in only if k not in QUESTIONS]
@@ -210,11 +284,14 @@ def main():
         q = QUESTIONS[base_key]
         t0 = time.time()
         try:
-            data = chat(q)
+            data, reasons = chat_resilient(
+                q, max_continue=CONTINUE_MAX if enable_continue else 0)
             parsed = extract_answer(data)
             parsed["elapsed"] = round(time.time() - t0, 1)
             parsed["scoring"] = base_key not in NON_SCORING
             parsed["base_key"] = base_key
+            parsed["continue_rounds"] = len(reasons)
+            parsed["continue_reasons"] = reasons
             results[key] = parsed
             if probe:
                 print(f"===== {key} 完整事件结构 =====")
@@ -223,7 +300,8 @@ def main():
                 tag_s = "" if base_key not in NON_SCORING else "  [不计分·待业务确认]"
                 n_ref = len(parsed["references"]) or len(parsed["event_refs"])
                 src = "引用" if parsed["references"] else "召回"
-                print(f"[{key}] 用时 {parsed['elapsed']}s | {src} {n_ref} 条{tag_s}")
+                cs = f" | 续跑 {parsed['continue_rounds']} 轮" if parsed["continue_rounds"] else ""
+                print(f"[{key}] 用时 {parsed['elapsed']}s | {src} {n_ref} 条{tag_s}{cs}")
                 print(f"    答: {parsed['answer'][:120].strip()}")
         except Exception as ex:
             results[key] = {"error": str(ex), "elapsed": round(time.time() - t0, 1),
