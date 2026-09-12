@@ -1,0 +1,1251 @@
+{
+  "X1": {
+    "answer": "当前项目上下文中没有找到关于公司员工食堂位置和开饭时间的相关信息。本项目是一个研究型知识库（专注于AI/LLM相关的研究、概念、文献和发现），不包含公司运营设施信息。\n\n如果需要获取食堂相关信息，建议查阅：\n- 公司员工手册\n- 内部通知公告\n- 行政/设施部门的相关文档",
+    "references": [],
+    "event_refs": [],
+    "usage": {
+      "completionChars": 372,
+      "promptChars": 8969,
+      "referenceCount": 0,
+      "toolEventCount": 2
+    },
+    "group": "X",
+    "question": "公司员工食堂在几楼？几点开饭？",
+    "elapsed": 12.8,
+    "refusal_signal": true
+  },
+  "X2": {
+    "answer": "当前项目上下文主要包含 ERP 系统、订单管理和物流相关的概念与实体（如“ERP接口适配”、“加工单加放系数”、“包装方式”等），没有找到关于 Python 编程或网络爬虫的相关文档。\n\n缺少的信息：\n- 项目 Wiki 中不存在关于 Python 爬虫编写的数据。\n- 项目 Wiki 中不存在关于数据抓取技术或相关代码示例的页面。",
+    "references": [
+      {
+        "path": "wiki/concepts/ERP接口适配.md",
+        "title": "ERP接口适配",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/concepts/加工单加放系数.md",
+        "title": "加工单加放系数",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/concepts/包装方式.md",
+        "title": "包装方式",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/concepts/尺码排序规则.md",
+        "title": "尺码排序规则",
+        "score": 0.00546448087431694
+      },
+      {
+        "path": "wiki/entities/[配送中心].md",
+        "title": "[配送中心]",
+        "score": 0.00546448087431694
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/concepts/ERP接口适配.md",
+        "kind": "wiki",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/concepts/加工单加放系数.md",
+        "kind": "wiki",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/concepts/包装方式.md",
+        "kind": "wiki",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/concepts/尺码排序规则.md",
+        "kind": "graph",
+        "score": 0.00546448087431694
+      },
+      {
+        "path": "wiki/entities/[配送中心].md",
+        "kind": "graph",
+        "score": 0.00546448087431694
+      }
+    ],
+    "usage": {
+      "completionChars": 413,
+      "promptChars": 10355,
+      "referenceCount": 5,
+      "toolEventCount": 6
+    },
+    "group": "X",
+    "question": "怎么用 Python 写一个爬虫抓取网页数据？",
+    "elapsed": 37.7,
+    "refusal_signal": true
+  },
+  "X3": {
+    "answer": "根据当前项目上下文，我无法回答DLS系统的服务器机房位置和硬件配置问题。\n\n现有的Wiki资料主要包含DLS系统的业务功能、配置规则、培训手册等内容，例如订单管理、CP节点配置、物料管理、加工费计算等业务层面的信息，但缺少以下基础设施相关的资料：\n\n- 服务器机房位置\n- 硬件配置（CPU、内存、存储等）\n- 网络架构\n- 部署环境（云服务商或本地数据中心）\n\n建议补充以下类型的资料：\n- 系统部署文档\n- IT架构说明\n- 基础设施配置清单\n- 运维手册",
+    "references": [
+      {
+        "path": "wiki/synthesis/业务场景配置矩阵.md",
+        "title": "业务场景配置矩阵",
+        "score": 30.0
+      },
+      {
+        "path": "wiki/concepts/CP节点配置体系.md",
+        "title": "CP节点配置体系",
+        "score": 22.0
+      },
+      {
+        "path": "wiki/concepts/订单导入配置规则.md",
+        "title": "订单导入配置规则",
+        "score": 22.0
+      },
+      {
+        "path": "wiki/concepts/包装方式配置参数.md",
+        "title": "包装方式配置参数",
+        "score": 21.0
+      },
+      {
+        "path": "wiki/index.md",
+        "title": "Wiki Index",
+        "score": 7.0
+      },
+      {
+        "path": "wiki/concepts/节点编辑器.md",
+        "title": "节点编辑器",
+        "score": 8.0
+      },
+      {
+        "path": "wiki/concepts/内地打样样板单三级CP.md",
+        "title": "内地打样样板单三级CP",
+        "score": 4.0
+      },
+      {
+        "path": "wiki/concepts/专用库.md",
+        "title": "专用库",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/entities/DLS系统.md",
+        "title": "DLS系统",
+        "score": 510.0
+      },
+      {
+        "path": "wiki/sources/10-DLS系统上线培训手册 - 大货技术资料包 20251031.md",
+        "title": "DLS系统上线培训手册 - 大货技术资料包 20251031",
+        "score": 270.0
+      },
+      {
+        "path": "wiki/sources/02-DLS系统上线培训手册 - 物料档案、二次加工物料及物料开发 20250828更新_截图OCR.md",
+        "title": "DLS系统上线培训手册 - 物料档案、二次加工物料及物料开发",
+        "score": 250.0
+      },
+      {
+        "path": "wiki/concepts/允差.md",
+        "title": "允差",
+        "score": 55.0
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/synthesis/业务场景配置矩阵.md",
+        "kind": "wiki",
+        "score": 30.0
+      },
+      {
+        "path": "wiki/concepts/CP节点配置体系.md",
+        "kind": "wiki",
+        "score": 22.0
+      },
+      {
+        "path": "wiki/concepts/订单导入配置规则.md",
+        "kind": "wiki",
+        "score": 22.0
+      },
+      {
+        "path": "wiki/concepts/包装方式配置参数.md",
+        "kind": "wiki",
+        "score": 21.0
+      },
+      {
+        "path": "wiki/index.md",
+        "kind": "graph",
+        "score": 7.0
+      },
+      {
+        "path": "wiki/concepts/节点编辑器.md",
+        "kind": "wiki",
+        "score": 8.0
+      },
+      {
+        "path": "wiki/concepts/内地打样样板单三级CP.md",
+        "kind": "graph",
+        "score": 4.0
+      },
+      {
+        "path": "wiki/concepts/专用库.md",
+        "kind": "graph",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/entities/DLS系统.md",
+        "kind": "wiki",
+        "score": 510.0
+      },
+      {
+        "path": "wiki/sources/10-DLS系统上线培训手册 - 大货技术资料包 20251031.md",
+        "kind": "wiki",
+        "score": 270.0
+      },
+      {
+        "path": "wiki/sources/02-DLS系统上线培训手册 - 物料档案、二次加工物料及物料开发 20250828更新_截图OCR.md",
+        "kind": "wiki",
+        "score": 250.0
+      },
+      {
+        "path": "wiki/concepts/允差.md",
+        "kind": "graph",
+        "score": 55.0
+      }
+    ],
+    "usage": {
+      "completionChars": 598,
+      "promptChars": 13632,
+      "referenceCount": 12,
+      "toolEventCount": 14
+    },
+    "group": "X",
+    "question": "DLS 系统的服务器机房在哪里？硬件配置是什么样的？",
+    "elapsed": 67.7,
+    "refusal_signal": true
+  },
+  "X4": {
+    "answer": "根据当前项目上下文中检索到的 DLS 系统培训手册（涵盖打样管理、报价管理、订单管理、物料出运管理及仓储管理等业务模块），**未找到关于如何找回或重置登录密码的相关信息**。\n\n现有文档主要关注业务流程操作和功能使用（例如：在 `wiki/sources/04-DLS系统上线培训手册 - 报价管理 20251028_截图OCR.txt` 中仅提到了显示当前登录用户名，但未涉及账号维护），未包含系统管理或账号安全相关的说明。\n\n缺失的信息：DLS 系统的“系统管理手册”、“用户操作指南”或“IT 支持文档”中关于账号恢复的部分。",
+    "references": [
+      {
+        "path": "wiki/entities/DLS系统.md",
+        "title": "DLS系统",
+        "score": 256.0
+      },
+      {
+        "path": "wiki/sources/03-DLS系统上线培训手册 - 打样管理及打样物料采购 20250915更新.md",
+        "title": "DLS系统上线培训手册 - 打样管理及打样物料采购",
+        "score": 216.0
+      },
+      {
+        "path": "wiki/sources/10-DLS系统上线培训手册 - 大货技术资料包 20251031.md",
+        "title": "DLS系统上线培训手册 - 大货技术资料包 20251031",
+        "score": 216.0
+      },
+      {
+        "path": "wiki/concepts/专用库.md",
+        "title": "专用库",
+        "score": 61.0
+      },
+      {
+        "path": "wiki/concepts/允差.md",
+        "title": "允差",
+        "score": 61.0
+      },
+      {
+        "path": "wiki/sources/11-DLS系统上线培训手册 - 物料出运管理 20251107更新_截图OCR.md",
+        "title": "11-DLS系统上线培训手册 - 物料出运管理 20251107更新",
+        "score": 7.0
+      },
+      {
+        "path": "wiki/findings/dls系统报价单分块保存机制.md",
+        "title": "DLS系统报价单分块保存机制",
+        "score": 6.0
+      },
+      {
+        "path": "wiki/concepts/自动翻译.md",
+        "title": "自动翻译",
+        "score": 1.0
+      },
+      {
+        "path": "raw/sources/03-DLS系统上线培训手册 - 打样管理及打样物料采购 20250915更新_截图OCR.txt",
+        "title": "03-DLS系统上线培训手册 - 打样管理及打样物料采购 20250915更新_截图OCR.txt",
+        "score": null
+      },
+      {
+        "path": "raw/sources/04-DLS系统上线培训手册 - 报价管理 20251028_截图OCR.txt",
+        "title": "04-DLS系统上线培训手册 - 报价管理 20251028_截图OCR.txt",
+        "score": null
+      },
+      {
+        "path": "raw/sources/06-DLS系统上线培训手册——06 订单管理 20251028 (1)_截图OCR.txt",
+        "title": "06-DLS系统上线培训手册——06 订单管理 20251028 (1)_截图OCR.txt",
+        "score": null
+      },
+      {
+        "path": "raw/sources/11-DLS系统上线培训手册 - 物料出运管理 20251107更新.txt",
+        "title": "11-DLS系统上线培训手册 - 物料出运管理 20251107更新.txt",
+        "score": null
+      },
+      {
+        "path": "raw/sources/11-DLS系统上线培训手册 - 物料出运管理 20251107更新_截图OCR.txt",
+        "title": "11-DLS系统上线培训手册 - 物料出运管理 20251107更新_截图OCR.txt",
+        "score": null
+      },
+      {
+        "path": "raw/sources/01-01-DLS系统上线培训手册 - 基础数据 - 成品尺寸表部位翻译档案 20251028_截图OCR.txt",
+        "title": "01-01-DLS系统上线培训手册 - 基础数据 - 成品尺寸表部位翻译档案 20251028_截图OCR.txt",
+        "score": null
+      },
+      {
+        "path": "raw/sources/08-DLS系统上线培训手册 - 仓储管理 20251031_截图OCR.txt",
+        "title": "08-DLS系统上线培训手册 - 仓储管理 20251031_截图OCR.txt",
+        "score": null
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/entities/DLS系统.md",
+        "kind": "wiki",
+        "score": 256.0
+      },
+      {
+        "path": "wiki/sources/03-DLS系统上线培训手册 - 打样管理及打样物料采购 20250915更新.md",
+        "kind": "wiki",
+        "score": 216.0
+      },
+      {
+        "path": "wiki/sources/10-DLS系统上线培训手册 - 大货技术资料包 20251031.md",
+        "kind": "wiki",
+        "score": 216.0
+      },
+      {
+        "path": "wiki/concepts/专用库.md",
+        "kind": "graph",
+        "score": 61.0
+      },
+      {
+        "path": "wiki/concepts/允差.md",
+        "kind": "graph",
+        "score": 61.0
+      },
+      {
+        "path": "wiki/sources/11-DLS系统上线培训手册 - 物料出运管理 20251107更新_截图OCR.md",
+        "kind": "wiki",
+        "score": 7.0
+      },
+      {
+        "path": "wiki/findings/dls系统报价单分块保存机制.md",
+        "kind": "wiki",
+        "score": 6.0
+      },
+      {
+        "path": "wiki/concepts/自动翻译.md",
+        "kind": "graph",
+        "score": 1.0
+      },
+      {
+        "path": "raw/sources/03-DLS系统上线培训手册 - 打样管理及打样物料采购 20250915更新_截图OCR.txt",
+        "kind": "source",
+        "score": null
+      },
+      {
+        "path": "raw/sources/04-DLS系统上线培训手册 - 报价管理 20251028_截图OCR.txt",
+        "kind": "source",
+        "score": null
+      },
+      {
+        "path": "raw/sources/06-DLS系统上线培训手册——06 订单管理 20251028 (1)_截图OCR.txt",
+        "kind": "source",
+        "score": null
+      },
+      {
+        "path": "raw/sources/11-DLS系统上线培训手册 - 物料出运管理 20251107更新.txt",
+        "kind": "source",
+        "score": null
+      },
+      {
+        "path": "raw/sources/11-DLS系统上线培训手册 - 物料出运管理 20251107更新_截图OCR.txt",
+        "kind": "source",
+        "score": null
+      },
+      {
+        "path": "raw/sources/01-01-DLS系统上线培训手册 - 基础数据 - 成品尺寸表部位翻译档案 20251028_截图OCR.txt",
+        "kind": "source",
+        "score": null
+      },
+      {
+        "path": "raw/sources/08-DLS系统上线培训手册 - 仓储管理 20251031_截图OCR.txt",
+        "kind": "source",
+        "score": null
+      }
+    ],
+    "usage": {
+      "completionChars": 672,
+      "promptChars": 12892,
+      "referenceCount": 15,
+      "toolEventCount": 18
+    },
+    "group": "X",
+    "question": "DLS 系统登录密码忘了，怎么找回或重置？",
+    "elapsed": 112.5,
+    "refusal_signal": true
+  },
+  "X5": {
+    "answer": "根据当前提供的项目上下文，未能找到关于“核料单三级复核机制”的具体设计细节。\n\n现有资料主要涵盖了以下相关内容，但未涉及该特定复核机制：\n1. **核料单基础操作**：包括物料列表管理、BOM复制机制以及单耗计算的三种方式（分色单耗、分码单耗、分色分码单耗）【wiki/concepts/核料单.md】【wiki/sources/_understand.md】。\n2. **单耗计算规则**：明确了实际填写的单耗值是数量与价格计算的依据，系统自动计算的“平均单耗”仅作查看【wiki/findings/单耗计算优先级规则.md】。\n3. **其他审核机制**：资料中提到了“成本管理审核与回退机制”【wiki/findings/成本管理审核与回退机制.md】和“超额入库审核机制”【wiki/findings/超额入库审核机制.md】，但这些分别针对成本和仓储模块，并非核料单的三级复核设计。\n\n**缺失信息**：当前上下文未说明核料单具体的复核流程（如三级节点的定义）、各节点的职责分工、退回规则或权限配置等设计要素。",
+    "references": [
+      {
+        "path": "wiki/concepts/核料单.md",
+        "title": "核料单",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/sources/_content_x.md",
+        "title": "核料单的理解与来源",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/sources/_understand.md",
+        "title": "核料单的理解与来源",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/findings/单耗计算优先级规则.md",
+        "title": "单耗计算优先级规则",
+        "score": 19.0
+      },
+      {
+        "path": "wiki/index.md",
+        "title": "Wiki Index",
+        "score": 8.0
+      },
+      {
+        "path": "wiki/findings/超额入库审核机制.md",
+        "title": "超额入库审核机制",
+        "score": 36.0
+      },
+      {
+        "path": "wiki/findings/成本管理审核与回退机制.md",
+        "title": "成本管理审核与回退机制",
+        "score": 30.0
+      },
+      {
+        "path": "wiki/concepts/BOM复制机制.md",
+        "title": "BOM复制机制",
+        "score": 27.0
+      },
+      {
+        "path": "wiki/sources/08-DLS系统上线培训手册 - 仓储管理 20251031_截图OCR.md",
+        "title": "08-DLS系统上线培训手册 - 仓储管理 20251031",
+        "score": 5.0
+      },
+      {
+        "path": "wiki/entities/DLS系统.md",
+        "title": "DLS系统",
+        "score": 10027.0
+      },
+      {
+        "path": "wiki/entities/款式档案.md",
+        "title": "款式档案",
+        "score": 10026.0
+      },
+      {
+        "path": "wiki/entities/样板单.md",
+        "title": "样板单",
+        "score": 10020.0
+      },
+      {
+        "path": "wiki/entities/内部合同号.md",
+        "title": "内部合同号",
+        "score": 10018.0
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/concepts/核料单.md",
+        "kind": "wiki",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/sources/_content_x.md",
+        "kind": "wiki",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/sources/_understand.md",
+        "kind": "wiki",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/findings/单耗计算优先级规则.md",
+        "kind": "graph",
+        "score": 19.0
+      },
+      {
+        "path": "wiki/index.md",
+        "kind": "graph",
+        "score": 8.0
+      },
+      {
+        "path": "wiki/findings/超额入库审核机制.md",
+        "kind": "wiki",
+        "score": 36.0
+      },
+      {
+        "path": "wiki/findings/成本管理审核与回退机制.md",
+        "kind": "wiki",
+        "score": 30.0
+      },
+      {
+        "path": "wiki/concepts/BOM复制机制.md",
+        "kind": "wiki",
+        "score": 27.0
+      },
+      {
+        "path": "wiki/sources/08-DLS系统上线培训手册 - 仓储管理 20251031_截图OCR.md",
+        "kind": "graph",
+        "score": 5.0
+      },
+      {
+        "path": "wiki/entities/DLS系统.md",
+        "kind": "graph",
+        "score": 10027.0
+      },
+      {
+        "path": "wiki/entities/款式档案.md",
+        "kind": "graph",
+        "score": 10026.0
+      },
+      {
+        "path": "wiki/entities/样板单.md",
+        "kind": "graph",
+        "score": 10020.0
+      },
+      {
+        "path": "wiki/entities/内部合同号.md",
+        "kind": "graph",
+        "score": 10018.0
+      }
+    ],
+    "usage": {
+      "completionChars": 1120,
+      "promptChars": 11308,
+      "referenceCount": 13,
+      "toolEventCount": 17
+    },
+    "group": "X",
+    "question": "「核料单三级复核机制」是怎样设计的？",
+    "elapsed": 73.3,
+    "refusal_signal": false
+  },
+  "X6": {
+    "answer": "基于当前检索到的项目上下文，未能找到关于“翻单时「改颜色」具体审批流程”的直接信息。\n\n检索结果中包含了以下相关流程，但未涉及改颜色的具体审批：\n*   **核料单审核回退流程** (`wiki/methodology/核料单审核回退流程.md`)\n*   **让步接收处理流程** (`wiki/concepts/让步接收处理流程.md`)\n*   **成品出运管理流程** (`wiki/concepts/成品出运管理流程.md`)\n*   **订单比对流程** (`wiki/concepts/商业周.md` 中提及)\n\n如果需要了解该具体流程，可能需要补充相关资料或查阅具体的业务操作手册。",
+    "references": [
+      {
+        "path": "wiki/methodology/核料单审核回退流程.md",
+        "title": "核料单审核回退流程",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/concepts/让步接收处理流程.md",
+        "title": "让步接收处理流程",
+        "score": 23.0
+      },
+      {
+        "path": "wiki/concepts/成品出运管理流程.md",
+        "title": "成品出运管理流程",
+        "score": 22.0
+      },
+      {
+        "path": "wiki/concepts/商业周.md",
+        "title": "商业周",
+        "score": 4.0
+      },
+      {
+        "path": "wiki/concepts/短溢装百分比.md",
+        "title": "短溢装百分比",
+        "score": 4.0
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/methodology/核料单审核回退流程.md",
+        "kind": "wiki",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/concepts/让步接收处理流程.md",
+        "kind": "wiki",
+        "score": 23.0
+      },
+      {
+        "path": "wiki/concepts/成品出运管理流程.md",
+        "kind": "wiki",
+        "score": 22.0
+      },
+      {
+        "path": "wiki/concepts/商业周.md",
+        "kind": "graph",
+        "score": 4.0
+      },
+      {
+        "path": "wiki/concepts/短溢装百分比.md",
+        "kind": "graph",
+        "score": 4.0
+      }
+    ],
+    "usage": {
+      "completionChars": 633,
+      "promptChars": 7470,
+      "referenceCount": 5,
+      "toolEventCount": 9
+    },
+    "group": "X",
+    "question": "翻单时「改颜色」这个类型需要走什么审批流程？",
+    "elapsed": 60.4,
+    "refusal_signal": false
+  },
+  "X7": {
+    "answer": "根据当前项目上下文检索，没有找到专门的“DLS系统对外API接口文档”页面。\n\n与系统集成和接口相关的资料如下：\n- **[[wiki/concepts/ERP接口适配.md]]**：该页面讨论了Agent系统与自研ERP系统交互时的API适配器设计模式（如API适配器、RPA适配器），但未提供DLS系统具体的对外API接口文档。\n- **[[wiki/sources/飞书AI知识库方案.md]]**：该方案提及若需AI自动操作飞书或实现外部集成，可考虑使用飞书开放平台自建应用，但未涉及DLS系统本身的对外API细节。\n\n若该API文档存储在飞书云文档、外部链接或使用了其他特定关键词，请提供更多信息以便进一步搜索。",
+    "references": [
+      {
+        "path": "wiki/entities/DLS系统.md",
+        "title": "DLS系统",
+        "score": 256.0
+      },
+      {
+        "path": "wiki/sources/03-DLS系统上线培训手册 - 打样管理及打样物料采购 20250915更新.md",
+        "title": "DLS系统上线培训手册 - 打样管理及打样物料采购",
+        "score": 216.0
+      },
+      {
+        "path": "wiki/sources/10-DLS系统上线培训手册 - 大货技术资料包 20251031.md",
+        "title": "DLS系统上线培训手册 - 大货技术资料包 20251031",
+        "score": 216.0
+      },
+      {
+        "path": "wiki/concepts/专用库.md",
+        "title": "专用库",
+        "score": 61.0
+      },
+      {
+        "path": "wiki/concepts/允差.md",
+        "title": "允差",
+        "score": 61.0
+      },
+      {
+        "path": "wiki/sources/p05_OCR.md",
+        "title": "p05_OCR - 订单理单实操培训文档",
+        "score": 21.0
+      },
+      {
+        "path": "wiki/sources/订单培训文档.md",
+        "title": "订单培训文档",
+        "score": 21.0
+      },
+      {
+        "path": "wiki/sources/p03_OCR.md",
+        "title": "p03_OCR - 订单理单实操培训文档",
+        "score": 20.0
+      },
+      {
+        "path": "wiki/concepts/意向订单手工录入.md",
+        "title": "意向订单手工录入",
+        "score": 3.0
+      },
+      {
+        "path": "wiki/index.md",
+        "title": "Wiki Index",
+        "score": 5.0
+      },
+      {
+        "path": "wiki/concepts/ERP接口适配.md",
+        "title": "ERP接口适配",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/sources/飞书AI知识库方案.md",
+        "title": "飞书 AI 知识库搭建方案",
+        "score": 8.0
+      },
+      {
+        "path": "wiki/concepts/加工单加放系数.md",
+        "title": "加工单加放系数",
+        "score": 7.0
+      },
+      {
+        "path": "wiki/entities/DLS系统.md",
+        "title": "DLS系统",
+        "score": 4.0
+      },
+      {
+        "path": "wiki/entities/合料单.md",
+        "title": "合料单",
+        "score": 0.00819672131147541
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/entities/DLS系统.md",
+        "kind": "wiki",
+        "score": 256.0
+      },
+      {
+        "path": "wiki/sources/03-DLS系统上线培训手册 - 打样管理及打样物料采购 20250915更新.md",
+        "kind": "wiki",
+        "score": 216.0
+      },
+      {
+        "path": "wiki/sources/10-DLS系统上线培训手册 - 大货技术资料包 20251031.md",
+        "kind": "wiki",
+        "score": 216.0
+      },
+      {
+        "path": "wiki/concepts/专用库.md",
+        "kind": "graph",
+        "score": 61.0
+      },
+      {
+        "path": "wiki/concepts/允差.md",
+        "kind": "graph",
+        "score": 61.0
+      },
+      {
+        "path": "wiki/sources/p05_OCR.md",
+        "kind": "wiki",
+        "score": 21.0
+      },
+      {
+        "path": "wiki/sources/订单培训文档.md",
+        "kind": "wiki",
+        "score": 21.0
+      },
+      {
+        "path": "wiki/sources/p03_OCR.md",
+        "kind": "wiki",
+        "score": 20.0
+      },
+      {
+        "path": "wiki/concepts/意向订单手工录入.md",
+        "kind": "graph",
+        "score": 3.0
+      },
+      {
+        "path": "wiki/index.md",
+        "kind": "graph",
+        "score": 5.0
+      },
+      {
+        "path": "wiki/concepts/ERP接口适配.md",
+        "kind": "wiki",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/sources/飞书AI知识库方案.md",
+        "kind": "wiki",
+        "score": 8.0
+      },
+      {
+        "path": "wiki/concepts/加工单加放系数.md",
+        "kind": "wiki",
+        "score": 7.0
+      },
+      {
+        "path": "wiki/entities/DLS系统.md",
+        "kind": "graph",
+        "score": 4.0
+      },
+      {
+        "path": "wiki/entities/合料单.md",
+        "kind": "graph",
+        "score": 0.00819672131147541
+      }
+    ],
+    "usage": {
+      "completionChars": 725,
+      "promptChars": 15190,
+      "referenceCount": 15,
+      "toolEventCount": 14
+    },
+    "group": "X",
+    "question": "DLS 系统的对外 API 接口文档在哪里可以看？",
+    "elapsed": 52.9,
+    "refusal_signal": true
+  },
+  "X8": {
+    "answer": "根据当前检索到的项目上下文，未找到关于 DLS 系统 2027 年计划上线新功能的相关信息。现有的资料（如《DLS系统上线培训手册》系列）主要覆盖 2025 年的打样管理、采购管理、物料档案、报价管理、物料出运等模块的培训内容，以及部分功能的开发状态（如分码报价功能），但均未提及 2027 年的未来计划或路线图。",
+    "references": [
+      {
+        "path": "wiki/sources/03-DLS系统上线培训手册 - 打样管理及打样物料采购 20250915更新.md",
+        "title": "DLS系统上线培训手册 - 打样管理及打样物料采购",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/sources/03-DLS系统上线培训手册 - 打样管理及打样物料采购 20250915更新_截图OCR.md",
+        "title": "DLS系统上线培训手册 - 打样管理及打样物料采购 20250915更新",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/sources/07-DLS系统上线培训手册 - 采购管理 20250826更新_截图OCR.md",
+        "title": "DLS系统上线培训手册 - 采购管理",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/findings/分码报价功能开发状态.md",
+        "title": "分码报价功能开发状态",
+        "score": 23.0
+      },
+      {
+        "path": "wiki/sources/11-DLS系统上线培训手册 - 物料出运管理 20251107更新_截图OCR.md",
+        "title": "11-DLS系统上线培训手册 - 物料出运管理 20251107更新",
+        "score": 23.0
+      },
+      {
+        "path": "wiki/sources/02-DLS系统上线培训手册 - 物料档案、二次加工物料及物料开发 20250828更新_截图OCR.md",
+        "title": "DLS系统上线培训手册 - 物料档案、二次加工物料及物料开发",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/sources/02-DLS系统上线培训手册 - 物料档案、二次加工物料及物料开发 20250828更新.md",
+        "title": "DLS系统上线培训手册 - 物料档案、二次加工物料及物料开发",
+        "score": 35.0
+      },
+      {
+        "path": "wiki/concepts/小缸费.md",
+        "title": "小缸费",
+        "score": 5.0
+      },
+      {
+        "path": "wiki/concepts/物料BOM.md",
+        "title": "物料BOM",
+        "score": 6.0
+      },
+      {
+        "path": "wiki/concepts/计划采购数量.md",
+        "title": "计划采购数量",
+        "score": 7.0
+      },
+      {
+        "path": "wiki/entities/DLS系统.md",
+        "title": "DLS系统",
+        "score": 7.0
+      },
+      {
+        "path": "wiki/concepts/齐料状态.md",
+        "title": "齐料状态",
+        "score": 2.0
+      },
+      {
+        "path": "wiki/entities/板料采购单.md",
+        "title": "板料采购单",
+        "score": 1.0
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/sources/03-DLS系统上线培训手册 - 打样管理及打样物料采购 20250915更新.md",
+        "kind": "wiki",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/sources/03-DLS系统上线培训手册 - 打样管理及打样物料采购 20250915更新_截图OCR.md",
+        "kind": "wiki",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/sources/07-DLS系统上线培训手册 - 采购管理 20250826更新_截图OCR.md",
+        "kind": "wiki",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/findings/分码报价功能开发状态.md",
+        "kind": "wiki",
+        "score": 23.0
+      },
+      {
+        "path": "wiki/sources/11-DLS系统上线培训手册 - 物料出运管理 20251107更新_截图OCR.md",
+        "kind": "wiki",
+        "score": 23.0
+      },
+      {
+        "path": "wiki/sources/02-DLS系统上线培训手册 - 物料档案、二次加工物料及物料开发 20250828更新_截图OCR.md",
+        "kind": "wiki",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/sources/02-DLS系统上线培训手册 - 物料档案、二次加工物料及物料开发 20250828更新.md",
+        "kind": "wiki",
+        "score": 35.0
+      },
+      {
+        "path": "wiki/concepts/小缸费.md",
+        "kind": "graph",
+        "score": 5.0
+      },
+      {
+        "path": "wiki/concepts/物料BOM.md",
+        "kind": "graph",
+        "score": 6.0
+      },
+      {
+        "path": "wiki/concepts/计划采购数量.md",
+        "kind": "wiki",
+        "score": 7.0
+      },
+      {
+        "path": "wiki/entities/DLS系统.md",
+        "kind": "wiki",
+        "score": 7.0
+      },
+      {
+        "path": "wiki/concepts/齐料状态.md",
+        "kind": "graph",
+        "score": 2.0
+      },
+      {
+        "path": "wiki/entities/板料采购单.md",
+        "kind": "graph",
+        "score": 1.0
+      }
+    ],
+    "usage": {
+      "completionChars": 419,
+      "promptChars": 12480,
+      "referenceCount": 13,
+      "toolEventCount": 18
+    },
+    "group": "X",
+    "question": "DLS 系统 2027 年计划上线哪些新功能？",
+    "elapsed": 44.8,
+    "refusal_signal": true
+  },
+  "N1": {
+    "answer": "根据[08-DLS系统上线培训手册 - 仓储管理 20251031](wiki/sources/08-DLS系统上线培训手册 - 仓储管理 20251031_截图OCR.md)，DLS系统仓储管理模块的主要功能包括以下四个核心业务流程及相关管理功能：\n\n1.  **物料暂收管理**\n    *   支持暂收单的新增创建与发货清单导入。\n    *   进行暂收数量校验，基于供应商档案中的短溢装设置（如短装率0%、溢装率5%）计算允许的发货范围。\n    *   当累积暂收数量超出范围时，触超额入库审核机制，需提交物料跟单审核。\n\n2.  **入库管理**\n    *   基于已暂收单创建入库单，并提供快速验点功能。\n    *   处理不合格品与让步接收，记录验点数据（送货数、免费数、合格数等）。\n    *   附件管理，存在让步接收或不合格品时强制要求上传附件。\n\n3.  **领料申请与出库管理**\n    *   创建领料申请单，支持从生产单导入物料需求，区分不同生产用途（缝制/裁剪/包材）。\n    *   管理物料待出库池，从池中选择物料生成出库单。\n    *   执行出库管理，严格校验“实际出库数≤库存可用数”，支持分批出库。\n\n4.  **成品出运管理**\n    *   管理出运箱单，支持多客户订单合并及物流信息（箱号、体积、重量）记录。\n    *   处理成品出库流程，通过“出运待出库池”生成出库单，并追踪完整的“待入库→已入库→待出库→已出库”状态链。\n\n5.  **华东物流中心**\n    *   处理特定物流中心的入库与出库单据管理。\n\n该模块旨在实现业务流程的完整性、数量的严格控制、清晰的异常处理机制以及规范的状态管理。",
+    "references": [
+      {
+        "path": "wiki/sources/08-DLS系统上线培训手册 - 仓储管理 20251031.md",
+        "title": "08-DLS系统上线培训手册 - 仓储管理 20251031",
+        "score": 49.0
+      },
+      {
+        "path": "wiki/sources/08-DLS系统上线培训手册 - 仓储管理 20251031_截图OCR.md",
+        "title": "08-DLS系统上线培训手册 - 仓储管理 20251031",
+        "score": 49.0
+      },
+      {
+        "path": "wiki/concepts/成本管理模块基础流程.md",
+        "title": "成本管理模块基础流程",
+        "score": 45.0
+      },
+      {
+        "path": "wiki/findings/超额入库审核机制.md",
+        "title": "超额入库审核机制",
+        "score": 8.0
+      },
+      {
+        "path": "wiki/index.md",
+        "title": "Wiki Index",
+        "score": 8.0
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/sources/08-DLS系统上线培训手册 - 仓储管理 20251031.md",
+        "kind": "wiki",
+        "score": 49.0
+      },
+      {
+        "path": "wiki/sources/08-DLS系统上线培训手册 - 仓储管理 20251031_截图OCR.md",
+        "kind": "wiki",
+        "score": 49.0
+      },
+      {
+        "path": "wiki/concepts/成本管理模块基础流程.md",
+        "kind": "wiki",
+        "score": 45.0
+      },
+      {
+        "path": "wiki/findings/超额入库审核机制.md",
+        "kind": "graph",
+        "score": 8.0
+      },
+      {
+        "path": "wiki/index.md",
+        "kind": "graph",
+        "score": 8.0
+      }
+    ],
+    "usage": {
+      "completionChars": 1753,
+      "promptChars": 13185,
+      "referenceCount": 5,
+      "toolEventCount": 10
+    },
+    "group": "N",
+    "question": "仓储管理模块主要有哪些功能？",
+    "elapsed": 49.9,
+    "refusal_signal": false
+  },
+  "N2": {
+    "answer": "根据 `wiki/entities/款式档案.md` 的内容，款式档案包含以下主要信息：\n\n### 1. 核心属性与基本信息\n*   **基础信息**：客商称、成品品类（基于5级分类体系）、客系列/自系列、客款名/自款名、客款号/自款号、订单尺码范围、大货客款号、款式档案编号。\n*   **类型**：分为“普通”、“套装”和“大小码”三种。\n*   **翻单属性**：翻单资料合同号（翻单业务中由技术跟单勾选，用于关联历史资料）。\n\n### 2. 详细页签内容\n*   **基本信息**：由报价单自动推送的基础数据。\n*   **颜色尺码与颜色成分**：\n    *   颜色代码、中英文颜色名称。\n    *   洗标成分、报关成分。\n    *   尺码明细。\n*   **套装对应关系**：仅“套装”类型款式拥有此页签。\n*   **款式BOM**：\n    *   物料明细（主编码、名称、类型、分类、供应商、供方物料编号等）。\n    *   注：套装或大小码款式无此页签。\n*   **款式尺寸表**：\n    *   各部位尺寸数据（内部尺寸、公差）。\n    *   支持多档差设置。\n    *   注：套装或大小码款式无此页签。\n*   **GST工序**：关联GST工序信息（功能待实现）。\n*   **制版文件**：存储制版相关文件（功能待实现）。\n*   **客户意见与尺寸表**：记录客户反馈及相关尺寸意见。\n*   **成本重量**：管理成本与重量相关数据。\n*   **装箱规则**：定义该款式的装箱配比规则。\n*   **操作记录**：记录档案的所有变更历史。",
+    "references": [
+      {
+        "path": "wiki/entities/款式档案.md",
+        "title": "款式档案",
+        "score": 498.0
+      },
+      {
+        "path": "wiki/concepts/款式档案生成机制.md",
+        "title": "款式档案生成机制",
+        "score": 298.0
+      },
+      {
+        "path": "wiki/findings/款式档案数据来源与回写逻辑.md",
+        "title": "款式档案数据来源与回写逻辑",
+        "score": 298.0
+      },
+      {
+        "path": "wiki/entities/大货技术资料包.md",
+        "title": "大货技术资料包",
+        "score": 208.0
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "title": "理单",
+        "score": 6.0
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/entities/款式档案.md",
+        "kind": "wiki",
+        "score": 498.0
+      },
+      {
+        "path": "wiki/concepts/款式档案生成机制.md",
+        "kind": "wiki",
+        "score": 298.0
+      },
+      {
+        "path": "wiki/findings/款式档案数据来源与回写逻辑.md",
+        "kind": "wiki",
+        "score": 298.0
+      },
+      {
+        "path": "wiki/entities/大货技术资料包.md",
+        "kind": "graph",
+        "score": 208.0
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "kind": "graph",
+        "score": 6.0
+      }
+    ],
+    "usage": {
+      "completionChars": 1594,
+      "promptChars": 14770,
+      "referenceCount": 5,
+      "toolEventCount": 10
+    },
+    "group": "N",
+    "question": "款式档案里包含哪些信息？",
+    "elapsed": 46.4,
+    "refusal_signal": false
+  },
+  "N3": {
+    "answer": "基于项目中的培训手册文档，物料出运管理和成品出运管理的主要区别如下：\n\n## 一、业务起始点不同\n\n**物料出运管理**：\n- 起始于「物料出口销售合同」生成\n- 数据来源：订单完成理单后系统自动推送\n- 生成条件：采购用完成 + 委外合同已签订\n\n**成品出运管理**：\n- 起始于「出运箱单」（从验货箱单推送）\n- 然后进入「成品待出运清单」\n- 数据来源：完成订单理单后推送\n\n## 二、功能模块差异\n\n| 物料出运管理 | 成品出运管理 |\n|-------------|-------------|\n| 物料出口销售合同 | 出运箱单（仅查看） |\n| 物料待出运清单 | 成品待出运清单（订单看板） |\n| 物料联运审核 | 成品托运订舱 |\n| 物料托运订舱 | 成品出口报关 |\n| 物料出口报关 | 成品进口清关 |\n| 物料清关结汇 | 成品结汇 |\n\n## 三、特殊功能区别\n\n**物料出运管理特有功能**：\n- 支持多个内部合同号合并生成一个销售合同（客户简称和协同模板一致）\n- 支持分批出运，动态显示已出运/待订舱/可出运数量\n- 支持联运申请（可在待出运清单已收货中申请）\n\n**成品出运管理特有功能**：\n- 出运箱单流程（由验货箱单推送）\n- 成品待出运清单提供「订单看板」功能，可查看单据不同进度并导出报表\n- PO批次支持新增、拆分、删除操作\n- 报关/清关/结汇支持发票拆分和合并生成\n\n## 四、职责分工不同\n\n**物料出运管理**：\n- 客户组长：负责物料出口销售合同\n- 物料出运跟单：负责物料待出运清单\n- 综管办单证部：负责物料清关结汇\n\n**成品出运管理**：\n- 文档未明确具体角色分工，流程相对统一管理\n\n## 五、清关环节差异\n\n- **物料**：流程为「出口报关」→「清关结汇」\n- **成品**：流程为「出口报关」→「进口清关」→「结汇」，多了一个进口清关环节\n\n## 参考文档\n- [11-DLS系统上线培训手册 - 物料出运管理 20251107更新](wiki/sources/11-DLS系统上线培训手册%20-%20物料出运管理%2020251107更新.md)\n- [12-DLS系统上线培训手册 - 成品出运管理](wiki/sources/12-DLS系统上线培训手册%20-%20成品出运管理.md)",
+    "references": [
+      {
+        "path": "wiki/sources/12-DLS系统上线培训手册 - 成品出运管理_截图OCR.md",
+        "title": "12-DLS系统上线培训手册 - 成品出运管理",
+        "score": 77.0
+      },
+      {
+        "path": "wiki/sources/12-DLS系统上线培训手册 - 成品出运管理.md",
+        "title": "12-DLS系统上线培训手册 - 成品出运管理",
+        "score": 74.0
+      },
+      {
+        "path": "wiki/sources/11-DLS系统上线培训手册 - 物料出运管理 20251107更新.md",
+        "title": "11-DLS系统上线培训手册 - 物料出运管理 20251107更新",
+        "score": 73.0
+      },
+      {
+        "path": "wiki/sources/11-DLS系统上线培训手册 - 物料出运管理 20251107更新_截图OCR.md",
+        "title": "11-DLS系统上线培训手册 - 物料出运管理 20251107更新",
+        "score": 73.0
+      },
+      {
+        "path": "wiki/concepts/成品出运管理流程.md",
+        "title": "成品出运管理流程",
+        "score": 72.0
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/sources/12-DLS系统上线培训手册 - 成品出运管理_截图OCR.md",
+        "kind": "wiki",
+        "score": 77.0
+      },
+      {
+        "path": "wiki/sources/12-DLS系统上线培训手册 - 成品出运管理.md",
+        "kind": "wiki",
+        "score": 74.0
+      },
+      {
+        "path": "wiki/sources/11-DLS系统上线培训手册 - 物料出运管理 20251107更新.md",
+        "kind": "wiki",
+        "score": 73.0
+      },
+      {
+        "path": "wiki/sources/11-DLS系统上线培训手册 - 物料出运管理 20251107更新_截图OCR.md",
+        "kind": "wiki",
+        "score": 73.0
+      },
+      {
+        "path": "wiki/concepts/成品出运管理流程.md",
+        "kind": "wiki",
+        "score": 72.0
+      }
+    ],
+    "usage": {
+      "completionChars": 2294,
+      "promptChars": 13188,
+      "referenceCount": 5,
+      "toolEventCount": 14
+    },
+    "group": "N",
+    "question": "物料出运管理和成品出运管理有什么区别？",
+    "elapsed": 99.0,
+    "refusal_signal": false
+  },
+  "N4": {
+    "answer": "根据相关文档，大货技术资料包在审核通过后主要回写以下数据：\n\n1. **工艺数据（工序表）**：在工艺分析流程中，当工艺组长在iGST系统审核通过工艺分析单后，工艺数据会自动回写至DLS系统，OCR资料中明确指出会回写**工序表**。\n\n2. **款式档案关键数据**：大货技术资料包是[[款式档案]]的重要数据回写来源，具体涉及**BOM**和**尺寸表**等关键数据。\n\n参考资料：\n- `wiki/sources/10-DLS系统上线培训手册 - 大货技术资料包 20251031.md`\n- `wiki/sources/10-DLS系统上线培训手册 - 大货技术资料包 20251031_截图OCR.md`\n- `wiki/entities/大货技术资料包.md`",
+    "references": [
+      {
+        "path": "wiki/entities/大货技术资料包.md",
+        "title": "大货技术资料包",
+        "score": 84.0
+      },
+      {
+        "path": "wiki/sources/10-DLS系统上线培训手册 - 大货技术资料包 20251031.md",
+        "title": "DLS系统上线培训手册 - 大货技术资料包 20251031",
+        "score": 84.0
+      },
+      {
+        "path": "wiki/sources/10-DLS系统上线培训手册 - 大货技术资料包 20251031_截图OCR.md",
+        "title": "DLS系统上线培训手册 - 大货技术资料包 20251031",
+        "score": 84.0
+      },
+      {
+        "path": "wiki/entities/款式BOM.md",
+        "title": "款式BOM",
+        "score": 3.0
+      },
+      {
+        "path": "wiki/entities/款式档案.md",
+        "title": "款式档案",
+        "score": 20.0
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/entities/大货技术资料包.md",
+        "kind": "wiki",
+        "score": 84.0
+      },
+      {
+        "path": "wiki/sources/10-DLS系统上线培训手册 - 大货技术资料包 20251031.md",
+        "kind": "wiki",
+        "score": 84.0
+      },
+      {
+        "path": "wiki/sources/10-DLS系统上线培训手册 - 大货技术资料包 20251031_截图OCR.md",
+        "kind": "wiki",
+        "score": 84.0
+      },
+      {
+        "path": "wiki/entities/款式BOM.md",
+        "kind": "graph",
+        "score": 3.0
+      },
+      {
+        "path": "wiki/entities/款式档案.md",
+        "kind": "graph",
+        "score": 20.0
+      }
+    ],
+    "usage": {
+      "completionChars": 702,
+      "promptChars": 10054,
+      "referenceCount": 5,
+      "toolEventCount": 18
+    },
+    "group": "N",
+    "question": "大货技术资料包审核通过后会回写哪些数据？",
+    "elapsed": 105.3,
+    "refusal_signal": false
+  },
+  "N5": {
+    "answer": "根据 [wiki/sources/07-DLS系统上线培训手册 - 采购管理 20250826更新](wiki/sources/07-DLS系统上线培训手册 - 采购管理 20250826更新.md)，采购管理模块的核心流程包含以下11个主要业务环节：\n\n## 核心业务流程\n\n1. **采购核料单**（起点）\n   - 数据来源于理单完成后状态为\"已配置\"的单据\n   - 流程：核实物料 → 制版任务 → 填写单耗 → 技术审核\n   - 涉及角色：技术跟单、版师、单耗组长、单耗师\n\n2. **成本核价单**\n   - 数据来源：同一合同号下所有款式完成核料后自动推送\n   - 支持常规采购流程和紧急采购流程\n   - 涉及角色：物料跟单\n\n3. **采购询价**\n   - 非必须流程，功能待完善\n   - 涉及角色：客户组长\n\n4. **紧急采购**\n   - 为交期紧急物料提供的捷径，跳过成本管理审核\n   - 数据不可修改，审核通过后流转至物料需求\n   - 涉及角色：客户组长\n\n5. **成本管理**\n   - 数据来源：成本核价单完成后自动推送\n   - 按款和按合同两个维度展示，进行成本审批\n   - 涉及角色：客户组长\n\n6. **采购需求**\n   - 数据来源：成本管理审核通过后生成，紧急采购单审核通过后也会生成\n   - 支持多个合同号合并采购\n   - 涉及角色：物料跟单\n\n7. **意向采购单**\n   - 不可更改物料规格和数量，仅可更改确认货期和费用\n   - 审核通过后流转至采购合同\n   - 涉及角色：物料跟单（操作）、客户组长（审核）\n\n8. **物料二次加工单**\n   - 相当于二次加工物料的加工合同\n   - 状态流转：待确认 → 待签合同\n   - 涉及角色：物料跟单\n\n9. **采购合同**\n   - 数据来源：意向采购单审核通过后自动推送\n   - 状态流转：待确认 → 已确认（上传合同扫描件后）\n   - 涉及角色：物料跟单\n\n10. **送货通知单**\n    - 数据来源：意向采购单审核通过后自动推送\n    - 状态：待签委外合同 → 待生成 → 已完成\n    - 涉及角色：物料跟单\n\n11. **发货清单物料池**\n    - 数据来源：送货通知单完成后自动推送\n    - 数据不可编辑，仅用于导出发货清单\n    - 涉及角色：物料跟单\n\n## 流程流转特点\n\n- 各环节之间系统自动推送数据\n- 支持单据退回机制，发现错误可退回至上一步或更早环节\n- 涉及物料跟单、技术跟单、版师、单耗师、客户组长等多个角色协同\n- 紧急采购作为特殊路径，可跳过成本管理审核以加快流程",
+    "references": [
+      {
+        "path": "wiki/sources/07-DLS系统上线培训手册 - 采购管理 20250826更新.md",
+        "title": "07-DLS系统上线培训手册 - 采购管理 20250826更新",
+        "score": 218.0
+      },
+      {
+        "path": "wiki/sources/07-DLS系统上线培训手册 - 采购管理 20250826更新_截图OCR.md",
+        "title": "DLS系统上线培训手册 - 采购管理",
+        "score": 198.0
+      },
+      {
+        "path": "wiki/entities/采购预核单.md",
+        "title": "采购预核单",
+        "score": 103.0
+      },
+      {
+        "path": "wiki/entities/款式档案.md",
+        "title": "款式档案",
+        "score": 3.0
+      },
+      {
+        "path": "wiki/concepts/一级二级核料.md",
+        "title": "一级二级核料",
+        "score": 4.0
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/sources/07-DLS系统上线培训手册 - 采购管理 20250826更新.md",
+        "kind": "wiki",
+        "score": 218.0
+      },
+      {
+        "path": "wiki/sources/07-DLS系统上线培训手册 - 采购管理 20250826更新_截图OCR.md",
+        "kind": "wiki",
+        "score": 198.0
+      },
+      {
+        "path": "wiki/entities/采购预核单.md",
+        "kind": "wiki",
+        "score": 103.0
+      },
+      {
+        "path": "wiki/entities/款式档案.md",
+        "kind": "graph",
+        "score": 3.0
+      },
+      {
+        "path": "wiki/concepts/一级二级核料.md",
+        "kind": "graph",
+        "score": 4.0
+      }
+    ],
+    "usage": {
+      "completionChars": 2576,
+      "promptChars": 13608,
+      "referenceCount": 5,
+      "toolEventCount": 10
+    },
+    "group": "N",
+    "question": "采购管理模块的核心流程是什么？",
+    "elapsed": 45.7,
+    "refusal_signal": false
+  }
+}
