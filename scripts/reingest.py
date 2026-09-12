@@ -12,6 +12,8 @@
 - batch2（逐字稿）与 batch1（纪要）同名但内容不同 -> batch2 文件名加「逐字稿-」前缀
 - batch3 有 2 个智能纪要与 batch1 正文完全相同 -> 跳过（去重）
 - batch5 日报（纯日期文件名）加「日报-」前缀，聊天记录/AI建议原样
+- 仍存在的同名不同内容（如同一 docx 在两目录各存一份、OCR 结果不同）
+  -> 目标名追加「（来源目录名）」后缀，避免静默覆盖丢知识
 
 用法：python reingest.py  （可选 --no-rescan 只做文件操作不触发重扫）
 """
@@ -19,6 +21,7 @@ import hashlib
 import json
 import shutil
 import sys
+import time
 import urllib.request
 from pathlib import Path
 
@@ -40,9 +43,8 @@ def body_hash(path: Path) -> str:
 
 
 def backup():
-    dst = BASE / "data" / "backup_wiki_地名泄漏版_20260911"
-    if dst.exists():
-        shutil.rmtree(dst)
+    stamp = time.strftime("%Y%m%d_%H%M%S")
+    dst = BASE / "data" / f"backup_reingest_{stamp}"
     shutil.copytree(WIKI, dst / "wiki")
     shutil.copytree(SOURCES, dst / "raw_sources")
     print(f"已备份旧编译到 {dst.relative_to(BASE)}")
@@ -64,7 +66,12 @@ def reset_state():
     fq = LLM / "file-change-queue.json"
     if fq.exists():
         fq.write_text(json.dumps({"version": 1, "tasks": []}, ensure_ascii=False), encoding="utf-8")
-    print("已重置 file-snapshot / ingest-cache / review / file-change-queue")
+    # 清空 ingest-queue.json：残留的 processing/pending 会让应用以为任务仍在跑，
+    # 卡住的 processing 标记会阻塞新队列（实测卡 8.5 小时）。清空后由重扫重建。
+    iq = LLM / "ingest-queue.json"
+    if iq.exists():
+        iq.write_text("[]", encoding="utf-8")
+    print("已重置 file-snapshot / ingest-cache / review / file-change-queue / ingest-queue")
 
 
 def collect_files():
@@ -111,9 +118,17 @@ def collect_files():
 
 
 def copy_files(files):
+    written = set()
+    renamed = 0
     for src, dst_name in files:
+        if dst_name in written:
+            # 同名不同内容：追加来源目录后缀，避免静默覆盖丢知识
+            stem, suffix = src.stem, src.suffix
+            dst_name = f"{stem}（{src.parent.name}）{suffix}"
+            renamed += 1
+        written.add(dst_name)
         shutil.copy2(src, SOURCES / dst_name)
-    print(f"已复制 {len(files)} 个文件到 raw/sources")
+    print(f"已复制 {len(files)} 个文件到 raw/sources（同名改名 {renamed} 个）")
 
 
 def rescan():

@@ -61,3 +61,8 @@ Desktop.ini
 *.log
 *.tmp
 *.bak
+
+# 排查/监控产生的临时脚本与输出（下划线前缀，非项目正式内容）
+/_*.txt
+/scripts/_*.py
+!/scripts/_probe_state.py
