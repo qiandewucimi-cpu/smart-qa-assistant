@@ -1,0 +1,680 @@
+{
+  "C3": {
+    "answer": "「短溢装」是指客户允许的交货数量浮动范围，是客户层面的容差机制。它规定了实际交货数量相对于订单数量的最小和最大允许偏差范围。\n\n主要特点包括：\n- 短装：实际交货数量少于订单数量的允许比例（如-5%）\n- 溢装：实际交货数量多于订单数量的允许比例（如+5%）\n- 超出范围可能被拒收或免费接收\n\n配置位置在客户档案中的「短溢装设置」部分，可以为不同包装方式设置短溢装率。\n\n与「加放系数」的区别在于：短溢装是客户层面的交货容差，目的是验收标准；而加放系数是内部层面的生产损耗保障，影响生产要求。\n\n例如，订单数量为100件，短溢装为±5%：\n- 最少需交付：100 × (1 - 5%) = 95件\n- 最多可交付：100 × (1 + 5%) = 105件\n- 交付95-105件之间，客户均应接受",
+    "references": [
+      {
+        "path": "wiki/concepts/短溢装.md",
+        "title": "短溢装",
+        "score": 466.0
+      },
+      {
+        "path": "wiki/concepts/短溢装设置.md",
+        "title": "短溢装设置",
+        "score": 286.0
+      },
+      {
+        "path": "wiki/concepts/短溢装百分比.md",
+        "title": "短溢装百分比",
+        "score": 226.0
+      },
+      {
+        "path": "wiki/concepts/加放系数.md",
+        "title": "加放系数",
+        "score": 106.0
+      },
+      {
+        "path": "wiki/concepts/加放系数应用.md",
+        "title": "加放系数应用",
+        "score": 106.0
+      },
+      {
+        "path": "wiki/concepts/装箱管理.md",
+        "title": "装箱管理",
+        "score": 71.0
+      },
+      {
+        "path": "wiki/concepts/订单批量状态.md",
+        "title": "订单批量状态",
+        "score": 66.0
+      },
+      {
+        "path": "wiki/concepts/订单比对流程.md",
+        "title": "订单比对流程",
+        "score": 0.009855581576893051
+      },
+      {
+        "path": "wiki/concepts/一级二级核料.md",
+        "title": "一级二级核料",
+        "score": 0.00819672131147541
+      },
+      {
+        "path": "wiki/concepts/综合损耗率.md",
+        "title": "综合损耗率",
+        "score": 0.00819672131147541
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/concepts/短溢装.md",
+        "kind": "wiki",
+        "score": 466.0
+      },
+      {
+        "path": "wiki/concepts/短溢装设置.md",
+        "kind": "wiki",
+        "score": 286.0
+      },
+      {
+        "path": "wiki/concepts/短溢装百分比.md",
+        "kind": "wiki",
+        "score": 226.0
+      },
+      {
+        "path": "wiki/concepts/加放系数.md",
+        "kind": "wiki",
+        "score": 106.0
+      },
+      {
+        "path": "wiki/concepts/加放系数应用.md",
+        "kind": "wiki",
+        "score": 106.0
+      },
+      {
+        "path": "wiki/concepts/装箱管理.md",
+        "kind": "wiki",
+        "score": 71.0
+      },
+      {
+        "path": "wiki/concepts/订单批量状态.md",
+        "kind": "wiki",
+        "score": 66.0
+      },
+      {
+        "path": "wiki/concepts/订单比对流程.md",
+        "kind": "graph",
+        "score": 0.009855581576893051
+      },
+      {
+        "path": "wiki/concepts/一级二级核料.md",
+        "kind": "graph",
+        "score": 0.00819672131147541
+      },
+      {
+        "path": "wiki/concepts/综合损耗率.md",
+        "kind": "graph",
+        "score": 0.00819672131147541
+      }
+    ],
+    "usage": {
+      "completionChars": 887,
+      "promptChars": 13015,
+      "referenceCount": 10,
+      "toolEventCount": 10
+    },
+    "elapsed": 15.3,
+    "scoring": true,
+    "base_key": "C3"
+  },
+  "O4": {
+    "answer": "根据检索到的资料，色码明细是自动带入的，而非手动填写。在wiki/concepts/色码明细.md中明确提到：\"色码明细是核料单的基础信息之一，由上游订单理单自动带入，无需手动填写\"。同时，在wiki/entities/色码明细.md中也确认：\"色码明细是核料单的基础字段之一，表示算上加放系数后的成品，各颜色对应各尺码的具体数量。特点是由上游订单理单自动带入，拆分至单款单色单码，无需手动填写，是核料单生成的基础数据之一\"。",
+    "references": [
+      {
+        "path": "wiki/concepts/意向订单导入界面操作指南.md",
+        "title": "意向订单导入界面操作指南",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/concepts/行为准则CoC.md",
+        "title": "行为准则CoC",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/entities/OA银行.md",
+        "title": "OA银行",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/entities/海外工厂.md",
+        "title": "海外工厂",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/findings/合并物料明细规则.md",
+        "title": "合并物料明细规则",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/findings/拆分报关单证规则.md",
+        "title": "拆分报关单证规则",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/sources/07-DLS系统上线培训手册 - 采购管理 20250826更新.md",
+        "title": "07-DLS系统上线培训手册 - 采购管理 20250826更新",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/concepts/客户档案差异详情.md",
+        "title": "客户档案差异详情",
+        "score": 0.01639344262295082
+      },
+      {
+        "path": "wiki/concepts/组合报价对比.md",
+        "title": "组合报价对比",
+        "score": 0.01639344262295082
+      },
+      {
+        "path": "wiki/concepts/解析数据比对机制.md",
+        "title": "解析数据比对机制",
+        "score": 0.01639344262295082
+      },
+      {
+        "path": "wiki/findings/样板单分色码数量表自动计算逻辑.md",
+        "title": "样板单分色码数量表自动计算逻辑",
+        "score": 13.0
+      },
+      {
+        "path": "wiki/concepts/BOM导入流程.md",
+        "title": "BOM导入流程",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/concepts/色码明细.md",
+        "title": "色码明细",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/concepts/订单导入方式.md",
+        "title": "订单导入方式",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/concepts/订单导入配置规则.md",
+        "title": "订单导入配置规则",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/entities/色码明细.md",
+        "title": "色码明细",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/entities/分色码数量表.md",
+        "title": "分色码数量表",
+        "score": 8.0
+      },
+      {
+        "path": "wiki/index.md",
+        "title": "Wiki Index",
+        "score": 3.0
+      },
+      {
+        "path": "wiki/concepts/核料单BOM明细操作规范.md",
+        "title": "核料单BOM明细操作规范",
+        "score": 33.0
+      },
+      {
+        "path": "wiki/synthesis/核价单自动取值逻辑.md",
+        "title": "核价单自动取值逻辑",
+        "score": 28.0
+      },
+      {
+        "path": "wiki/entities/分色码数量表.md",
+        "title": "分色码数量表",
+        "score": 26.0
+      },
+      {
+        "path": "wiki/concepts/翻单字段自动判定规则.md",
+        "title": "翻单字段自动判定规则",
+        "score": 25.0
+      },
+      {
+        "path": "wiki/concepts/单号-单耗.md",
+        "title": "单号/单耗",
+        "score": 11.0
+      },
+      {
+        "path": "wiki/concepts/配色方案-配色代码.md",
+        "title": "配色方案/配色代码",
+        "score": 18.0
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/concepts/意向订单导入界面操作指南.md",
+        "kind": "wiki",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/concepts/行为准则CoC.md",
+        "kind": "wiki",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/entities/OA银行.md",
+        "kind": "wiki",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/entities/海外工厂.md",
+        "kind": "wiki",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/findings/合并物料明细规则.md",
+        "kind": "wiki",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/findings/拆分报关单证规则.md",
+        "kind": "wiki",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/sources/07-DLS系统上线培训手册 - 采购管理 20250826更新.md",
+        "kind": "wiki",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/concepts/客户档案差异详情.md",
+        "kind": "graph",
+        "score": 0.01639344262295082
+      },
+      {
+        "path": "wiki/concepts/组合报价对比.md",
+        "kind": "graph",
+        "score": 0.01639344262295082
+      },
+      {
+        "path": "wiki/concepts/解析数据比对机制.md",
+        "kind": "graph",
+        "score": 0.01639344262295082
+      },
+      {
+        "path": "wiki/findings/样板单分色码数量表自动计算逻辑.md",
+        "kind": "wiki",
+        "score": 13.0
+      },
+      {
+        "path": "wiki/concepts/BOM导入流程.md",
+        "kind": "wiki",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/concepts/色码明细.md",
+        "kind": "wiki",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/concepts/订单导入方式.md",
+        "kind": "wiki",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/concepts/订单导入配置规则.md",
+        "kind": "wiki",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/entities/色码明细.md",
+        "kind": "wiki",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/entities/分色码数量表.md",
+        "kind": "graph",
+        "score": 8.0
+      },
+      {
+        "path": "wiki/index.md",
+        "kind": "graph",
+        "score": 3.0
+      },
+      {
+        "path": "wiki/concepts/核料单BOM明细操作规范.md",
+        "kind": "wiki",
+        "score": 33.0
+      },
+      {
+        "path": "wiki/synthesis/核价单自动取值逻辑.md",
+        "kind": "wiki",
+        "score": 28.0
+      },
+      {
+        "path": "wiki/entities/分色码数量表.md",
+        "kind": "wiki",
+        "score": 26.0
+      },
+      {
+        "path": "wiki/concepts/翻单字段自动判定规则.md",
+        "kind": "wiki",
+        "score": 25.0
+      },
+      {
+        "path": "wiki/concepts/单号-单耗.md",
+        "kind": "graph",
+        "score": 11.0
+      },
+      {
+        "path": "wiki/concepts/配色方案-配色代码.md",
+        "kind": "graph",
+        "score": 18.0
+      }
+    ],
+    "usage": {
+      "completionChars": 563,
+      "promptChars": 17186,
+      "referenceCount": 24,
+      "toolEventCount": 21
+    },
+    "elapsed": 18.9,
+    "scoring": true,
+    "base_key": "O4"
+  },
+  "P1": {
+    "answer": "The retrieved context doesn't contain a clear description of how data flows from order approval to the purchase material verification form (采购核料单). While there are related concepts like 订单比对流程 (Order Comparison Process), 理单 (Order Processing), and the Purchase Order [订单号] example, none of the documents explicitly describe this specific data flow. More specific documentation about the order-to-purchase-material-verification workflow would be needed to answer this question accurately.",
+    "references": [
+      {
+        "path": "wiki/entities/purchase-order-[订单号].md",
+        "title": "Purchase Order [订单号]",
+        "score": 6.0
+      },
+      {
+        "path": "wiki/sources/11 (1)_OCR.md",
+        "title": "Purchase Order [订单号] 实例分析",
+        "score": 6.0
+      },
+      {
+        "path": "wiki/sources/11_OCR.md",
+        "title": "Purchase Order [订单号] 实例分析",
+        "score": 6.0
+      },
+      {
+        "path": "wiki/concepts/业务流程建模.md",
+        "title": "业务流程建模",
+        "score": 2.0
+      },
+      {
+        "path": "wiki/concepts/PO格式.md",
+        "title": "PO格式",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/concepts/交付容差.md",
+        "title": "交付容差",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/concepts/关键路径.md",
+        "title": "关键路径",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/entities/[配送中心].md",
+        "title": "[配送中心]",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/concepts/订单比对流程.md",
+        "title": "订单比对流程",
+        "score": 0.019854280510018217
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "title": "理单",
+        "score": 0.018214936247723135
+      },
+      {
+        "path": "wiki/index.md",
+        "title": "Wiki Index",
+        "score": 10200.0
+      },
+      {
+        "path": "wiki/entities/DLS系统.md",
+        "title": "DLS系统",
+        "score": 10027.0
+      },
+      {
+        "path": "wiki/entities/内部合同号.md",
+        "title": "内部合同号",
+        "score": 10018.0
+      },
+      {
+        "path": "wiki/entities/技术跟单.md",
+        "title": "技术跟单",
+        "score": 10014.0
+      },
+      {
+        "path": "wiki/entities/飞书.md",
+        "title": "飞书",
+        "score": 10013.0
+      },
+      {
+        "path": "wiki/log.md",
+        "title": "Wiki Log",
+        "score": 10013.0
+      },
+      {
+        "path": "wiki/entities/飞书知识库.md",
+        "title": "飞书知识库",
+        "score": 10011.0
+      },
+      {
+        "path": "wiki/concepts/意向订单导入界面操作指南.md",
+        "title": "意向订单导入界面操作指南",
+        "score": 10007.0
+      },
+      {
+        "path": "wiki/entities/大货技术资料包.md",
+        "title": "大货技术资料包",
+        "score": 10007.0
+      },
+      {
+        "path": "wiki/entities/版师.md",
+        "title": "版师",
+        "score": 10007.0
+      },
+      {
+        "path": "wiki/findings/采购核料单状态流转与审核规则.md",
+        "title": "采购核料单状态流转与审核规则",
+        "score": 96.0
+      },
+      {
+        "path": "wiki/concepts/采购核料单填写流程.md",
+        "title": "采购核料单填写流程",
+        "score": 75.0
+      },
+      {
+        "path": "wiki/entities/采购核料单.md",
+        "title": "采购核料单",
+        "score": 74.0
+      },
+      {
+        "path": "wiki/sources/采购核料单业务逻辑培训手册.md",
+        "title": "采购核料单业务逻辑培训手册",
+        "score": 74.0
+      },
+      {
+        "path": "wiki/concepts/采购核料单基础信息配置规则.md",
+        "title": "采购核料单基础信息配置规则",
+        "score": 68.0
+      },
+      {
+        "path": "wiki/findings/学员A采购核料单学习要点.md",
+        "title": "学员A采购核料单学习要点",
+        "score": 68.0
+      },
+      {
+        "path": "wiki/findings/采购核料单生成与可见性控制.md",
+        "title": "采购核料单生成与可见性控制",
+        "score": 68.0
+      },
+      {
+        "path": "wiki/concepts/分色分码单耗.md",
+        "title": "分色分码单耗",
+        "score": 17.0
+      },
+      {
+        "path": "wiki/entities/合料单.md",
+        "title": "合料单",
+        "score": 31.0
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/entities/purchase-order-[订单号].md",
+        "kind": "wiki",
+        "score": 6.0
+      },
+      {
+        "path": "wiki/sources/11 (1)_OCR.md",
+        "kind": "wiki",
+        "score": 6.0
+      },
+      {
+        "path": "wiki/sources/11_OCR.md",
+        "kind": "wiki",
+        "score": 6.0
+      },
+      {
+        "path": "wiki/concepts/业务流程建模.md",
+        "kind": "wiki",
+        "score": 2.0
+      },
+      {
+        "path": "wiki/concepts/PO格式.md",
+        "kind": "wiki",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/concepts/交付容差.md",
+        "kind": "wiki",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/concepts/关键路径.md",
+        "kind": "wiki",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/entities/[配送中心].md",
+        "kind": "graph",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/concepts/订单比对流程.md",
+        "kind": "graph",
+        "score": 0.019854280510018217
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "kind": "graph",
+        "score": 0.018214936247723135
+      },
+      {
+        "path": "wiki/index.md",
+        "kind": "graph",
+        "score": 10200.0
+      },
+      {
+        "path": "wiki/entities/DLS系统.md",
+        "kind": "graph",
+        "score": 10027.0
+      },
+      {
+        "path": "wiki/entities/内部合同号.md",
+        "kind": "graph",
+        "score": 10018.0
+      },
+      {
+        "path": "wiki/entities/技术跟单.md",
+        "kind": "graph",
+        "score": 10014.0
+      },
+      {
+        "path": "wiki/entities/飞书.md",
+        "kind": "graph",
+        "score": 10013.0
+      },
+      {
+        "path": "wiki/log.md",
+        "kind": "graph",
+        "score": 10013.0
+      },
+      {
+        "path": "wiki/entities/飞书知识库.md",
+        "kind": "graph",
+        "score": 10011.0
+      },
+      {
+        "path": "wiki/concepts/意向订单导入界面操作指南.md",
+        "kind": "graph",
+        "score": 10007.0
+      },
+      {
+        "path": "wiki/entities/大货技术资料包.md",
+        "kind": "graph",
+        "score": 10007.0
+      },
+      {
+        "path": "wiki/entities/版师.md",
+        "kind": "graph",
+        "score": 10007.0
+      },
+      {
+        "path": "wiki/findings/采购核料单状态流转与审核规则.md",
+        "kind": "wiki",
+        "score": 96.0
+      },
+      {
+        "path": "wiki/concepts/采购核料单填写流程.md",
+        "kind": "wiki",
+        "score": 75.0
+      },
+      {
+        "path": "wiki/entities/采购核料单.md",
+        "kind": "wiki",
+        "score": 74.0
+      },
+      {
+        "path": "wiki/sources/采购核料单业务逻辑培训手册.md",
+        "kind": "wiki",
+        "score": 74.0
+      },
+      {
+        "path": "wiki/concepts/采购核料单基础信息配置规则.md",
+        "kind": "wiki",
+        "score": 68.0
+      },
+      {
+        "path": "wiki/findings/学员A采购核料单学习要点.md",
+        "kind": "wiki",
+        "score": 68.0
+      },
+      {
+        "path": "wiki/findings/采购核料单生成与可见性控制.md",
+        "kind": "wiki",
+        "score": 68.0
+      },
+      {
+        "path": "wiki/concepts/分色分码单耗.md",
+        "kind": "graph",
+        "score": 17.0
+      },
+      {
+        "path": "wiki/entities/合料单.md",
+        "kind": "graph",
+        "score": 31.0
+      }
+    ],
+    "usage": {
+      "completionChars": 515,
+      "promptChars": 15876,
+      "referenceCount": 29,
+      "toolEventCount": 17
+    },
+    "elapsed": 20.7,
+    "scoring": true,
+    "base_key": "P1"
+  }
+}

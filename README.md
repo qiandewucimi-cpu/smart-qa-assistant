@@ -15,8 +15,9 @@
 
 - **数据脱敏**：一键把人名/公司/客户/内部合同号泛化为化名，保留对话角色结构，避免敏感信息泄漏（`clean_text.py`）。
 - **零依赖**：docx / xlsx 抽取、截图 OCR、清洗、巡检、分批、评测脚本只用 Python 标准库；仅 `extract_pdf.py` 需 `pymupdf`、`feishu_bot.py` 需 `lark-oapi`。
-- **混合检索**：关键词 + 向量（`embedding-3`，764/817 页）+ 知识图谱三路融合，而非只靠向量库一路。
-- **可复现**：清洗 → 分批 → 重导 → 建向量索引 → 评测每一步都有独立脚本，参数化、幂等、可续跑。
+- **混合检索**：关键词 + 知识图谱两路融合跑在生产上；向量一路（`embedding-3`，764/817 页索引已建）
+  **已配置但因 embedding 额度耗尽未生效**（`/search` 的 `vectorHits` 恒为 0），充值时一键恢复——详见下方「向量检索的真实状况」。
+- **可复现**：清洗 → 分批 → 重导 → （可选）建向量索引 → 评测每一步都有独立脚本，参数化、幂等、可续跑。
 - **量化评测**：22 题评测集（概念/对比/流程/操作/报价配比/机制）+ 13 题拒答专项 + 延迟对照基准，
   按「命中 / 答偏 / 幻觉」三档打分，形成可对比的质量报告（`eval/`）。
 
@@ -27,16 +28,16 @@
 | 语料 | **121 份 / 105.2 万字符**（源 173 份 / 153MB） | `corpus_stats.py` |
 | 脱敏 | 命中 **4,667 处**；输入侧（`data/clean`）残留 **0**；评测产物残留 **0** | `corpus_stats.py` / `audit_leaks.py` / `sanitize_eval_results.py` |
 | 知识库 | **119/119** 编译完成，**819 页**结构化 Wiki | `wiki_status.py` |
-| 向量索引 | **764/817 页（93.5%）** 已建（`embedding-3`） | `vector_index.py status` |
-| 命中率 | **90.5%**（19/21；95% Wilson 区间 71.1~97.3%） | `eval/评测报告_v1.0_向量+快模型.md` |
-| 幻觉 | **0/21**（95% 置信上界 **13.3%**） | 同上 |
+| 向量索引 | 索引 **764/817 页（93.5%）已建**，但**当前未生效**（embedding 额度耗尽） | `vector_index.py status` / `vector_index.py probe` |
+| 命中率 | **90.5%**（19/21；95% Wilson 区间 71.1~97.3%） | `eval/评测报告_v1.0_检索深度与快模型.md` |
+| 幻觉 | **0/21**（95% 置信上界 **13.3%**）※ 口径限定见该报告 §4.1 | 同上 |
 | 拒答 | 语料外 **8/8** 正确拒答、0 编造；语料内对照 **5/5** 无误拒 | `eval/拒答评测报告.md` |
 | 引用可溯源 | **100%**（22/22） | `eval/评测结果_raw.json` |
 | 延迟 | P50 **18.0s** / 均值 22.1s（**未达标**，但较上轮 61.5s **↓3.4×**） | 同上 |
 
 > 完整复盘（目标 vs 结果逐条对照 / 归因 / 踩坑 / 方法论沉淀 / 数字来源索引）见 [`docs/复盘报告.md`](docs/复盘报告.md)。
 > 质量维度对标企业参考门槛见 [`docs/质量门槛对标.md`](docs/质量门槛对标.md)。
-> 四轮评测演进：73.3% → 81.0% → 85.7% → **90.5%**，幻觉率始终 0%。
+> 四轮评测演进：73.3% → 81.0% → 85.7% → **90.5%**；幻觉**始终为 0/21**（95% 置信上界 13.3%，口径限定见报告）。
 
 ## 整体流程
 
@@ -60,7 +61,7 @@
   reingest.py  ── 清空旧库 → 复制 → 触发重扫（写入 LLM-Wiki）
         │
         ▼
-  vector_index.py ── 开启向量检索 + 批量建索引（764/817 页）
+  vector_index.py ──（可选）开启向量检索 + 批量建索引（764/817 页；当前因额度未生效）
         │
         ▼
   eval_chat.py  ── 调用本地 API 逐题评测 →  eval/评测结果_raw.json
@@ -75,13 +76,13 @@
 | 截图 OCR | `scripts/ocr_docx_media.py` | docx 内嵌截图 → `data/clean/`（需智谱 key） |
 | 文本清洗/脱敏 | `scripts/clean_text.py` | `工作内容/*.txt\|md` → `data/clean/` |
 | 脱敏巡检 | `scripts/audit_leaks.py` | `data/clean/` + LLM-Wiki 项目 → 残留报告（可用作 CI 卡点） |
-| **评测产物擦除** | `scripts/sanitize_eval_results.py` | 把「编译期派生的真实专名」从 `eval/` 产物中擦掉（`--check` 可挂 CI）；开向量检索后必需，见下 |
+| **评测产物擦除** | `scripts/sanitize_eval_results.py` | 把「编译期派生的真实专名」从 `eval/` 产物中擦掉（`--check` 可挂 CI）；**检索面一变宽就必需**，见下 |
 | 重复检测 | `scripts/check_duplicates.py` | 8-gram 倒排 + 精确 Jaccard，找完全相同/近似重复（语料或 wiki） |
 | 批次构建 | `scripts/build_batches.py` | `data/clean/` → `data/import_batches/` |
 | 知识入库 | `scripts/reingest.py` | `data/import_batches/` → LLM-Wiki 项目（清空旧库 → 复制 → 重置状态 → 触发重扫） |
 | 续跑导入 | `scripts/resume_ingest.py` | 中断后续跑：摘除未编译条目 + 清队列 → 重扫重建，已编译的不重做（`--plan`/`--apply`/`--rescan`） |
 | 分模型 | `scripts/set_ingest_model.py` | 单独指定「入库/编译」模型（编译用轻量、聊天跟随当前预设），`--show`/`--clear` |
-| **向量索引** | `scripts/vector_index.py` | 开启 `embeddingConfig` + 批量给 wiki 页建向量索引（`status`/`enable`/`embed-one`/`embed-all`/`restore`，可续跑） |
+| **向量索引** | `scripts/vector_index.py` | 开启/关闭 `embeddingConfig` + 批量给 wiki 页建向量索引（`probe`/`status`/`enable`/`disable`/`embed-one`/`embed-all`/`restore`，可续跑）；**`probe` 是必跑自检——`enabled=true` 不等于生效** |
 | 编译监控 | `scripts/monitor_compile.py` | 读 `ingest-cache`/`ingest-queue` 看进度，编完自动触发 22 题评测（幂等：同一轮只评一次，`--force` 可强制重跑）；`failed` 单独计为「已终结」，避免一份永久失败卡死自动评测 |
 | 失败重排 | `scripts/requeue_failed.py` | 队列里 `status=failed`（重试耗尽）的源文件重新排入编译：`--plan` 只读，`--apply` 摘 snapshot 条目 + 删 failed 条目 + 重扫 |
 | 状态自检 | `scripts/wiki_status.py` | 一次打印 API health + 编译进度 + 当前入库模型；`--samples N --interval S` 可做有界后台采样 |
@@ -118,7 +119,8 @@
 │   ├── monitor_compile.py # 编译进度监控（编完自动评测）
 │   ├── requeue_failed.py  # 失败文件重排入队（file-snapshot 手术法）
 │   ├── wiki_status.py  # 状态自检（health + 进度 + 入库模型）
-│   ├── vector_index.py # 向量索引：开启 embedding 配置 + 批量建索引（可续跑）
+│   ├── vector_index.py # 向量索引：开关 embedding 配置 + 批量建索引 + probe 自检（可续跑）
+│   ├── sanitize_eval_results.py # 评测产物擦除（第三道脱敏闸门，--check 可挂 CI）
 │   ├── bench_models.py # 模型耗时对比（编译层）
 │   ├── bench_chat_latency.py # 端到端问答延迟对照基准（glm-4.7 / glm-4.5-air）
 │   ├── eval_chat.py    # 机器评测（22 题，支持 --only/--repeat/--topk/--tag）
@@ -178,10 +180,10 @@ python build_batches.py
 # 7) 重导 LLM-Wiki（备份旧库 → 清空 → 复制 → 触发重扫）
 python reingest.py
 
-# 7.5) 开启向量检索并批量建索引（可续跑；status 可查进度）
-python vector_index.py status
-python vector_index.py enable
-python vector_index.py embed-all
+# 7.5) （可选）向量检索：先 probe 自检，再 enable / 建索引
+python vector_index.py probe        # ★ 必跑：接口通不通 + 检索真的用上向量没
+python vector_index.py enable       # 写配置（model=embedding-3，复用 llmConfig.apiKey）
+python vector_index.py embed-all    # 批量建索引（可续跑）
 
 # 8) 跑 22 题评测（默认 topK=15；--only/--repeat/--tag 支持复测）
 python eval_chat.py
@@ -197,9 +199,17 @@ python sanitize_eval_results.py --check        # 有残留则退出码 1
 python sanitize_eval_results.py --apply       # 就地擦除
 ```
 
-> **关于 topK**：开启向量检索后，默认检索深度会让向量结果把关键词命中的关键页**挤出 Top-K**
-> （实测会把 P1 从"答偏"变成"拒答"）。因此 `eval_chat.py` 与 `feishu_bot.py` 统一把 `topK` 提到 **15**，
-> 可用 `--topk N` 覆盖。这是本项目踩过的一个坑，详见 `docs/复盘报告.md` §5。
+> ⚠️ **向量检索的真实状况（务必先读）**：本项目**配置了**向量检索、也**建好了** 764/817 页索引，
+> 但查询期的 embedding 调用因**账户额度耗尽**（智谱 `code 1113 余额不足或无可用资源包`）而失败，
+> 应用**静默降级** → `/search` 的 `vectorHits` **恒为 0**，评测里**一个向量召回事件都没有**。
+> 也就是说 **v1.0 的 90.5% 完全是「关键词 + 图谱」两路跑出来的**。
+> **教训：`enabled=true` 不等于生效**——`vector_index.py probe` 就是为此加的自检；
+> 充值后 `enable` 一步即可恢复（索引无需重建）。
+
+> **关于 topK**：本项目 chat 端默认只回 5 条候选，**提高检索深度（→15）**修好了两道零召回题
+> （C3/O4），但同时**把 P1 从"答偏"稀释成"拒答"**——召回更多 ≠ 更好。
+> `eval_chat.py` 与 `feishu_bot.py` 统一 `topK=15`，可用 `--topk N` 覆盖。
+> 详见 `docs/复盘报告.md` §4.7 与 §5。
 
 ### 3. 飞书机器人（可选）
 
@@ -270,13 +280,17 @@ python scripts/usage_stats.py --md      # 额外输出 Markdown 表
 > 词表只能挡输入里存在的词。
 > 好在 `projects/` 已被 `.gitignore` 隔离，**公开仓库不受影响**；但取用 wiki 内容写对外文档时需人工过一遍。
 
-### 第三道闸门：评测产物擦除（开向量检索后必需）
+### 第三道闸门：评测产物擦除（检索面变宽后必需）
 
 `audit_leaks.py` 扫的是**输入侧**（语料与 wiki）。但**输出侧**也会带真实信息：
 LLM 编译时会从**截图 OCR** 里派生出**新的真实实体页**（真实订单号、配送中心、
 第三方物流商名），这些页面平时只躺在 gitignored 的 wiki 目录里；
-而**开启向量检索后**，chat API 的 `references` 会把它们也带回给评测脚本，
-于是写进了**入库的** `eval/评测结果_raw*.json`（实测 2026-09-12 复现）。
+而**检索面一变宽**（提高检索深度、或 agent 多跑几轮），chat API 的 `references`
+就会把它们也带回给评测脚本，于是写进了**入库的** `eval/评测结果_raw*.json`（实测 2026-09-12 复现）。
+
+> 注意：这次**不是**「开向量」导致的——向量当时根本还没生效，
+> 而是**检索面变宽**（引用数由 5~10 增至 20+）把派生页带了进来。
+> **结论：任何改变"会召回哪些页"的改动，都要重跑输出侧闸门。**
 
 因此加了第三道闸门：
 
@@ -305,11 +319,14 @@ python scripts/sanitize_eval_results.py --apply   # 就地擦除
 | 基线 | 12 份（19%） | 关键词+图谱 / glm-4.6 | 73.3% | 0% | 首版评测 |
 | v0.2 | **119 份（100%）** | 关键词+图谱 / glm-4.7 | 81.0% | 0% | 语料扩容 10× |
 | v0.3 | 119 份 | 关键词+图谱 / glm-4.7 | 85.7% | 0% | **修评测链路缺陷**（502 重试 + 项目 ID 解析） |
-| **v1.0** | 119 份 | **混合检索 / glm-4.5-air** | **90.5%** | **0%** | **两项 P0：开向量检索 + 换快模型** |
+| **v1.0** | 119 份 | 关键词+图谱（**向量未生效**）/ glm-4.5-air | **90.5%** | **0%** | **提高检索深度 topK 5→15 + 换快模型** |
 
 > v1.0 的 2 道未命中均**非语料缺失**：P1 是检索排序（答案在库、复跑 0/3 稳定缺口），
 > D2 是应用框架的 8 步迭代上限（偶发，复跑 2/3 命中）。
 > **主口径按单轮实测的 90.5% 报，不按复跑后的 95.2% 报。**
+>
+> ⚠️ v1.0 一栏**不写「混合检索」**：向量虽已配置、索引也已建，但查询期 embedding 额度耗尽，
+> 实际仍走「关键词 + 图谱」两路（见上方「向量检索的真实状况」）。
 
 ### 拒答准确性专项（13 题）
 
@@ -325,7 +342,7 @@ python scripts/sanitize_eval_results.py --apply   # 就地擦除
 > **关键发现**：模型是**内容驱动而非检索驱动**——8 道语料外题里 7 道检索都返回了 5~15 条内容，
 > 模型仍正确拒答，避开了 RAG 最常见的失败模式「检索恒有返回 → 强行凑答案」。
 
-详细结论见 `eval/评测报告_v1.0_向量+快模型.md`、`eval/评测集.md`，拒答专项见 `eval/拒答评测报告.md`；
+详细结论见 `eval/评测报告_v1.0_检索深度与快模型.md`、`eval/评测集.md`，拒答专项见 `eval/拒答评测报告.md`；
 质量门槛与现状对标见 `docs/质量门槛对标.md`。
 
 > 评测口径提醒：单一命中率不足以判断系统水平（受语料覆盖度影响极大）。企业场景下**忠实度（零幻觉）与引用可溯源**才是上线底线，详见 `docs/质量门槛对标.md`。
@@ -333,8 +350,8 @@ python scripts/sanitize_eval_results.py --apply   # 就地擦除
 ## 技术栈
 
 - Python（标准库优先；PDF 用 `pymupdf`、飞书机器人用 `lark-oapi`）
-- 智谱 GLM（国产大模型，OpenAI 兼容接口；**分模型**：编译/入库与问答统一用 `glm-4.5-air`，截图 OCR 用 `glm-4v-flash`；向量嵌入用 `embedding-3`）
-- LLM-Wiki（本地知识库引擎，编译式 Wiki + **混合检索（关键词 + 向量 + 知识图谱）** + 本地 HTTP API）
+- 智谱 GLM（国产大模型，OpenAI 兼容接口；**分模型**：编译/入库与问答统一用 `glm-4.5-air`，截图 OCR 用 `glm-4v-flash`；向量嵌入 `embedding-3`——**已配置但当前未生效**）
+- LLM-Wiki（本地知识库引擎，编译式 Wiki + 内置混合检索（关键词 / 向量 / 知识图谱；本项目实际跑前两路+图谱）+ 本地 HTTP API）
 - 飞书开放平台（企业自建应用 + WebSocket 长连接）
 
 > **模型选型的演进**：初期「入库用快模型、问答用旗舰 `glm-4.7`」；后经 `bench_chat_latency.py` 对照实测，

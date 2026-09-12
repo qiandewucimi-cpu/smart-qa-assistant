@@ -60,7 +60,7 @@ def load_bot_settings() -> dict:
         "wiki_retries": _int_env("BOT_WIKI_RETRIES", 2),     # 超时/网络错误重试次数
         "session_ttl": _int_env("BOT_SESSION_TTL", 3600),    # 多轮会话有效期（秒）
         "card_max_chars": _int_env("BOT_CARD_MAX_CHARS", 4500),  # 卡片正文上限（字）
-        # 检索深度：开启向量检索后默认深度会把关键词命中的关键页挤出 Top-K（实测 P1），
-        # 提高到 15 后关键页可召回、答案更完整（且实测耗时更低）。
+        # 检索深度：chat 端点不传 topK 时实测只回 5 条，会把关键词命中的关键页挤出 Top-K
+        # （C3/O4 零召回）；提高到 15 后关键页可召回、零召回消除（代价：P1 被稀释，见报告 §7）。
         "top_k": _int_env("BOT_TOP_K", 15),
     }

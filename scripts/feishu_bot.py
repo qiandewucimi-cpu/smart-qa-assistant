@@ -14,7 +14,7 @@
     BOT_WIKI_RETRIES=2         超时/网络错误重试次数
     BOT_SESSION_TTL=3600       多轮会话有效期（秒）
     BOT_CARD_MAX_CHARS=4500    卡片正文上限（字）
-    BOT_TOP_K=15               检索深度（开启向量检索后需 > 默认值，否则关键页会被挤出）
+    BOT_TOP_K=15               检索深度（chat 端点不传 topK 时只回 5 条，关键页会被挤出）
 
 运行：
     python scripts/feishu_bot.py                 # 启动机器人（长连接，阻塞）
@@ -71,7 +71,7 @@ WIKI_TIMEOUT = CFG["wiki_timeout"]
 WIKI_RETRIES = CFG["wiki_retries"]
 SESSION_TTL = CFG["session_ttl"]
 CARD_MAX = CFG["card_max_chars"]
-TOP_K = CFG["top_k"]                  # 检索深度（开启向量检索后需 > 默认值，见 config.py）
+TOP_K = CFG["top_k"]                  # 检索深度（chat 端点不传 topK 时只回 5 条，见 config.py）
 
 # 去掉群聊里的 <at user_id="...">@xxx</at> 提及标记，只留问题正文
 _AT_RE = re.compile(r"<at\b[^>]*>.*?</at>", re.S)
