@@ -1,0 +1,2622 @@
+{
+  "D1": {
+    "answer": "The Agent reached the tool-iteration limit after 8 step(s). It gathered 8 tool observation(s), but did not produce a final answer. Please narrow the request or ask it to continue from the latest result.",
+    "references": [
+      {
+        "path": "wiki/concepts/加放系数.md",
+        "title": "加放系数",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/concepts/加放系数应用.md",
+        "title": "加放系数应用",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/concepts/加工单加放系数.md",
+        "title": "加工单加放系数",
+        "score": 50.0
+      },
+      {
+        "path": "wiki/concepts/加放系数成品件数.md",
+        "title": "加放系数成品件数",
+        "score": 48.0
+      },
+      {
+        "path": "wiki/concepts/短溢装.md",
+        "title": "短溢装",
+        "score": 44.0
+      },
+      {
+        "path": "wiki/concepts/短溢装设置.md",
+        "title": "短溢装设置",
+        "score": 44.0
+      },
+      {
+        "path": "wiki/concepts/短溢装百分比.md",
+        "title": "短溢装百分比",
+        "score": 38.0
+      },
+      {
+        "path": "wiki/entities/客户档案.md",
+        "title": "客户档案",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/entities/订单配置状态.md",
+        "title": "订单配置状态",
+        "score": 8.0
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "title": "理单",
+        "score": 9.0
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/concepts/加放系数.md",
+        "kind": "wiki",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/concepts/加放系数应用.md",
+        "kind": "wiki",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/concepts/加工单加放系数.md",
+        "kind": "wiki",
+        "score": 50.0
+      },
+      {
+        "path": "wiki/concepts/加放系数成品件数.md",
+        "kind": "wiki",
+        "score": 48.0
+      },
+      {
+        "path": "wiki/concepts/短溢装.md",
+        "kind": "wiki",
+        "score": 44.0
+      },
+      {
+        "path": "wiki/concepts/短溢装设置.md",
+        "kind": "wiki",
+        "score": 44.0
+      },
+      {
+        "path": "wiki/concepts/短溢装百分比.md",
+        "kind": "wiki",
+        "score": 38.0
+      },
+      {
+        "path": "wiki/entities/客户档案.md",
+        "kind": "graph",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/entities/订单配置状态.md",
+        "kind": "graph",
+        "score": 8.0
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "kind": "graph",
+        "score": 9.0
+      }
+    ],
+    "usage": {
+      "completionChars": 202,
+      "promptChars": 16307,
+      "referenceCount": 10,
+      "toolEventCount": 27
+    },
+    "elapsed": 51.2,
+    "scoring": true,
+    "base_key": "D1"
+  },
+  "D1#2": {
+    "answer": "The Agent reached the tool-iteration limit after 8 step(s). It gathered 8 tool observation(s), but did not produce a final answer. Please narrow the request or ask it to continue from the latest result.",
+    "references": [
+      {
+        "path": "wiki/concepts/加放系数.md",
+        "title": "加放系数",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/concepts/加放系数应用.md",
+        "title": "加放系数应用",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/concepts/加工单加放系数.md",
+        "title": "加工单加放系数",
+        "score": 50.0
+      },
+      {
+        "path": "wiki/concepts/加放系数成品件数.md",
+        "title": "加放系数成品件数",
+        "score": 48.0
+      },
+      {
+        "path": "wiki/concepts/短溢装.md",
+        "title": "短溢装",
+        "score": 44.0
+      },
+      {
+        "path": "wiki/concepts/短溢装设置.md",
+        "title": "短溢装设置",
+        "score": 44.0
+      },
+      {
+        "path": "wiki/concepts/短溢装百分比.md",
+        "title": "短溢装百分比",
+        "score": 38.0
+      },
+      {
+        "path": "wiki/entities/客户档案.md",
+        "title": "客户档案",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/entities/订单配置状态.md",
+        "title": "订单配置状态",
+        "score": 8.0
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "title": "理单",
+        "score": 9.0
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/concepts/加放系数.md",
+        "kind": "wiki",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/concepts/加放系数应用.md",
+        "kind": "wiki",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/concepts/加工单加放系数.md",
+        "kind": "wiki",
+        "score": 50.0
+      },
+      {
+        "path": "wiki/concepts/加放系数成品件数.md",
+        "kind": "wiki",
+        "score": 48.0
+      },
+      {
+        "path": "wiki/concepts/短溢装.md",
+        "kind": "wiki",
+        "score": 44.0
+      },
+      {
+        "path": "wiki/concepts/短溢装设置.md",
+        "kind": "wiki",
+        "score": 44.0
+      },
+      {
+        "path": "wiki/concepts/短溢装百分比.md",
+        "kind": "wiki",
+        "score": 38.0
+      },
+      {
+        "path": "wiki/entities/客户档案.md",
+        "kind": "graph",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/entities/订单配置状态.md",
+        "kind": "graph",
+        "score": 8.0
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "kind": "graph",
+        "score": 9.0
+      }
+    ],
+    "usage": {
+      "completionChars": 202,
+      "promptChars": 16266,
+      "referenceCount": 10,
+      "toolEventCount": 27
+    },
+    "elapsed": 52.8,
+    "scoring": true,
+    "base_key": "D1"
+  },
+  "D1#3": {
+    "answer": "The Agent reached the tool-iteration limit after 8 step(s). It gathered 8 tool observation(s), but did not produce a final answer. Please narrow the request or ask it to continue from the latest result.",
+    "references": [
+      {
+        "path": "wiki/concepts/加放系数.md",
+        "title": "加放系数",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/concepts/加放系数应用.md",
+        "title": "加放系数应用",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/concepts/加工单加放系数.md",
+        "title": "加工单加放系数",
+        "score": 50.0
+      },
+      {
+        "path": "wiki/concepts/加放系数成品件数.md",
+        "title": "加放系数成品件数",
+        "score": 48.0
+      },
+      {
+        "path": "wiki/concepts/短溢装.md",
+        "title": "短溢装",
+        "score": 44.0
+      },
+      {
+        "path": "wiki/concepts/短溢装设置.md",
+        "title": "短溢装设置",
+        "score": 44.0
+      },
+      {
+        "path": "wiki/concepts/短溢装百分比.md",
+        "title": "短溢装百分比",
+        "score": 38.0
+      },
+      {
+        "path": "wiki/entities/客户档案.md",
+        "title": "客户档案",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/entities/订单配置状态.md",
+        "title": "订单配置状态",
+        "score": 8.0
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "title": "理单",
+        "score": 9.0
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/concepts/加放系数.md",
+        "kind": "wiki",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/concepts/加放系数应用.md",
+        "kind": "wiki",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/concepts/加工单加放系数.md",
+        "kind": "wiki",
+        "score": 50.0
+      },
+      {
+        "path": "wiki/concepts/加放系数成品件数.md",
+        "kind": "wiki",
+        "score": 48.0
+      },
+      {
+        "path": "wiki/concepts/短溢装.md",
+        "kind": "wiki",
+        "score": 44.0
+      },
+      {
+        "path": "wiki/concepts/短溢装设置.md",
+        "kind": "wiki",
+        "score": 44.0
+      },
+      {
+        "path": "wiki/concepts/短溢装百分比.md",
+        "kind": "wiki",
+        "score": 38.0
+      },
+      {
+        "path": "wiki/entities/客户档案.md",
+        "kind": "graph",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/entities/订单配置状态.md",
+        "kind": "graph",
+        "score": 8.0
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "kind": "graph",
+        "score": 9.0
+      }
+    ],
+    "usage": {
+      "completionChars": 202,
+      "promptChars": 16307,
+      "referenceCount": 10,
+      "toolEventCount": 27
+    },
+    "elapsed": 44.8,
+    "scoring": true,
+    "base_key": "D1"
+  },
+  "D1#4": {
+    "answer": "The Agent reached the tool-iteration limit after 8 step(s). It gathered 8 tool observation(s), but did not produce a final answer. Please narrow the request or ask it to continue from the latest result.",
+    "references": [
+      {
+        "path": "wiki/concepts/加放系数.md",
+        "title": "加放系数",
+        "score": 56.0
+      },
+      {
+        "path": "wiki/concepts/加放系数应用.md",
+        "title": "加放系数应用",
+        "score": 55.0
+      },
+      {
+        "path": "wiki/concepts/加工单加放系数.md",
+        "title": "加工单加放系数",
+        "score": 52.0
+      },
+      {
+        "path": "wiki/concepts/加放系数成品件数.md",
+        "title": "加放系数成品件数",
+        "score": 50.0
+      },
+      {
+        "path": "wiki/concepts/短溢装.md",
+        "title": "短溢装",
+        "score": 46.0
+      },
+      {
+        "path": "wiki/concepts/短溢装设置.md",
+        "title": "短溢装设置",
+        "score": 46.0
+      },
+      {
+        "path": "wiki/concepts/短溢装百分比.md",
+        "title": "短溢装百分比",
+        "score": 40.0
+      },
+      {
+        "path": "wiki/entities/客户档案.md",
+        "title": "客户档案",
+        "score": 10.0
+      },
+      {
+        "path": "wiki/entities/订单配置状态.md",
+        "title": "订单配置状态",
+        "score": 10.0
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "title": "理单",
+        "score": 11.0
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/concepts/加放系数.md",
+        "kind": "wiki",
+        "score": 56.0
+      },
+      {
+        "path": "wiki/concepts/加放系数应用.md",
+        "kind": "wiki",
+        "score": 55.0
+      },
+      {
+        "path": "wiki/concepts/加工单加放系数.md",
+        "kind": "wiki",
+        "score": 52.0
+      },
+      {
+        "path": "wiki/concepts/加放系数成品件数.md",
+        "kind": "wiki",
+        "score": 50.0
+      },
+      {
+        "path": "wiki/concepts/短溢装.md",
+        "kind": "wiki",
+        "score": 46.0
+      },
+      {
+        "path": "wiki/concepts/短溢装设置.md",
+        "kind": "wiki",
+        "score": 46.0
+      },
+      {
+        "path": "wiki/concepts/短溢装百分比.md",
+        "kind": "wiki",
+        "score": 40.0
+      },
+      {
+        "path": "wiki/entities/客户档案.md",
+        "kind": "graph",
+        "score": 10.0
+      },
+      {
+        "path": "wiki/entities/订单配置状态.md",
+        "kind": "graph",
+        "score": 10.0
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "kind": "graph",
+        "score": 11.0
+      }
+    ],
+    "usage": {
+      "completionChars": 202,
+      "promptChars": 16307,
+      "referenceCount": 10,
+      "toolEventCount": 27
+    },
+    "elapsed": 50.4,
+    "scoring": true,
+    "base_key": "D1"
+  },
+  "D1#5": {
+    "answer": "The Agent reached the tool-iteration limit after 8 step(s). It gathered 8 tool observation(s), but did not produce a final answer. Please narrow the request or ask it to continue from the latest result.",
+    "references": [
+      {
+        "path": "wiki/concepts/加放系数.md",
+        "title": "加放系数",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/concepts/加放系数应用.md",
+        "title": "加放系数应用",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/concepts/加工单加放系数.md",
+        "title": "加工单加放系数",
+        "score": 50.0
+      },
+      {
+        "path": "wiki/concepts/加放系数成品件数.md",
+        "title": "加放系数成品件数",
+        "score": 48.0
+      },
+      {
+        "path": "wiki/concepts/短溢装.md",
+        "title": "短溢装",
+        "score": 44.0
+      },
+      {
+        "path": "wiki/concepts/短溢装设置.md",
+        "title": "短溢装设置",
+        "score": 44.0
+      },
+      {
+        "path": "wiki/concepts/短溢装百分比.md",
+        "title": "短溢装百分比",
+        "score": 38.0
+      },
+      {
+        "path": "wiki/entities/客户档案.md",
+        "title": "客户档案",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/entities/订单配置状态.md",
+        "title": "订单配置状态",
+        "score": 8.0
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "title": "理单",
+        "score": 9.0
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/concepts/加放系数.md",
+        "kind": "wiki",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/concepts/加放系数应用.md",
+        "kind": "wiki",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/concepts/加工单加放系数.md",
+        "kind": "wiki",
+        "score": 50.0
+      },
+      {
+        "path": "wiki/concepts/加放系数成品件数.md",
+        "kind": "wiki",
+        "score": 48.0
+      },
+      {
+        "path": "wiki/concepts/短溢装.md",
+        "kind": "wiki",
+        "score": 44.0
+      },
+      {
+        "path": "wiki/concepts/短溢装设置.md",
+        "kind": "wiki",
+        "score": 44.0
+      },
+      {
+        "path": "wiki/concepts/短溢装百分比.md",
+        "kind": "wiki",
+        "score": 38.0
+      },
+      {
+        "path": "wiki/entities/客户档案.md",
+        "kind": "graph",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/entities/订单配置状态.md",
+        "kind": "graph",
+        "score": 8.0
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "kind": "graph",
+        "score": 9.0
+      }
+    ],
+    "usage": {
+      "completionChars": 202,
+      "promptChars": 16307,
+      "referenceCount": 10,
+      "toolEventCount": 27
+    },
+    "elapsed": 48.4,
+    "scoring": true,
+    "base_key": "D1"
+  },
+  "D2": {
+    "answer": "待核单和已核单的主要区别如下：\n\n1. **生成时机**：\n   - 待核单：在意向订单或正式订单审核通过后，由系统自动生成\n   - 已核单：由待核单按照指定条件合并后生成\n\n2. **生成规则**：\n   - 待核单：系统按制款维度自动生成，单款订单对应1条数据，套装订单对应多条制款数据\n   - 已核单：将待核单按指定条件合并，生成唯一的内部合同号作为后续单据流转的核心标识\n\n3. **业务状态**：\n   - 待核单：订单理单流程中的中间状态\n   - 已核单：最终核验单据，作为后续单据流转的核心标识\n\n4. **字段信息**：\n   - 待核单：包含订单号、制款信息、客款信息、数量、包装方式对应成品件数、最早/最晚出厂日期等\n   - 已核单：由待核单合并而来，生成内部合同号作为核心标识\n\n5. **业务意义**：\n   - 待核单：为后续的核单合并和已核单生成提供基础数据支持\n   - 已核单：作为单据流转的核心标识贯穿整个订单生命周期，通过内部合同号实现不同系统间的数据关联\n\n简单来说，待核单是合并前的原始核验单据，已核单是合并后的最终核验单据。",
+    "references": [
+      {
+        "path": "wiki/entities/已核单.md",
+        "title": "已核单",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/entities/待核单.md",
+        "title": "待核单",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/concepts/核单合并规则.md",
+        "title": "核单合并规则",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/concepts/核单条件.md",
+        "title": "核单条件",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/entities/采购预核单.md",
+        "title": "采购预核单",
+        "score": 19.0
+      },
+      {
+        "path": "wiki/concepts/核价单状态流转逻辑.md",
+        "title": "核价单状态流转逻辑",
+        "score": 16.0
+      },
+      {
+        "path": "wiki/entities/采购核料单.md",
+        "title": "采购核料单",
+        "score": 16.0
+      },
+      {
+        "path": "wiki/index.md",
+        "title": "Wiki Index",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/entities/内部合同号.md",
+        "title": "内部合同号",
+        "score": 7.0
+      },
+      {
+        "path": "wiki/entities/款式档案.md",
+        "title": "款式档案",
+        "score": 4.0
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/entities/已核单.md",
+        "kind": "wiki",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/entities/待核单.md",
+        "kind": "wiki",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/concepts/核单合并规则.md",
+        "kind": "wiki",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/concepts/核单条件.md",
+        "kind": "wiki",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/entities/采购预核单.md",
+        "kind": "wiki",
+        "score": 19.0
+      },
+      {
+        "path": "wiki/concepts/核价单状态流转逻辑.md",
+        "kind": "wiki",
+        "score": 16.0
+      },
+      {
+        "path": "wiki/entities/采购核料单.md",
+        "kind": "wiki",
+        "score": 16.0
+      },
+      {
+        "path": "wiki/index.md",
+        "kind": "graph",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/entities/内部合同号.md",
+        "kind": "graph",
+        "score": 7.0
+      },
+      {
+        "path": "wiki/entities/款式档案.md",
+        "kind": "graph",
+        "score": 4.0
+      }
+    ],
+    "usage": {
+      "completionChars": 1243,
+      "promptChars": 14453,
+      "referenceCount": 10,
+      "toolEventCount": 14
+    },
+    "elapsed": 27.7,
+    "scoring": true,
+    "base_key": "D2"
+  },
+  "D2#2": {
+    "answer": "The Agent reached the tool-iteration limit after 8 step(s). It gathered 8 tool observation(s), but did not produce a final answer. Please narrow the request or ask it to continue from the latest result.",
+    "references": [
+      {
+        "path": "wiki/entities/已核单.md",
+        "title": "已核单",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/entities/待核单.md",
+        "title": "待核单",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/concepts/核单合并规则.md",
+        "title": "核单合并规则",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/concepts/核单条件.md",
+        "title": "核单条件",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/entities/采购预核单.md",
+        "title": "采购预核单",
+        "score": 19.0
+      },
+      {
+        "path": "wiki/concepts/核价单状态流转逻辑.md",
+        "title": "核价单状态流转逻辑",
+        "score": 16.0
+      },
+      {
+        "path": "wiki/entities/采购核料单.md",
+        "title": "采购核料单",
+        "score": 16.0
+      },
+      {
+        "path": "wiki/index.md",
+        "title": "Wiki Index",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/entities/内部合同号.md",
+        "title": "内部合同号",
+        "score": 7.0
+      },
+      {
+        "path": "wiki/entities/款式档案.md",
+        "title": "款式档案",
+        "score": 4.0
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/entities/已核单.md",
+        "kind": "wiki",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/entities/待核单.md",
+        "kind": "wiki",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/concepts/核单合并规则.md",
+        "kind": "wiki",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/concepts/核单条件.md",
+        "kind": "wiki",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/entities/采购预核单.md",
+        "kind": "wiki",
+        "score": 19.0
+      },
+      {
+        "path": "wiki/concepts/核价单状态流转逻辑.md",
+        "kind": "wiki",
+        "score": 16.0
+      },
+      {
+        "path": "wiki/entities/采购核料单.md",
+        "kind": "wiki",
+        "score": 16.0
+      },
+      {
+        "path": "wiki/index.md",
+        "kind": "graph",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/entities/内部合同号.md",
+        "kind": "graph",
+        "score": 7.0
+      },
+      {
+        "path": "wiki/entities/款式档案.md",
+        "kind": "graph",
+        "score": 4.0
+      }
+    ],
+    "usage": {
+      "completionChars": 202,
+      "promptChars": 15846,
+      "referenceCount": 10,
+      "toolEventCount": 27
+    },
+    "elapsed": 47.1,
+    "scoring": true,
+    "base_key": "D2"
+  },
+  "D2#3": {
+    "answer": "待核单和已核单是订单理单流程中的两个不同阶段单据，主要区别如下：\n\n1. 生成方式：\n   - 待核单：订单审核通过后系统自动按制款维度生成\n   - 已核单：待核单按指定条件合并后生成\n\n2. 单据性质：\n   - 待核单：订单理单流程中的中间状态单据\n   - 已核单：最终核验单据，作为后续单据流转的核心标识\n\n3. 内容特点：\n   - 待核单：包含订单号、制款信息、客款信息、数量等基础字段\n   - 已核单：生成唯一内部合同号作为核心标识\n\n4. 业务作用：\n   - 待核单：为核单合并和已核单生成提供基础数据支持\n   - 已核单：作为单据流转核心标识贯穿整个订单生命周期，实现不同系统间数据关联\n\n5. 处理流程：\n   - 待核单 → 核单合并规则 → 已核单\n\n简单来说，待核单是原始的、分散的核验单据，已核单是合并后的、统一的最终核验单据。",
+    "references": [
+      {
+        "path": "wiki/entities/purchase-order-[订单号].md",
+        "title": "Purchase Order [订单号]",
+        "score": 6.0
+      },
+      {
+        "path": "wiki/sources/11 (1)_OCR.md",
+        "title": "Purchase Order [订单号] 实例分析",
+        "score": 6.0
+      },
+      {
+        "path": "wiki/sources/11_OCR.md",
+        "title": "Purchase Order [订单号] 实例分析",
+        "score": 6.0
+      },
+      {
+        "path": "wiki/concepts/PO格式.md",
+        "title": "PO格式",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/concepts/业务流程建模.md",
+        "title": "业务流程建模",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/concepts/交付容差.md",
+        "title": "交付容差",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/concepts/包装方式.md",
+        "title": "包装方式",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/concepts/订单比对流程.md",
+        "title": "订单比对流程",
+        "score": 0.02190346083788707
+      },
+      {
+        "path": "wiki/entities/[配送中心].md",
+        "title": "[配送中心]",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "title": "理单",
+        "score": 0.018442622950819672
+      },
+      {
+        "path": "wiki/entities/已核单.md",
+        "title": "已核单",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/entities/待核单.md",
+        "title": "待核单",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/concepts/核单合并规则.md",
+        "title": "核单合并规则",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/concepts/核单条件.md",
+        "title": "核单条件",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/entities/采购预核单.md",
+        "title": "采购预核单",
+        "score": 19.0
+      },
+      {
+        "path": "wiki/concepts/核价单状态流转逻辑.md",
+        "title": "核价单状态流转逻辑",
+        "score": 16.0
+      },
+      {
+        "path": "wiki/entities/采购核料单.md",
+        "title": "采购核料单",
+        "score": 16.0
+      },
+      {
+        "path": "wiki/index.md",
+        "title": "Wiki Index",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/entities/内部合同号.md",
+        "title": "内部合同号",
+        "score": 7.0
+      },
+      {
+        "path": "wiki/entities/款式档案.md",
+        "title": "款式档案",
+        "score": 4.0
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/entities/purchase-order-[订单号].md",
+        "kind": "wiki",
+        "score": 6.0
+      },
+      {
+        "path": "wiki/sources/11 (1)_OCR.md",
+        "kind": "wiki",
+        "score": 6.0
+      },
+      {
+        "path": "wiki/sources/11_OCR.md",
+        "kind": "wiki",
+        "score": 6.0
+      },
+      {
+        "path": "wiki/concepts/PO格式.md",
+        "kind": "wiki",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/concepts/业务流程建模.md",
+        "kind": "wiki",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/concepts/交付容差.md",
+        "kind": "wiki",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/concepts/包装方式.md",
+        "kind": "wiki",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/concepts/订单比对流程.md",
+        "kind": "graph",
+        "score": 0.02190346083788707
+      },
+      {
+        "path": "wiki/entities/[配送中心].md",
+        "kind": "graph",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "kind": "graph",
+        "score": 0.018442622950819672
+      },
+      {
+        "path": "wiki/entities/已核单.md",
+        "kind": "wiki",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/entities/待核单.md",
+        "kind": "wiki",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/concepts/核单合并规则.md",
+        "kind": "wiki",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/concepts/核单条件.md",
+        "kind": "wiki",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/entities/采购预核单.md",
+        "kind": "wiki",
+        "score": 19.0
+      },
+      {
+        "path": "wiki/concepts/核价单状态流转逻辑.md",
+        "kind": "wiki",
+        "score": 16.0
+      },
+      {
+        "path": "wiki/entities/采购核料单.md",
+        "kind": "wiki",
+        "score": 16.0
+      },
+      {
+        "path": "wiki/index.md",
+        "kind": "graph",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/entities/内部合同号.md",
+        "kind": "graph",
+        "score": 7.0
+      },
+      {
+        "path": "wiki/entities/款式档案.md",
+        "kind": "graph",
+        "score": 4.0
+      }
+    ],
+    "usage": {
+      "completionChars": 976,
+      "promptChars": 15185,
+      "referenceCount": 20,
+      "toolEventCount": 21
+    },
+    "elapsed": 29.6,
+    "scoring": true,
+    "base_key": "D2"
+  },
+  "D2#4": {
+    "answer": "待核单和已核单的主要区别如下：\n\n1. 生成方式：\n   - 待核单：订单理单系统中自动生成的原始核验单据\n   - 已核单：待核单按指定条件合并后生成的最终核验单据\n\n2. 生成时机：\n   - 待核单：在意向、正式订单审核通过后生成\n   - 已核单：在待核单合并完成后生成\n\n3. 数量关系：\n   - 待核单：单款订单对应1条，套装订单对应多条制款数据\n   - 已核单：无论套装还是单款订单，合并后对应一条已核单\n\n4. 业务作用：\n   - 待核单：订单理单流程中的中间状态，为后续核单合并提供基础数据\n   - 已核单：作为单据流转的核心标识，贯穿整个订单生命周期\n\n5. 标识性：\n   - 待核单：没有唯一标识\n   - 已核单：生成唯一内部合同号作为后续单据流转核心标识\n\n6. 数据关联：\n   - 待核单：包含订单号、制款信息、客款信息等基础数据\n   - 已核单：通过内部合同号实现不同系统间的数据关联\n\n简单来说，待核单是合并前的原始单据，已核单是合并后的最终单据，两者通过核单合并规则进行转换。",
+    "references": [
+      {
+        "path": "wiki/entities/已核单.md",
+        "title": "已核单",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/entities/待核单.md",
+        "title": "待核单",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/concepts/核单合并规则.md",
+        "title": "核单合并规则",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/concepts/核单条件.md",
+        "title": "核单条件",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/entities/采购预核单.md",
+        "title": "采购预核单",
+        "score": 19.0
+      },
+      {
+        "path": "wiki/concepts/核价单状态流转逻辑.md",
+        "title": "核价单状态流转逻辑",
+        "score": 16.0
+      },
+      {
+        "path": "wiki/entities/采购核料单.md",
+        "title": "采购核料单",
+        "score": 16.0
+      },
+      {
+        "path": "wiki/index.md",
+        "title": "Wiki Index",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/entities/内部合同号.md",
+        "title": "内部合同号",
+        "score": 7.0
+      },
+      {
+        "path": "wiki/entities/款式档案.md",
+        "title": "款式档案",
+        "score": 4.0
+      },
+      {
+        "path": "wiki/concepts/核料单全流程流转逻辑.md",
+        "title": "核料单全流程流转逻辑",
+        "score": 20.0
+      },
+      {
+        "path": "wiki/methodology/核料单审核回退流程.md",
+        "title": "核料单审核回退流程",
+        "score": 20.0
+      },
+      {
+        "path": "wiki/concepts/核料单时间字段取值规则.md",
+        "title": "核料单时间字段取值规则",
+        "score": 14.0
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/entities/已核单.md",
+        "kind": "wiki",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/entities/待核单.md",
+        "kind": "wiki",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/concepts/核单合并规则.md",
+        "kind": "wiki",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/concepts/核单条件.md",
+        "kind": "wiki",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/entities/采购预核单.md",
+        "kind": "wiki",
+        "score": 19.0
+      },
+      {
+        "path": "wiki/concepts/核价单状态流转逻辑.md",
+        "kind": "wiki",
+        "score": 16.0
+      },
+      {
+        "path": "wiki/entities/采购核料单.md",
+        "kind": "wiki",
+        "score": 16.0
+      },
+      {
+        "path": "wiki/index.md",
+        "kind": "graph",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/entities/内部合同号.md",
+        "kind": "graph",
+        "score": 7.0
+      },
+      {
+        "path": "wiki/entities/款式档案.md",
+        "kind": "graph",
+        "score": 4.0
+      },
+      {
+        "path": "wiki/concepts/核料单全流程流转逻辑.md",
+        "kind": "wiki",
+        "score": 20.0
+      },
+      {
+        "path": "wiki/methodology/核料单审核回退流程.md",
+        "kind": "wiki",
+        "score": 20.0
+      },
+      {
+        "path": "wiki/concepts/核料单时间字段取值规则.md",
+        "kind": "graph",
+        "score": 14.0
+      }
+    ],
+    "usage": {
+      "completionChars": 1176,
+      "promptChars": 12190,
+      "referenceCount": 13,
+      "toolEventCount": 18
+    },
+    "elapsed": 25.2,
+    "scoring": true,
+    "base_key": "D2"
+  },
+  "D2#5": {
+    "answer": "The Agent reached the tool-iteration limit after 8 step(s). It gathered 8 tool observation(s), but did not produce a final answer. Please narrow the request or ask it to continue from the latest result.",
+    "references": [
+      {
+        "path": "wiki/entities/已核单.md",
+        "title": "已核单",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/entities/待核单.md",
+        "title": "待核单",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/concepts/核单合并规则.md",
+        "title": "核单合并规则",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/concepts/核单条件.md",
+        "title": "核单条件",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/entities/采购预核单.md",
+        "title": "采购预核单",
+        "score": 19.0
+      },
+      {
+        "path": "wiki/concepts/核价单状态流转逻辑.md",
+        "title": "核价单状态流转逻辑",
+        "score": 16.0
+      },
+      {
+        "path": "wiki/entities/采购核料单.md",
+        "title": "采购核料单",
+        "score": 16.0
+      },
+      {
+        "path": "wiki/index.md",
+        "title": "Wiki Index",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/entities/内部合同号.md",
+        "title": "内部合同号",
+        "score": 7.0
+      },
+      {
+        "path": "wiki/entities/款式档案.md",
+        "title": "款式档案",
+        "score": 4.0
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/entities/已核单.md",
+        "kind": "wiki",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/entities/待核单.md",
+        "kind": "wiki",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/concepts/核单合并规则.md",
+        "kind": "wiki",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/concepts/核单条件.md",
+        "kind": "wiki",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/entities/采购预核单.md",
+        "kind": "wiki",
+        "score": 19.0
+      },
+      {
+        "path": "wiki/concepts/核价单状态流转逻辑.md",
+        "kind": "wiki",
+        "score": 16.0
+      },
+      {
+        "path": "wiki/entities/采购核料单.md",
+        "kind": "wiki",
+        "score": 16.0
+      },
+      {
+        "path": "wiki/index.md",
+        "kind": "graph",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/entities/内部合同号.md",
+        "kind": "graph",
+        "score": 7.0
+      },
+      {
+        "path": "wiki/entities/款式档案.md",
+        "kind": "graph",
+        "score": 4.0
+      }
+    ],
+    "usage": {
+      "completionChars": 202,
+      "promptChars": 15805,
+      "referenceCount": 10,
+      "toolEventCount": 27
+    },
+    "elapsed": 43.9,
+    "scoring": true,
+    "base_key": "D2"
+  },
+  "P1": {
+    "answer": "订单审核通过后，数据通过以下流程流转到采购核料单：\n\n1. 触发生成：订单审核通过（理单确认）会自动触发采购核料单的生成，但仅限已确认协同流程的数据才会进入正常列表。非自营且为经销合作的特定订单不自动生成。\n\n2. 状态流转：生成的采购核料单遵循以下状态流转路径：\n   - 待核实：确认物料及技术前置条件\n   - 根据是否需要制版，可能进入\"制版中\"状态\n   - 核单耗：完成单耗、损耗并逐项自审\n   - 已自审：由技术审核人复核\n   - 已技审：形成正式核料结果（终态）\n\n3. 下游触发：已技审状态完成后，会触发核价/变更等下游业务动作，为采购订单生成提供基础数据。\n\n整个流程体现了订单管理模块与采购核料单之间的数据传递关系，确保了从订单确认到物料采购的完整业务链条。",
+    "references": [
+      {
+        "path": "wiki/findings/采购核料单状态流转与审核规则.md",
+        "title": "采购核料单状态流转与审核规则",
+        "score": 92.0
+      },
+      {
+        "path": "wiki/concepts/采购核料单填写流程.md",
+        "title": "采购核料单填写流程",
+        "score": 71.0
+      },
+      {
+        "path": "wiki/entities/采购核料单.md",
+        "title": "采购核料单",
+        "score": 70.0
+      },
+      {
+        "path": "wiki/sources/采购核料单业务逻辑培训手册.md",
+        "title": "采购核料单业务逻辑培训手册",
+        "score": 70.0
+      },
+      {
+        "path": "wiki/concepts/采购核料单基础信息配置规则.md",
+        "title": "采购核料单基础信息配置规则",
+        "score": 66.0
+      },
+      {
+        "path": "wiki/findings/学员A采购核料单学习要点.md",
+        "title": "学员A采购核料单学习要点",
+        "score": 66.0
+      },
+      {
+        "path": "wiki/findings/采购核料单生成与可见性控制.md",
+        "title": "采购核料单生成与可见性控制",
+        "score": 66.0
+      },
+      {
+        "path": "wiki/index.md",
+        "title": "Wiki Index",
+        "score": 20.0
+      },
+      {
+        "path": "wiki/concepts/分色分码单耗.md",
+        "title": "分色分码单耗",
+        "score": 16.0
+      },
+      {
+        "path": "wiki/entities/合料单.md",
+        "title": "合料单",
+        "score": 29.0
+      },
+      {
+        "path": "wiki/entities/DLS系统.md",
+        "title": "DLS系统",
+        "score": 10027.0
+      },
+      {
+        "path": "wiki/entities/款式档案.md",
+        "title": "款式档案",
+        "score": 10026.0
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "title": "理单",
+        "score": 10021.0
+      },
+      {
+        "path": "wiki/entities/内部合同号.md",
+        "title": "内部合同号",
+        "score": 10018.0
+      },
+      {
+        "path": "wiki/entities/报价单.md",
+        "title": "报价单",
+        "score": 10017.0
+      },
+      {
+        "path": "wiki/concepts/标准价格验算.md",
+        "title": "标准价格验算",
+        "score": 10014.0
+      },
+      {
+        "path": "wiki/entities/技术跟单.md",
+        "title": "技术跟单",
+        "score": 10014.0
+      },
+      {
+        "path": "wiki/concepts/订单管理模块.md",
+        "title": "订单管理模块",
+        "score": 10013.0
+      },
+      {
+        "path": "wiki/entities/飞书.md",
+        "title": "飞书",
+        "score": 10013.0
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/findings/采购核料单状态流转与审核规则.md",
+        "kind": "wiki",
+        "score": 92.0
+      },
+      {
+        "path": "wiki/concepts/采购核料单填写流程.md",
+        "kind": "wiki",
+        "score": 71.0
+      },
+      {
+        "path": "wiki/entities/采购核料单.md",
+        "kind": "wiki",
+        "score": 70.0
+      },
+      {
+        "path": "wiki/sources/采购核料单业务逻辑培训手册.md",
+        "kind": "wiki",
+        "score": 70.0
+      },
+      {
+        "path": "wiki/concepts/采购核料单基础信息配置规则.md",
+        "kind": "wiki",
+        "score": 66.0
+      },
+      {
+        "path": "wiki/findings/学员A采购核料单学习要点.md",
+        "kind": "wiki",
+        "score": 66.0
+      },
+      {
+        "path": "wiki/findings/采购核料单生成与可见性控制.md",
+        "kind": "wiki",
+        "score": 66.0
+      },
+      {
+        "path": "wiki/index.md",
+        "kind": "graph",
+        "score": 20.0
+      },
+      {
+        "path": "wiki/concepts/分色分码单耗.md",
+        "kind": "graph",
+        "score": 16.0
+      },
+      {
+        "path": "wiki/entities/合料单.md",
+        "kind": "graph",
+        "score": 29.0
+      },
+      {
+        "path": "wiki/entities/DLS系统.md",
+        "kind": "graph",
+        "score": 10027.0
+      },
+      {
+        "path": "wiki/entities/款式档案.md",
+        "kind": "graph",
+        "score": 10026.0
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "kind": "graph",
+        "score": 10021.0
+      },
+      {
+        "path": "wiki/entities/内部合同号.md",
+        "kind": "graph",
+        "score": 10018.0
+      },
+      {
+        "path": "wiki/entities/报价单.md",
+        "kind": "graph",
+        "score": 10017.0
+      },
+      {
+        "path": "wiki/concepts/标准价格验算.md",
+        "kind": "graph",
+        "score": 10014.0
+      },
+      {
+        "path": "wiki/entities/技术跟单.md",
+        "kind": "graph",
+        "score": 10014.0
+      },
+      {
+        "path": "wiki/concepts/订单管理模块.md",
+        "kind": "graph",
+        "score": 10013.0
+      },
+      {
+        "path": "wiki/entities/飞书.md",
+        "kind": "graph",
+        "score": 10013.0
+      }
+    ],
+    "usage": {
+      "completionChars": 926,
+      "promptChars": 17476,
+      "referenceCount": 19,
+      "toolEventCount": 21
+    },
+    "elapsed": 201.5,
+    "scoring": true,
+    "base_key": "P1"
+  },
+  "P1#2": {
+    "answer": "订单审核通过后，数据流转到采购核料单的过程如下：\n\n1. 订单审核通过后，进入理单流程，系统会根据已审核的订单信息自动生成采购核料单。这个过程在DLS系统中完成，数据从订单系统自动流转到采购核料单模块。\n\n2. 采购核料单生成遵循基础信息配置规则，包括时间字段取值规则和流程控制字段规则，确保数据准确性和完整性。\n\n3. 生成后的采购核料单具有特定的可见性控制规则，不同角色的用户只能查看和处理权限范围内的数据。\n\n4. 采购核料单进入全流程流转逻辑，从初始的核实物料状态开始，经过自检、技检等审核节点，状态会根据审核结果自动更新。\n\n5. 审核通过后，采购核料单状态更新为\"已技审\"，流程正式结束。在这个过程中，订单中的关键信息（如物料信息、数量、规格等）被完整传递到采购核料单中，确保后续采购环节的数据一致性。",
+    "references": [
+      {
+        "path": "wiki/entities/purchase-order-[订单号].md",
+        "title": "Purchase Order [订单号]",
+        "score": 6.0
+      },
+      {
+        "path": "wiki/sources/11 (1)_OCR.md",
+        "title": "Purchase Order [订单号] 实例分析",
+        "score": 6.0
+      },
+      {
+        "path": "wiki/sources/11_OCR.md",
+        "title": "Purchase Order [订单号] 实例分析",
+        "score": 6.0
+      },
+      {
+        "path": "wiki/concepts/业务流程建模.md",
+        "title": "业务流程建模",
+        "score": 2.0
+      },
+      {
+        "path": "wiki/concepts/PO格式.md",
+        "title": "PO格式",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/concepts/交付容差.md",
+        "title": "交付容差",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/concepts/关键路径.md",
+        "title": "关键路径",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/entities/[配送中心].md",
+        "title": "[配送中心]",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/concepts/订单比对流程.md",
+        "title": "订单比对流程",
+        "score": 0.019854280510018217
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "title": "理单",
+        "score": 0.018214936247723135
+      },
+      {
+        "path": "wiki/findings/采购核料单状态流转与审核规则.md",
+        "title": "采购核料单状态流转与审核规则",
+        "score": 92.0
+      },
+      {
+        "path": "wiki/concepts/采购核料单填写流程.md",
+        "title": "采购核料单填写流程",
+        "score": 71.0
+      },
+      {
+        "path": "wiki/entities/采购核料单.md",
+        "title": "采购核料单",
+        "score": 70.0
+      },
+      {
+        "path": "wiki/sources/采购核料单业务逻辑培训手册.md",
+        "title": "采购核料单业务逻辑培训手册",
+        "score": 70.0
+      },
+      {
+        "path": "wiki/concepts/采购核料单基础信息配置规则.md",
+        "title": "采购核料单基础信息配置规则",
+        "score": 66.0
+      },
+      {
+        "path": "wiki/findings/学员A采购核料单学习要点.md",
+        "title": "学员A采购核料单学习要点",
+        "score": 66.0
+      },
+      {
+        "path": "wiki/findings/采购核料单生成与可见性控制.md",
+        "title": "采购核料单生成与可见性控制",
+        "score": 66.0
+      },
+      {
+        "path": "wiki/index.md",
+        "title": "Wiki Index",
+        "score": 20.0
+      },
+      {
+        "path": "wiki/concepts/分色分码单耗.md",
+        "title": "分色分码单耗",
+        "score": 16.0
+      },
+      {
+        "path": "wiki/entities/合料单.md",
+        "title": "合料单",
+        "score": 29.0
+      },
+      {
+        "path": "wiki/methodology/核料单审核回退流程.md",
+        "title": "核料单审核回退流程",
+        "score": 72.0
+      },
+      {
+        "path": "wiki/concepts/核料单全流程流转逻辑.md",
+        "title": "核料单全流程流转逻辑",
+        "score": 68.0
+      },
+      {
+        "path": "wiki/entities/DLS系统.md",
+        "title": "DLS系统",
+        "score": 10027.0
+      },
+      {
+        "path": "wiki/entities/内部合同号.md",
+        "title": "内部合同号",
+        "score": 10018.0
+      },
+      {
+        "path": "wiki/entities/技术跟单.md",
+        "title": "技术跟单",
+        "score": 10014.0
+      },
+      {
+        "path": "wiki/entities/飞书.md",
+        "title": "飞书",
+        "score": 10013.0
+      },
+      {
+        "path": "wiki/log.md",
+        "title": "Wiki Log",
+        "score": 10013.0
+      },
+      {
+        "path": "wiki/entities/飞书知识库.md",
+        "title": "飞书知识库",
+        "score": 10011.0
+      },
+      {
+        "path": "wiki/concepts/意向订单导入界面操作指南.md",
+        "title": "意向订单导入界面操作指南",
+        "score": 10007.0
+      },
+      {
+        "path": "wiki/entities/大货技术资料包.md",
+        "title": "大货技术资料包",
+        "score": 10007.0
+      },
+      {
+        "path": "wiki/entities/版师.md",
+        "title": "版师",
+        "score": 10007.0
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/entities/purchase-order-[订单号].md",
+        "kind": "wiki",
+        "score": 6.0
+      },
+      {
+        "path": "wiki/sources/11 (1)_OCR.md",
+        "kind": "wiki",
+        "score": 6.0
+      },
+      {
+        "path": "wiki/sources/11_OCR.md",
+        "kind": "wiki",
+        "score": 6.0
+      },
+      {
+        "path": "wiki/concepts/业务流程建模.md",
+        "kind": "wiki",
+        "score": 2.0
+      },
+      {
+        "path": "wiki/concepts/PO格式.md",
+        "kind": "wiki",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/concepts/交付容差.md",
+        "kind": "wiki",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/concepts/关键路径.md",
+        "kind": "wiki",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/entities/[配送中心].md",
+        "kind": "graph",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/concepts/订单比对流程.md",
+        "kind": "graph",
+        "score": 0.019854280510018217
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "kind": "graph",
+        "score": 0.018214936247723135
+      },
+      {
+        "path": "wiki/findings/采购核料单状态流转与审核规则.md",
+        "kind": "wiki",
+        "score": 92.0
+      },
+      {
+        "path": "wiki/concepts/采购核料单填写流程.md",
+        "kind": "wiki",
+        "score": 71.0
+      },
+      {
+        "path": "wiki/entities/采购核料单.md",
+        "kind": "wiki",
+        "score": 70.0
+      },
+      {
+        "path": "wiki/sources/采购核料单业务逻辑培训手册.md",
+        "kind": "wiki",
+        "score": 70.0
+      },
+      {
+        "path": "wiki/concepts/采购核料单基础信息配置规则.md",
+        "kind": "wiki",
+        "score": 66.0
+      },
+      {
+        "path": "wiki/findings/学员A采购核料单学习要点.md",
+        "kind": "wiki",
+        "score": 66.0
+      },
+      {
+        "path": "wiki/findings/采购核料单生成与可见性控制.md",
+        "kind": "wiki",
+        "score": 66.0
+      },
+      {
+        "path": "wiki/index.md",
+        "kind": "graph",
+        "score": 20.0
+      },
+      {
+        "path": "wiki/concepts/分色分码单耗.md",
+        "kind": "graph",
+        "score": 16.0
+      },
+      {
+        "path": "wiki/entities/合料单.md",
+        "kind": "graph",
+        "score": 29.0
+      },
+      {
+        "path": "wiki/methodology/核料单审核回退流程.md",
+        "kind": "wiki",
+        "score": 72.0
+      },
+      {
+        "path": "wiki/concepts/核料单全流程流转逻辑.md",
+        "kind": "wiki",
+        "score": 68.0
+      },
+      {
+        "path": "wiki/entities/DLS系统.md",
+        "kind": "graph",
+        "score": 10027.0
+      },
+      {
+        "path": "wiki/entities/内部合同号.md",
+        "kind": "graph",
+        "score": 10018.0
+      },
+      {
+        "path": "wiki/entities/技术跟单.md",
+        "kind": "graph",
+        "score": 10014.0
+      },
+      {
+        "path": "wiki/entities/飞书.md",
+        "kind": "graph",
+        "score": 10013.0
+      },
+      {
+        "path": "wiki/log.md",
+        "kind": "graph",
+        "score": 10013.0
+      },
+      {
+        "path": "wiki/entities/飞书知识库.md",
+        "kind": "graph",
+        "score": 10011.0
+      },
+      {
+        "path": "wiki/concepts/意向订单导入界面操作指南.md",
+        "kind": "graph",
+        "score": 10007.0
+      },
+      {
+        "path": "wiki/entities/大货技术资料包.md",
+        "kind": "graph",
+        "score": 10007.0
+      },
+      {
+        "path": "wiki/entities/版师.md",
+        "kind": "graph",
+        "score": 10007.0
+      }
+    ],
+    "usage": {
+      "completionChars": 1011,
+      "promptChars": 16961,
+      "referenceCount": 31,
+      "toolEventCount": 21
+    },
+    "elapsed": 27.0,
+    "scoring": true,
+    "base_key": "P1"
+  },
+  "P1#3": {
+    "answer": "订单审核通过后，数据流转到采购核料单的过程如下：\n\n1. 触发机制：订单审核通过后，通常由\"理单/已合单\"确认动作自动触发采购核料单的生成，不以人工新建为主要入口。\n\n2. 数据汇总：系统将相同自款(自口径)的订单款式进行汇总，整合各订单的颜色、尺码、杯型和数量信息，形成核料基数。\n\n3. 责任分配：根据订单信息，确定每种物料的主责方（国内业务、国内加工厂、国外加工厂）、供应商及规格。\n\n4. 用量核定：根据物料特性，系统自动计算或核定物料用量，包括考虑损耗率等因素。\n\n5. 单据生成：最终生成采购核料单，包含汇总后的物料需求数量、规格、供应商信息等，为后续采购环节提供数据支持。\n\n需要注意的是，并非所有审核通过的订单都会生成采购核料单，这取决于具体的业务规则和订单类型。采购核料单作为数据汇总的关键环节，将多个订单信息整合到同一自款口径下，确保采购数据的准确性和一致性。",
+    "references": [
+      {
+        "path": "wiki/findings/采购核料单状态流转与审核规则.md",
+        "title": "采购核料单状态流转与审核规则",
+        "score": 56.0
+      },
+      {
+        "path": "wiki/concepts/订单审核状态.md",
+        "title": "订单审核状态",
+        "score": 53.0
+      },
+      {
+        "path": "wiki/methodology/核料单审核回退流程.md",
+        "title": "核料单审核回退流程",
+        "score": 47.0
+      },
+      {
+        "path": "wiki/findings/物料开发单状态流转与审核规则.md",
+        "title": "物料开发单状态流转与审核规则",
+        "score": 46.0
+      },
+      {
+        "path": "wiki/findings/订单流程图数据化实现.md",
+        "title": "订单流程图数据化实现",
+        "score": 43.0
+      },
+      {
+        "path": "wiki/concepts/核料单全流程流转逻辑.md",
+        "title": "核料单全流程流转逻辑",
+        "score": 42.0
+      },
+      {
+        "path": "wiki/concepts/订单状态流转.md",
+        "title": "订单状态流转",
+        "score": 42.0
+      },
+      {
+        "path": "wiki/index.md",
+        "title": "Wiki Index",
+        "score": 14.0
+      },
+      {
+        "path": "wiki/entities/物料开发单.md",
+        "title": "物料开发单",
+        "score": 11.0
+      },
+      {
+        "path": "wiki/queries/业务场景合同需求差异与系统实现.md",
+        "title": "业务场景合同需求差异与系统实现",
+        "score": 8.0
+      },
+      {
+        "path": "wiki/entities/DLS系统.md",
+        "title": "DLS系统",
+        "score": 10027.0
+      },
+      {
+        "path": "wiki/entities/内部合同号.md",
+        "title": "内部合同号",
+        "score": 10018.0
+      },
+      {
+        "path": "wiki/entities/技术跟单.md",
+        "title": "技术跟单",
+        "score": 10014.0
+      },
+      {
+        "path": "wiki/entities/飞书.md",
+        "title": "飞书",
+        "score": 10013.0
+      },
+      {
+        "path": "wiki/log.md",
+        "title": "Wiki Log",
+        "score": 10013.0
+      },
+      {
+        "path": "wiki/entities/飞书知识库.md",
+        "title": "飞书知识库",
+        "score": 10011.0
+      },
+      {
+        "path": "wiki/concepts/意向订单导入界面操作指南.md",
+        "title": "意向订单导入界面操作指南",
+        "score": 10007.0
+      },
+      {
+        "path": "wiki/entities/大货技术资料包.md",
+        "title": "大货技术资料包",
+        "score": 10007.0
+      },
+      {
+        "path": "wiki/entities/版师.md",
+        "title": "版师",
+        "score": 10007.0
+      },
+      {
+        "path": "wiki/sources/飞书AI知识库方案.md",
+        "title": "飞书 AI 知识库搭建方案",
+        "score": 10007.0
+      },
+      {
+        "path": "wiki/concepts/采购核料单填写流程.md",
+        "title": "采购核料单填写流程",
+        "score": 69.0
+      },
+      {
+        "path": "wiki/entities/采购核料单.md",
+        "title": "采购核料单",
+        "score": 69.0
+      },
+      {
+        "path": "wiki/sources/采购核料单业务逻辑培训手册.md",
+        "title": "采购核料单业务逻辑培训手册",
+        "score": 68.0
+      },
+      {
+        "path": "wiki/findings/采购核料单生成与可见性控制.md",
+        "title": "采购核料单生成与可见性控制",
+        "score": 63.0
+      },
+      {
+        "path": "wiki/concepts/分色分码单耗.md",
+        "title": "分色分码单耗",
+        "score": 17.0
+      },
+      {
+        "path": "wiki/entities/合料单.md",
+        "title": "合料单",
+        "score": 30.0
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/findings/采购核料单状态流转与审核规则.md",
+        "kind": "wiki",
+        "score": 56.0
+      },
+      {
+        "path": "wiki/concepts/订单审核状态.md",
+        "kind": "wiki",
+        "score": 53.0
+      },
+      {
+        "path": "wiki/methodology/核料单审核回退流程.md",
+        "kind": "wiki",
+        "score": 47.0
+      },
+      {
+        "path": "wiki/findings/物料开发单状态流转与审核规则.md",
+        "kind": "wiki",
+        "score": 46.0
+      },
+      {
+        "path": "wiki/findings/订单流程图数据化实现.md",
+        "kind": "wiki",
+        "score": 43.0
+      },
+      {
+        "path": "wiki/concepts/核料单全流程流转逻辑.md",
+        "kind": "wiki",
+        "score": 42.0
+      },
+      {
+        "path": "wiki/concepts/订单状态流转.md",
+        "kind": "wiki",
+        "score": 42.0
+      },
+      {
+        "path": "wiki/index.md",
+        "kind": "graph",
+        "score": 14.0
+      },
+      {
+        "path": "wiki/entities/物料开发单.md",
+        "kind": "graph",
+        "score": 11.0
+      },
+      {
+        "path": "wiki/queries/业务场景合同需求差异与系统实现.md",
+        "kind": "graph",
+        "score": 8.0
+      },
+      {
+        "path": "wiki/entities/DLS系统.md",
+        "kind": "graph",
+        "score": 10027.0
+      },
+      {
+        "path": "wiki/entities/内部合同号.md",
+        "kind": "graph",
+        "score": 10018.0
+      },
+      {
+        "path": "wiki/entities/技术跟单.md",
+        "kind": "graph",
+        "score": 10014.0
+      },
+      {
+        "path": "wiki/entities/飞书.md",
+        "kind": "graph",
+        "score": 10013.0
+      },
+      {
+        "path": "wiki/log.md",
+        "kind": "graph",
+        "score": 10013.0
+      },
+      {
+        "path": "wiki/entities/飞书知识库.md",
+        "kind": "graph",
+        "score": 10011.0
+      },
+      {
+        "path": "wiki/concepts/意向订单导入界面操作指南.md",
+        "kind": "graph",
+        "score": 10007.0
+      },
+      {
+        "path": "wiki/entities/大货技术资料包.md",
+        "kind": "graph",
+        "score": 10007.0
+      },
+      {
+        "path": "wiki/entities/版师.md",
+        "kind": "graph",
+        "score": 10007.0
+      },
+      {
+        "path": "wiki/sources/飞书AI知识库方案.md",
+        "kind": "graph",
+        "score": 10007.0
+      },
+      {
+        "path": "wiki/concepts/采购核料单填写流程.md",
+        "kind": "wiki",
+        "score": 69.0
+      },
+      {
+        "path": "wiki/entities/采购核料单.md",
+        "kind": "wiki",
+        "score": 69.0
+      },
+      {
+        "path": "wiki/sources/采购核料单业务逻辑培训手册.md",
+        "kind": "wiki",
+        "score": 68.0
+      },
+      {
+        "path": "wiki/findings/采购核料单生成与可见性控制.md",
+        "kind": "wiki",
+        "score": 63.0
+      },
+      {
+        "path": "wiki/concepts/分色分码单耗.md",
+        "kind": "graph",
+        "score": 17.0
+      },
+      {
+        "path": "wiki/entities/合料单.md",
+        "kind": "graph",
+        "score": 30.0
+      }
+    ],
+    "usage": {
+      "completionChars": 1106,
+      "promptChars": 14908,
+      "referenceCount": 26,
+      "toolEventCount": 21
+    },
+    "elapsed": 26.0,
+    "scoring": true,
+    "base_key": "P1"
+  },
+  "P1#4": {
+    "answer": "订单审核通过后，数据流转到采购核料单的流程如下：\n\n1. **触发机制**：订单审核通过后，当执行\"理单/已合单\"确认动作时，系统会自动触发采购核料单的生成，而非人工手动创建。\n\n2. **数据聚合**：系统会按照业务归属对相同自款（内部产品代码）的订单数据进行汇总，合并相同项目的颜色和尺码数量，并剔除零数量组合。\n\n3. **信息带入**：生成采购核料单时，系统会自动带入以下信息：\n   - 内部合同\n   - 款式\n   - 客户信息\n   - 品类\n   - 产地\n   - 采购方式\n   - 下单主体\n   - CP树信息\n\n4. **过滤规则**：\n   - 非自营且为经销合作的特定订单不会生成采购核料单\n   - 只有已完成上游流程确认的数据才会进入正常列表作为可处理任务\n   - 未完成上游流程确认的数据不会作为可处理任务展示\n\n5. **初始化逻辑**：\n   - 对于新款，系统会初始化核料纸样、制版/工艺等默认要求\n   - 对于存在历史同款的订单，系统会按翻单逻辑标识并允许引用历史资料\n\n6. **可见性控制**：采购核料单的可见性受多重因素影响，包括业务权限、下单主体权限、业务组权限、单耗部门权限以及指定单耗师等。",
+    "references": [
+      {
+        "path": "wiki/entities/purchase-order-[订单号].md",
+        "title": "Purchase Order [订单号]",
+        "score": 6.0
+      },
+      {
+        "path": "wiki/sources/11 (1)_OCR.md",
+        "title": "Purchase Order [订单号] 实例分析",
+        "score": 6.0
+      },
+      {
+        "path": "wiki/sources/11_OCR.md",
+        "title": "Purchase Order [订单号] 实例分析",
+        "score": 6.0
+      },
+      {
+        "path": "wiki/concepts/业务流程建模.md",
+        "title": "业务流程建模",
+        "score": 2.0
+      },
+      {
+        "path": "wiki/concepts/关键路径.md",
+        "title": "关键路径",
+        "score": 2.0
+      },
+      {
+        "path": "wiki/entities/样板单.md",
+        "title": "样板单",
+        "score": 2.0
+      },
+      {
+        "path": "wiki/findings/样板单与报价单的生成逻辑.md",
+        "title": "样板单与报价单的生成逻辑",
+        "score": 2.0
+      },
+      {
+        "path": "wiki/entities/[配送中心].md",
+        "title": "[配送中心]",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/concepts/商业周.md",
+        "title": "商业周",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "title": "理单",
+        "score": 0.01639344262295082
+      },
+      {
+        "path": "wiki/entities/采购核料单.md",
+        "title": "采购核料单",
+        "score": 490.0
+      },
+      {
+        "path": "wiki/findings/学员A采购核料单学习要点.md",
+        "title": "学员A采购核料单学习要点",
+        "score": 250.0
+      },
+      {
+        "path": "wiki/findings/采购核料单生成与可见性控制.md",
+        "title": "采购核料单生成与可见性控制",
+        "score": 250.0
+      },
+      {
+        "path": "wiki/sources/采购核料单业务逻辑培训手册.md",
+        "title": "采购核料单业务逻辑培训手册",
+        "score": 250.0
+      },
+      {
+        "path": "wiki/findings/采购核料单状态流转与审核规则.md",
+        "title": "采购核料单状态流转与审核规则",
+        "score": 230.0
+      },
+      {
+        "path": "wiki/concepts/采购核料单填写流程.md",
+        "title": "采购核料单填写流程",
+        "score": 190.0
+      },
+      {
+        "path": "wiki/concepts/采购核料单基础信息配置规则.md",
+        "title": "采购核料单基础信息配置规则",
+        "score": 170.0
+      },
+      {
+        "path": "wiki/entities/合料单.md",
+        "title": "合料单",
+        "score": 65.0
+      },
+      {
+        "path": "wiki/entities/飞书.md",
+        "title": "飞书",
+        "score": 50.0
+      },
+      {
+        "path": "wiki/sources/飞书AI知识库方案.md",
+        "title": "飞书 AI 知识库搭建方案",
+        "score": 50.0
+      },
+      {
+        "path": "wiki/concepts/订单审核状态.md",
+        "title": "订单审核状态",
+        "score": 52.0
+      },
+      {
+        "path": "wiki/concepts/审核通过分界点.md",
+        "title": "审核通过分界点",
+        "score": 49.0
+      },
+      {
+        "path": "wiki/findings/物料开发单状态流转与审核规则.md",
+        "title": "物料开发单状态流转与审核规则",
+        "score": 48.0
+      },
+      {
+        "path": "wiki/concepts/订单状态流转.md",
+        "title": "订单状态流转",
+        "score": 47.0
+      },
+      {
+        "path": "wiki/findings/订单流程图数据化实现.md",
+        "title": "订单流程图数据化实现",
+        "score": 47.0
+      },
+      {
+        "path": "wiki/methodology/核料单审核回退流程.md",
+        "title": "核料单审核回退流程",
+        "score": 45.0
+      },
+      {
+        "path": "wiki/concepts/订单理单九环节流程.md",
+        "title": "订单理单九环节流程",
+        "score": 40.0
+      },
+      {
+        "path": "wiki/index.md",
+        "title": "Wiki Index",
+        "score": 13.0
+      },
+      {
+        "path": "wiki/entities/物料开发单.md",
+        "title": "物料开发单",
+        "score": 16.0
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/entities/purchase-order-[订单号].md",
+        "kind": "wiki",
+        "score": 6.0
+      },
+      {
+        "path": "wiki/sources/11 (1)_OCR.md",
+        "kind": "wiki",
+        "score": 6.0
+      },
+      {
+        "path": "wiki/sources/11_OCR.md",
+        "kind": "wiki",
+        "score": 6.0
+      },
+      {
+        "path": "wiki/concepts/业务流程建模.md",
+        "kind": "wiki",
+        "score": 2.0
+      },
+      {
+        "path": "wiki/concepts/关键路径.md",
+        "kind": "wiki",
+        "score": 2.0
+      },
+      {
+        "path": "wiki/entities/样板单.md",
+        "kind": "wiki",
+        "score": 2.0
+      },
+      {
+        "path": "wiki/findings/样板单与报价单的生成逻辑.md",
+        "kind": "wiki",
+        "score": 2.0
+      },
+      {
+        "path": "wiki/entities/[配送中心].md",
+        "kind": "graph",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/concepts/商业周.md",
+        "kind": "graph",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "kind": "graph",
+        "score": 0.01639344262295082
+      },
+      {
+        "path": "wiki/entities/采购核料单.md",
+        "kind": "wiki",
+        "score": 490.0
+      },
+      {
+        "path": "wiki/findings/学员A采购核料单学习要点.md",
+        "kind": "wiki",
+        "score": 250.0
+      },
+      {
+        "path": "wiki/findings/采购核料单生成与可见性控制.md",
+        "kind": "wiki",
+        "score": 250.0
+      },
+      {
+        "path": "wiki/sources/采购核料单业务逻辑培训手册.md",
+        "kind": "wiki",
+        "score": 250.0
+      },
+      {
+        "path": "wiki/findings/采购核料单状态流转与审核规则.md",
+        "kind": "wiki",
+        "score": 230.0
+      },
+      {
+        "path": "wiki/concepts/采购核料单填写流程.md",
+        "kind": "wiki",
+        "score": 190.0
+      },
+      {
+        "path": "wiki/concepts/采购核料单基础信息配置规则.md",
+        "kind": "wiki",
+        "score": 170.0
+      },
+      {
+        "path": "wiki/entities/合料单.md",
+        "kind": "graph",
+        "score": 65.0
+      },
+      {
+        "path": "wiki/entities/飞书.md",
+        "kind": "graph",
+        "score": 50.0
+      },
+      {
+        "path": "wiki/sources/飞书AI知识库方案.md",
+        "kind": "graph",
+        "score": 50.0
+      },
+      {
+        "path": "wiki/concepts/订单审核状态.md",
+        "kind": "wiki",
+        "score": 52.0
+      },
+      {
+        "path": "wiki/concepts/审核通过分界点.md",
+        "kind": "wiki",
+        "score": 49.0
+      },
+      {
+        "path": "wiki/findings/物料开发单状态流转与审核规则.md",
+        "kind": "wiki",
+        "score": 48.0
+      },
+      {
+        "path": "wiki/concepts/订单状态流转.md",
+        "kind": "wiki",
+        "score": 47.0
+      },
+      {
+        "path": "wiki/findings/订单流程图数据化实现.md",
+        "kind": "wiki",
+        "score": 47.0
+      },
+      {
+        "path": "wiki/methodology/核料单审核回退流程.md",
+        "kind": "wiki",
+        "score": 45.0
+      },
+      {
+        "path": "wiki/concepts/订单理单九环节流程.md",
+        "kind": "graph",
+        "score": 40.0
+      },
+      {
+        "path": "wiki/index.md",
+        "kind": "graph",
+        "score": 13.0
+      },
+      {
+        "path": "wiki/entities/物料开发单.md",
+        "kind": "graph",
+        "score": 16.0
+      }
+    ],
+    "usage": {
+      "completionChars": 1302,
+      "promptChars": 16869,
+      "referenceCount": 29,
+      "toolEventCount": 18
+    },
+    "elapsed": 35.3,
+    "scoring": true,
+    "base_key": "P1"
+  },
+  "P1#5": {
+    "answer": "订单审核通过后，数据流转到采购核料单的流程如下：\n\n1. **触发机制**：通常由\"理单/已合单\"确认动作自动触发，不是通过人工新建方式。\n\n2. **数据汇总**：相同款式的订单数据按业务归属汇总生成，颜色尺码数量会合并同项并剔除零数量组合。\n\n3. **信息带入**：生成时自动带入内部合同、款式、客户、品类、产地、采购方式、下单主体、CP树等信息。\n\n4. **过滤规则**：\n   - 非自营且为经销合作的特定订单不生成采购核料单\n   - 只有已确认协同流程的数据才进入正常列表；未完成上游流程确认的数据不会作为可处理任务展示\n\n5. **初始化逻辑**：新款会初始化核料纸样、制版/工艺等默认要求；存在历史同款时按翻单逻辑标识并允许引用历史资料。\n\n6. **可见性控制**：列表可见范围受业务权限、下单主体权限、业务组权限、单耗部门权限和指定单耗师权限共同影响。\n\n这一流程确保了只有经过审核且符合特定条件的订单才会生成采购核料单，并且只有有权限的相关人员才能看到和处理相应的核料单任务。",
+    "references": [
+      {
+        "path": "wiki/entities/purchase-order-[订单号].md",
+        "title": "Purchase Order [订单号]",
+        "score": 6.0
+      },
+      {
+        "path": "wiki/sources/11 (1)_OCR.md",
+        "title": "Purchase Order [订单号] 实例分析",
+        "score": 6.0
+      },
+      {
+        "path": "wiki/sources/11_OCR.md",
+        "title": "Purchase Order [订单号] 实例分析",
+        "score": 6.0
+      },
+      {
+        "path": "wiki/concepts/业务流程建模.md",
+        "title": "业务流程建模",
+        "score": 2.0
+      },
+      {
+        "path": "wiki/entities/开发物料档案.md",
+        "title": "开发物料档案",
+        "score": 2.0
+      },
+      {
+        "path": "wiki/concepts/PO格式.md",
+        "title": "PO格式",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/concepts/二次加工物料.md",
+        "title": "二次加工物料",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/entities/[配送中心].md",
+        "title": "[配送中心]",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/concepts/商业周.md",
+        "title": "商业周",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "title": "理单",
+        "score": 0.01639344262295082
+      },
+      {
+        "path": "wiki/findings/采购核料单状态流转与审核规则.md",
+        "title": "采购核料单状态流转与审核规则",
+        "score": 80.0
+      },
+      {
+        "path": "wiki/concepts/采购核料单填写流程.md",
+        "title": "采购核料单填写流程",
+        "score": 69.0
+      },
+      {
+        "path": "wiki/entities/采购核料单.md",
+        "title": "采购核料单",
+        "score": 66.0
+      },
+      {
+        "path": "wiki/sources/采购核料单业务逻辑培训手册.md",
+        "title": "采购核料单业务逻辑培训手册",
+        "score": 66.0
+      },
+      {
+        "path": "wiki/concepts/采购核料单基础信息配置规则.md",
+        "title": "采购核料单基础信息配置规则",
+        "score": 64.0
+      },
+      {
+        "path": "wiki/findings/学员A采购核料单学习要点.md",
+        "title": "学员A采购核料单学习要点",
+        "score": 64.0
+      },
+      {
+        "path": "wiki/findings/采购核料单生成与可见性控制.md",
+        "title": "采购核料单生成与可见性控制",
+        "score": 64.0
+      },
+      {
+        "path": "wiki/index.md",
+        "title": "Wiki Index",
+        "score": 16.0
+      },
+      {
+        "path": "wiki/concepts/分色分码单耗.md",
+        "title": "分色分码单耗",
+        "score": 14.0
+      },
+      {
+        "path": "wiki/entities/合料单.md",
+        "title": "合料单",
+        "score": 29.0
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/entities/purchase-order-[订单号].md",
+        "kind": "wiki",
+        "score": 6.0
+      },
+      {
+        "path": "wiki/sources/11 (1)_OCR.md",
+        "kind": "wiki",
+        "score": 6.0
+      },
+      {
+        "path": "wiki/sources/11_OCR.md",
+        "kind": "wiki",
+        "score": 6.0
+      },
+      {
+        "path": "wiki/concepts/业务流程建模.md",
+        "kind": "wiki",
+        "score": 2.0
+      },
+      {
+        "path": "wiki/entities/开发物料档案.md",
+        "kind": "wiki",
+        "score": 2.0
+      },
+      {
+        "path": "wiki/concepts/PO格式.md",
+        "kind": "wiki",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/concepts/二次加工物料.md",
+        "kind": "wiki",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/entities/[配送中心].md",
+        "kind": "graph",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/concepts/商业周.md",
+        "kind": "graph",
+        "score": 1.0
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "kind": "graph",
+        "score": 0.01639344262295082
+      },
+      {
+        "path": "wiki/findings/采购核料单状态流转与审核规则.md",
+        "kind": "wiki",
+        "score": 80.0
+      },
+      {
+        "path": "wiki/concepts/采购核料单填写流程.md",
+        "kind": "wiki",
+        "score": 69.0
+      },
+      {
+        "path": "wiki/entities/采购核料单.md",
+        "kind": "wiki",
+        "score": 66.0
+      },
+      {
+        "path": "wiki/sources/采购核料单业务逻辑培训手册.md",
+        "kind": "wiki",
+        "score": 66.0
+      },
+      {
+        "path": "wiki/concepts/采购核料单基础信息配置规则.md",
+        "kind": "wiki",
+        "score": 64.0
+      },
+      {
+        "path": "wiki/findings/学员A采购核料单学习要点.md",
+        "kind": "wiki",
+        "score": 64.0
+      },
+      {
+        "path": "wiki/findings/采购核料单生成与可见性控制.md",
+        "kind": "wiki",
+        "score": 64.0
+      },
+      {
+        "path": "wiki/index.md",
+        "kind": "graph",
+        "score": 16.0
+      },
+      {
+        "path": "wiki/concepts/分色分码单耗.md",
+        "kind": "graph",
+        "score": 14.0
+      },
+      {
+        "path": "wiki/entities/合料单.md",
+        "kind": "graph",
+        "score": 29.0
+      }
+    ],
+    "usage": {
+      "completionChars": 1205,
+      "promptChars": 13671,
+      "referenceCount": 20,
+      "toolEventCount": 18
+    },
+    "elapsed": 24.9,
+    "scoring": true,
+    "base_key": "P1"
+  }
+}
