@@ -39,14 +39,14 @@ if CLIENT_NAMES:
 else:
     CLIENT_ORDER_RE = re.compile(r"(?!)")  # 无客户名时永不匹配
 
-# 内部合同号：公司/系列前缀 + 款号编码，如 RH2EBD25-0059。
+# 内部合同号：公司/系列前缀 + 款号编码，如 AB1CDE23-0059。
 # 客户订单号规则要求「客户名 + 长数字」，覆盖不到这种内部编号，故单列一条，
 # 前缀泛化为任意 2 位大写字母，换公司/换系列都不用改代码。
 CONTRACT_RE = re.compile(r"\b[A-Z]{2}\d[A-Z]{3}\d{2}-\d{4}\b")
 
 # 英文法人主体：任意大写起头的词（最多 5 个）+ 公司后缀。
-# 客户原始订单/英文单据里会出现 某外贸公司、海外工厂
-# Lingerie Ltd.、Hermes Fulfilment GmbH 这类主体，逐个补词是打地鼠，改用结构规则。
+# 客户原始订单/英文单据里会出现「某外贸公司英文抬头」「海外工厂 Lingerie Ltd.」
+# 「境外货代 Fulfilment GmbH」这类主体，逐个补词是打地鼠，改用结构规则。
 LEGAL_ENTITY_RE = re.compile(
     r"\b[A-Z][\w&.,'’()-]*(?:\s+(?:&\s+)?[A-Z][\w&.,'’()-]*){0,4}"
     r"(?:\s+(?:GmbH|Ltd\.?|LLC|Inc\.?|KGaA|S\.?A\.?|Co\.|Corp\.?|B\.?V\.?|Pte\.?))+",
@@ -65,9 +65,9 @@ CN_ENTITY_RE = re.compile(
 # 银行账号：形如 0000-486217-837
 BANK_ACCT_RE = re.compile(r"\b\d{3,4}-\d{6}-\d{2,5}\b")
 # SWIFT/BIC 码：**必须上下文锚定**。裸的 8/11 位大写串会误伤正常业务词——
-# 实测 SHANGHAI / CHOCOLAT / SUBCLASS / SOURCING 全部符合 BIC 的字面格式。
+# 实测 SHIPPING / STANDARD / MATERIAL / PRODUCTS 这类正常业务词全部符合 BIC 的字面格式。
 BIC_RE = re.compile(r"((?:SWIFT\s*(?:Code)?|BIC)\s*[:：]\s*)([A-Z0-9]{8,11})", re.IGNORECASE)
-# 裸域名（无 http:// 前缀）：www.[链接]、fbbrands.com 之类
+# 裸域名（无 http:// 前缀）：www.example.com、example-brands.com 之类
 DOMAIN_RE = re.compile(
     r"\b(?:www\.)?[\w-]+\.(?:com|cn|de|net|org|io|co)(?:\.[a-z]{2})?\b", re.IGNORECASE
 )
@@ -87,8 +87,8 @@ def _key_re(key: str) -> re.Pattern:
     """构造词条匹配正则。
 
     - 纯 ASCII 词条（英文公司名/客户名）：**忽略大小写 + 加词边界**。
-      OCR 输出的大小写不可控（截图里是 某外贸公司，文档里是 某外贸公司），
-      大小写敏感会漏；而英文词不加边界又会误伤（海外工厂 命中 ORIENTATION）。
+      OCR 输出的大小写不可控（截图里是全大写抬头，文档里是首字母大写形式），
+      大小写敏感会漏；而英文词不加边界又会误伤（如 ABC 命中 ABCDEF）。
     - 中文词条：保持子串匹配（中文没有词边界概念）。
     """
     esc = re.escape(key)
