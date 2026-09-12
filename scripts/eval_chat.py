@@ -2,8 +2,11 @@
 """LLM Wiki chat 评测脚本：逐题调用本地 API，提取最终答案 + 来源引用。
 
 用法：
-  python eval_chat.py            # 跑全部题目
-  python eval_chat.py --probe C1 # 只跑一题并 dump 完整事件结构
+  python eval_chat.py                  # 跑全部题目
+  python eval_chat.py --only C3,O4,P1  # 只跑指定题（快速复测/方差检查）
+  python eval_chat.py --repeat 2       # 每题重复 N 次（测生成端采样波动）
+  python eval_chat.py --probe C1       # 只跑一题并 dump 完整事件结构
+  python eval_chat.py --tag v1.1向量   # 结果另存为 评测结果_raw_<tag>.json（不覆盖）
 
 题目与标准答案要点见 eval/评测集.md（v0.2，22 题）。
 P2 口径待业务确认，属「不计分项」，这里保留提问便于人工核对。
@@ -23,6 +26,11 @@ TOKEN = load_token()
 RETRY_STATUS = {429, 500, 502, 503, 504}
 RETRY_MAX = 3          # 总尝试次数（含首次）
 RETRY_BASE_SLEEP = 4   # 指数退避基数（秒）：4s → 8s
+
+# 检索深度：开启向量检索后，默认深度下向量结果会把关键词命中的关键页挤出 Top-K
+# （实测 P1：默认深度召不到「采购核料单生成与可见性控制」，topK=15 时召回且答案完整）。
+# 故统一提高到 15。可用 --topk N 覆盖。
+TOP_K = 15
 
 # 评测集 v0.2（编号 -> 问题）
 # C=概念 D=对比 P=流程 O=操作/字段（batch1~3）；Q=报价/配比、M=机制/操作（v0.2 新增）
@@ -93,7 +101,7 @@ def chat(message, timeout=180):
     path = (f"/api/v1/projects/{PROJECT_ID}/chat" if PROJECT_ID
             else "/api/v1/projects/current/chat")
     url = f"{API_BASE}{path}"
-    payload = json.dumps({"message": message, "stream": False}).encode("utf-8")
+    payload = json.dumps({"message": message, "stream": False, "topK": TOP_K}).encode("utf-8")
     last_err = None
     for attempt in range(RETRY_MAX):
         req = urllib.request.Request(
@@ -164,34 +172,67 @@ def main():
     if probe and len(sys.argv) > 2:
         target = sys.argv[sys.argv.index("--probe") + 1]
 
+    # --only C3,O4,P1  只跑指定题（快速复测）; --repeat N 每题重复; --tag X 另存结果
+    only = None
+    if "--only" in sys.argv:
+        i = sys.argv.index("--only")
+        only = [x.strip().upper() for x in sys.argv[i + 1].split(",") if x.strip()]
+    repeat = 1
+    if "--repeat" in sys.argv:
+        repeat = max(1, int(sys.argv[sys.argv.index("--repeat") + 1]))
+    tag = None
+    if "--tag" in sys.argv:
+        tag = sys.argv[sys.argv.index("--tag") + 1]
+
+    global TOP_K
+    if "--topk" in sys.argv:
+        TOP_K = int(sys.argv[sys.argv.index("--topk") + 1])
+    print(f"检索深度 topK = {TOP_K}")
+
     keys = [target] if target else list(QUESTIONS.keys())
+    if only:
+        unknown = [k for k in only if k not in QUESTIONS]
+        if unknown:
+            print(f"未知题号: {unknown}")
+            return
+        keys = only
+    # 展开重复次数：C3、C3#2、C3#3 …
+    run_keys = []
+    for k in keys:
+        for r in range(repeat):
+            run_keys.append(k if r == 0 else f"{k}#{r + 1}")
+
     print(f"项目 ID: {PROJECT_ID or '(未解析到，回退 current)'}")
-    print(f"共 {len(keys)} 题，模型问答走 {API_BASE}")
+    print(f"共 {len(run_keys)} 次提问（{len(keys)} 题 × {repeat} 次），模型问答走 {API_BASE}")
     results = {}
-    for key in keys:
-        q = QUESTIONS[key]
+    for key in run_keys:
+        base_key = key.split("#")[0]
+        q = QUESTIONS[base_key]
         t0 = time.time()
         try:
             data = chat(q)
             parsed = extract_answer(data)
             parsed["elapsed"] = round(time.time() - t0, 1)
-            parsed["scoring"] = key not in NON_SCORING
+            parsed["scoring"] = base_key not in NON_SCORING
+            parsed["base_key"] = base_key
             results[key] = parsed
             if probe:
                 print(f"===== {key} 完整事件结构 =====")
                 print(json.dumps(data, ensure_ascii=False, indent=2))
             else:
-                tag = "" if key not in NON_SCORING else "  [不计分·待业务确认]"
+                tag_s = "" if base_key not in NON_SCORING else "  [不计分·待业务确认]"
                 n_ref = len(parsed["references"]) or len(parsed["event_refs"])
                 src = "引用" if parsed["references"] else "召回"
-                print(f"[{key}] 用时 {parsed['elapsed']}s | {src} {n_ref} 条{tag}")
+                print(f"[{key}] 用时 {parsed['elapsed']}s | {src} {n_ref} 条{tag_s}")
                 print(f"    答: {parsed['answer'][:120].strip()}")
         except Exception as ex:
-            results[key] = {"error": str(ex), "elapsed": round(time.time() - t0, 1)}
+            results[key] = {"error": str(ex), "elapsed": round(time.time() - t0, 1),
+                            "base_key": base_key}
             print(f"[{key}] 失败: {ex}")
 
     if not probe:
-        out = BASE / "eval" / "评测结果_raw.json"
+        name = f"评测结果_raw_{tag}.json" if tag else "评测结果_raw.json"
+        out = BASE / "eval" / name
         with open(out, "w", encoding="utf-8") as f:
             json.dump(results, f, ensure_ascii=False, indent=2)
         n_scoring = len([k for k in keys if k not in NON_SCORING])

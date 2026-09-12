@@ -15,24 +15,28 @@
 
 - **数据脱敏**：一键把人名/公司/客户/内部合同号泛化为化名，保留对话角色结构，避免敏感信息泄漏（`clean_text.py`）。
 - **零依赖**：docx / xlsx 抽取、截图 OCR、清洗、巡检、分批、评测脚本只用 Python 标准库；仅 `extract_pdf.py` 需 `pymupdf`、`feishu_bot.py` 需 `lark-oapi`。
-- **可复现**：清洗 → 分批 → 重导 → 评测每一步都有独立脚本，参数化、幂等。
-- **量化评测**：22 题评测集（概念/对比/流程/操作/报价配比/机制），按「命中 / 答偏 / 幻觉」三档打分，形成可对比的质量报告（`eval/`）。
+- **混合检索**：关键词 + 向量（`embedding-3`，764/817 页）+ 知识图谱三路融合，而非只靠向量库一路。
+- **可复现**：清洗 → 分批 → 重导 → 建向量索引 → 评测每一步都有独立脚本，参数化、幂等、可续跑。
+- **量化评测**：22 题评测集（概念/对比/流程/操作/报价配比/机制）+ 13 题拒答专项 + 延迟对照基准，
+  按「命中 / 答偏 / 幻觉」三档打分，形成可对比的质量报告（`eval/`）。
 
 ## 量化结果（实测，均可复算）
 
 | 维度 | 结果 | 口径 / 来源 |
 |---|---|---|
 | 语料 | **121 份 / 105.2 万字符**（源 173 份 / 153MB） | `corpus_stats.py` |
-| 脱敏 | 命中 **4,667 处**，残留 **0** | `corpus_stats.py` / `audit_leaks.py` |
+| 脱敏 | 命中 **4,667 处**；输入侧（`data/clean`）残留 **0**；评测产物残留 **0** | `corpus_stats.py` / `audit_leaks.py` / `sanitize_eval_results.py` |
 | 知识库 | **119/119** 编译完成，**819 页**结构化 Wiki | `wiki_status.py` |
-| 命中率 | **85.7%**（18/21）｜有效 **94.7%**（18/19） | `eval/评测报告_v0.3_复测.md` |
+| 向量索引 | **764/817 页（93.5%）** 已建（`embedding-3`） | `vector_index.py status` |
+| 命中率 | **90.5%**（19/21；95% Wilson 区间 71.1~97.3%） | `eval/评测报告_v1.0_向量+快模型.md` |
 | 幻觉 | **0/21**（95% 置信上界 **13.3%**） | 同上 |
 | 拒答 | 语料外 **8/8** 正确拒答、0 编造；语料内对照 **5/5** 无误拒 | `eval/拒答评测报告.md` |
-| 引用可溯源 | **90.9%**（20/22） | `eval/评测结果_raw.json` |
-| 延迟 | P50 **61.5s**（**未达标**，架构性 trade-off，已如实标注） | 同上 |
+| 引用可溯源 | **100%**（22/22） | `eval/评测结果_raw.json` |
+| 延迟 | P50 **18.0s** / 均值 22.1s（**未达标**，但较上轮 61.5s **↓3.4×**） | 同上 |
 
 > 完整复盘（目标 vs 结果逐条对照 / 归因 / 踩坑 / 方法论沉淀 / 数字来源索引）见 [`docs/复盘报告.md`](docs/复盘报告.md)。
 > 质量维度对标企业参考门槛见 [`docs/质量门槛对标.md`](docs/质量门槛对标.md)。
+> 四轮评测演进：73.3% → 81.0% → 85.7% → **90.5%**，幻觉率始终 0%。
 
 ## 整体流程
 
@@ -56,6 +60,9 @@
   reingest.py  ── 清空旧库 → 复制 → 触发重扫（写入 LLM-Wiki）
         │
         ▼
+  vector_index.py ── 开启向量检索 + 批量建索引（764/817 页）
+        │
+        ▼
   eval_chat.py  ── 调用本地 API 逐题评测 →  eval/评测结果_raw.json
 ```
 
@@ -68,18 +75,21 @@
 | 截图 OCR | `scripts/ocr_docx_media.py` | docx 内嵌截图 → `data/clean/`（需智谱 key） |
 | 文本清洗/脱敏 | `scripts/clean_text.py` | `工作内容/*.txt\|md` → `data/clean/` |
 | 脱敏巡检 | `scripts/audit_leaks.py` | `data/clean/` + LLM-Wiki 项目 → 残留报告（可用作 CI 卡点） |
+| **评测产物擦除** | `scripts/sanitize_eval_results.py` | 把「编译期派生的真实专名」从 `eval/` 产物中擦掉（`--check` 可挂 CI）；开向量检索后必需，见下 |
 | 重复检测 | `scripts/check_duplicates.py` | 8-gram 倒排 + 精确 Jaccard，找完全相同/近似重复（语料或 wiki） |
 | 批次构建 | `scripts/build_batches.py` | `data/clean/` → `data/import_batches/` |
 | 知识入库 | `scripts/reingest.py` | `data/import_batches/` → LLM-Wiki 项目（清空旧库 → 复制 → 重置状态 → 触发重扫） |
 | 续跑导入 | `scripts/resume_ingest.py` | 中断后续跑：摘除未编译条目 + 清队列 → 重扫重建，已编译的不重做（`--plan`/`--apply`/`--rescan`） |
 | 分模型 | `scripts/set_ingest_model.py` | 单独指定「入库/编译」模型（编译用轻量、聊天跟随当前预设），`--show`/`--clear` |
+| **向量索引** | `scripts/vector_index.py` | 开启 `embeddingConfig` + 批量给 wiki 页建向量索引（`status`/`enable`/`embed-one`/`embed-all`/`restore`，可续跑） |
 | 编译监控 | `scripts/monitor_compile.py` | 读 `ingest-cache`/`ingest-queue` 看进度，编完自动触发 22 题评测（幂等：同一轮只评一次，`--force` 可强制重跑）；`failed` 单独计为「已终结」，避免一份永久失败卡死自动评测 |
 | 失败重排 | `scripts/requeue_failed.py` | 队列里 `status=failed`（重试耗尽）的源文件重新排入编译：`--plan` 只读，`--apply` 摘 snapshot 条目 + 删 failed 条目 + 重扫 |
 | 状态自检 | `scripts/wiki_status.py` | 一次打印 API health + 编译进度 + 当前入库模型；`--samples N --interval S` 可做有界后台采样 |
 | 语料统计 | `scripts/corpus_stats.py` | 只读复算语料规模与脱敏命中数（给报告/简历回填数字） |
 | 覆盖度检查 | `scripts/check_coverage.py` | 源素材 vs 实际入库：按元数据「原文件名」反向追溯（脱敏会改名），单独统计图片 OCR / PDF / XLSX |
 | 模型选型 | `scripts/bench_models.py` | 同一语料对比各模型耗时/吞吐（解释编译慢的根因） |
-| 效果评测 | `scripts/eval_chat.py` | 22 题 → `eval/评测结果_raw.json` |
+| **延迟基准** | `scripts/bench_chat_latency.py` | 端到端对照问答模型（glm-4.7 / glm-4.5-air / glm-4.7 关思考）：P50·覆盖度·拒答，写 `eval/延迟基准_<ts>.json`；`--restore` 还原配置 |
+| 效果评测 | `scripts/eval_chat.py` | 22 题 → `eval/评测结果_raw.json`；`--only`/`--repeat`/`--topk`/`--tag` 支持复测与稳定性检查 |
 | 拒答评测 | `scripts/eval_refusal.py` | 语料外问题（应拒答）+ 语料内冷门模块对照（应回答），量化**拒答率 / 误拒率 / 拒答幻觉率** |
 | 拒答题库校验 | `scripts/check_refusal_bank.py` | 验证「语料外」题的关键词在 119 份语料中确实命中为 0（拒答测试成立的前提） |
 | 飞书机器人 | `scripts/feishu_bot.py` | 飞书消息 → LLM-Wiki 问答 → 卡片回复（多轮会话 / 进度更新 / 超时重试 / **用量埋点**；`--selftest`、`--ask` 可离线验证） |
@@ -98,6 +108,7 @@
 │   ├── ocr_docx_media.py# docx 内嵌截图 OCR
 │   ├── clean_text.py   # 脱敏 + 元数据标注
 │   ├── audit_leaks.py  # 脱敏巡检（入库前兜底，可作 CI 卡点）
+│   ├── sanitize_eval_results.py # 评测产物擦除（输出侧脱敏闸门，提交前必跑）
 │   ├── corpus_stats.py # 语料/脱敏统计（只读复算）
 │   ├── check_coverage.py # 覆盖度检查（源素材 vs 入库，追溯原文件名）
 │   ├── build_batches.py# 按主题分批
@@ -107,8 +118,10 @@
 │   ├── monitor_compile.py # 编译进度监控（编完自动评测）
 │   ├── requeue_failed.py  # 失败文件重排入队（file-snapshot 手术法）
 │   ├── wiki_status.py  # 状态自检（health + 进度 + 入库模型）
-│   ├── bench_models.py # 模型耗时对比
-│   ├── eval_chat.py    # 机器评测（22 题）
+│   ├── vector_index.py # 向量索引：开启 embedding 配置 + 批量建索引（可续跑）
+│   ├── bench_models.py # 模型耗时对比（编译层）
+│   ├── bench_chat_latency.py # 端到端问答延迟对照基准（glm-4.7 / glm-4.5-air）
+│   ├── eval_chat.py    # 机器评测（22 题，支持 --only/--repeat/--topk/--tag）
 │   ├── eval_refusal.py # 拒答评测（语料外 vs 语料内对照）
 │   ├── usage_stats.py  # 用量统计（读机器人埋点，出真实用量）
 │   └── feishu_bot.py   # 飞书机器人（需 pip install lark-oapi）
@@ -165,12 +178,28 @@ python build_batches.py
 # 7) 重导 LLM-Wiki（备份旧库 → 清空 → 复制 → 触发重扫）
 python reingest.py
 
-# 8) 跑 22 题评测
+# 7.5) 开启向量检索并批量建索引（可续跑；status 可查进度）
+python vector_index.py status
+python vector_index.py enable
+python vector_index.py embed-all
+
+# 8) 跑 22 题评测（默认 topK=15；--only/--repeat/--tag 支持复测）
 python eval_chat.py
+
+# 8.5) （可选）端到端延迟对照基准：glm-4.7 / glm-4.5-air
+python bench_chat_latency.py
 
 # 9) （可选）复算语料规模与脱敏命中数
 python corpus_stats.py
+
+# 10) 提交前：擦除评测产物中「编译期派生」的真实专名（输出侧脱敏闸门）
+python sanitize_eval_results.py --check        # 有残留则退出码 1
+python sanitize_eval_results.py --apply       # 就地擦除
 ```
+
+> **关于 topK**：开启向量检索后，默认检索深度会让向量结果把关键词命中的关键页**挤出 Top-K**
+> （实测会把 P1 从"答偏"变成"拒答"）。因此 `eval_chat.py` 与 `feishu_bot.py` 统一把 `topK` 提到 **15**，
+> 可用 `--topk N` 覆盖。这是本项目踩过的一个坑，详见 `docs/复盘报告.md` §5。
 
 ### 3. 飞书机器人（可选）
 
@@ -234,6 +263,31 @@ python scripts/usage_stats.py --md      # 额外输出 Markdown 表
 
 > 为什么必须在入库前脱敏：一旦编译完成，敏感词会扩散到 wiki 的 entities / concepts / sources 多类页面，清理要连带重建向量索引，成本远高于改一处规则。
 
+> **⚠️ 巡检结论里"零残留"要看清范围**：`audit_leaks.py` 有两个目标，结论**不同**——
+> `--only clean`（输入侧，121 份）**命中 0**；`--only wiki`（编译产物）**命中 58 处 / 11 文件**。
+> 后者是 LLM 编译期的**派生与推断**：真实订单号，以及凭银行地址里的**城市线索**、用世界知识
+> **推断**出的"所在国家：某南亚国家"（输入里只有 `[地址]`）。**这类残留任何词表都拦不住**——
+> 词表只能挡输入里存在的词。
+> 好在 `projects/` 已被 `.gitignore` 隔离，**公开仓库不受影响**；但取用 wiki 内容写对外文档时需人工过一遍。
+
+### 第三道闸门：评测产物擦除（开向量检索后必需）
+
+`audit_leaks.py` 扫的是**输入侧**（语料与 wiki）。但**输出侧**也会带真实信息：
+LLM 编译时会从**截图 OCR** 里派生出**新的真实实体页**（真实订单号、配送中心、
+第三方物流商名），这些页面平时只躺在 gitignored 的 wiki 目录里；
+而**开启向量检索后**，chat API 的 `references` 会把它们也带回给评测脚本，
+于是写进了**入库的** `eval/评测结果_raw*.json`（实测 2026-09-12 复现）。
+
+因此加了第三道闸门：
+
+```bash
+python scripts/sanitize_eval_results.py --check   # 提交前检查（退出码 1 = 有残留，可挂 CI）
+python scripts/sanitize_eval_results.py --apply   # 就地擦除
+```
+
+> 擦除词表放在 gitignored 的 `scripts/maps_local.py`（`EVAL_SCRUB`），公开仓库不留明文。
+> **经验：改了检索策略，要重新评估"什么信息会出现在输出里"——脱敏闸门得跟着数据流向扩。**
+
 ## 评测方法
 
 评测集共 **22 题**，覆盖概念（C）、对比（D）、流程（P）、操作（O）、报价配比（Q）、机制（M）六类，每题带标准答案要点与来源。`eval_chat.py` 逐题调用 LLM-Wiki 的 chat API，提取最终答案 + 来源引用，并按三档归类：
@@ -243,6 +297,19 @@ python scripts/usage_stats.py --md      # 额外输出 Markdown 表
 - **幻觉**：给出语料中不存在的信息
 
 > P2（核料纸样 vs 制版口径）语料自相矛盾，标注为**不计分项**，待向业务确认后回填。
+
+### 四轮评测演进（口径可比）
+
+| 轮次 | 语料覆盖 | 检索 / 模型 | 命中率 | 幻觉率 | 关键动作 |
+|---|---|---|---|---|---|
+| 基线 | 12 份（19%） | 关键词+图谱 / glm-4.6 | 73.3% | 0% | 首版评测 |
+| v0.2 | **119 份（100%）** | 关键词+图谱 / glm-4.7 | 81.0% | 0% | 语料扩容 10× |
+| v0.3 | 119 份 | 关键词+图谱 / glm-4.7 | 85.7% | 0% | **修评测链路缺陷**（502 重试 + 项目 ID 解析） |
+| **v1.0** | 119 份 | **混合检索 / glm-4.5-air** | **90.5%** | **0%** | **两项 P0：开向量检索 + 换快模型** |
+
+> v1.0 的 2 道未命中均**非语料缺失**：P1 是检索排序（答案在库、复跑 0/3 稳定缺口），
+> D2 是应用框架的 8 步迭代上限（偶发，复跑 2/3 命中）。
+> **主口径按单轮实测的 90.5% 报，不按复跑后的 95.2% 报。**
 
 ### 拒答准确性专项（13 题）
 
@@ -258,7 +325,7 @@ python scripts/usage_stats.py --md      # 额外输出 Markdown 表
 > **关键发现**：模型是**内容驱动而非检索驱动**——8 道语料外题里 7 道检索都返回了 5~15 条内容，
 > 模型仍正确拒答，避开了 RAG 最常见的失败模式「检索恒有返回 → 强行凑答案」。
 
-详细结论见 `eval/评测报告.md` 与 `eval/评测集.md`，拒答专项见 `eval/拒答评测报告.md`；
+详细结论见 `eval/评测报告_v1.0_向量+快模型.md`、`eval/评测集.md`，拒答专项见 `eval/拒答评测报告.md`；
 质量门槛与现状对标见 `docs/质量门槛对标.md`。
 
 > 评测口径提醒：单一命中率不足以判断系统水平（受语料覆盖度影响极大）。企业场景下**忠实度（零幻觉）与引用可溯源**才是上线底线，详见 `docs/质量门槛对标.md`。
@@ -266,9 +333,13 @@ python scripts/usage_stats.py --md      # 额外输出 Markdown 表
 ## 技术栈
 
 - Python（标准库优先；PDF 用 `pymupdf`、飞书机器人用 `lark-oapi`）
-- 智谱 GLM（国产大模型，OpenAI 兼容接口；**分模型**：编译/入库用 `glm-4.5-air` 求快，问答用 `glm-4.7` 求质量，截图 OCR 用 `glm-4v-flash`）
-- LLM-Wiki（本地知识库引擎，编译式 Wiki + 向量检索 + 本地 HTTP API）
+- 智谱 GLM（国产大模型，OpenAI 兼容接口；**分模型**：编译/入库与问答统一用 `glm-4.5-air`，截图 OCR 用 `glm-4v-flash`；向量嵌入用 `embedding-3`）
+- LLM-Wiki（本地知识库引擎，编译式 Wiki + **混合检索（关键词 + 向量 + 知识图谱）** + 本地 HTTP API）
 - 飞书开放平台（企业自建应用 + WebSocket 长连接）
+
+> **模型选型的演进**：初期「入库用快模型、问答用旗舰 `glm-4.7`」；后经 `bench_chat_latency.py` 对照实测，
+> 问答改用 `glm-4.5-air` 后**延迟 P50 从 61.5s 降到 18.0s（↓3.4×），命中率不降反升**（85.7% → 90.5%），
+> 因此现在两层统一用 `glm-4.5-air`。
 
 ## License
 
