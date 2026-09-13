@@ -60,7 +60,7 @@ def main():
     targets = load_targets()
     per_q = defaultdict(list)          # key -> [verdict, ...]
     per_q_latency = defaultdict(list)
-    per_q_refc = defaultdict(list)     # base -> [(referenceCount, answer), ...]  见「主指标①」
+    per_q_refc = defaultdict(list)     # base -> [(referenceCount, answer, continue_rounds), ...]  见「主指标①」
     n_calls = 0
     for tag in tags:
         p = os.path.join(EVAL, '评测结果_raw_%s.json' % tag)
@@ -74,7 +74,7 @@ def main():
             # 零召回指标的数据源（两个分支都要收，故放在分流之前）
             _rc = (it.get('usage') or {}).get('referenceCount')
             if _rc is not None:
-                per_q_refc[base].append((_rc, it.get('answer') or ''))
+                per_q_refc[base].append((_rc, it.get('answer') or '', it.get('continue_rounds')))
             if base not in targets:
                 # 原 21 题没有「目标页」这种可自动判定的标准答案，
                 # 这里只做客观判定：框架失败 / API 报错 / 正常作答（不评判答案对错）。
@@ -137,15 +137,30 @@ def main():
     # 模型却仍给出一段像模像样的答案（常自陈「wiki 中没有找到…以下是基于通用业务流程知识的解释」）。
     # 这种「零召回仍作答」是**自信的错答案**：`framework_failure` 判它「正常」，
     # 而用户会拿它当依据。详见 `eval/评测报告_v1.3` §8.5 / §8.7。
-    refc_rows = [(q, rc, a) for q, rows in per_q_refc.items() for rc, a in rows]
+    # ⚠️ 2026-09-14 口径修正：**分母漏洞已修**。
+    #   `referenceCount == 0` **只在「首轮调用」下才等价于「零召回」**。
+    #   续跑轮的提示词明令「不要再调用任何工具」→ 它的 referenceCount **必然为 0**，
+    #   与「检索到底有没有捞到东西」无关。把续跑轮算进分母就是在虚增零召回率。
+    #   实测依据（21 份产物、321 次带 continue_rounds 字段的调用）：
+    #     续跑 0 轮 298 次 → refc==0 仅 10 次（3.4%）
+    #     续跑 ≥1 轮  23 次 → refc==0 有 20 次（87.0%）  ← 几乎全是构造性的 0
+    refc_rows = [(q, rc, a, cr) for q, rows in per_q_refc.items() for rc, a, cr in rows]
     if refc_rows:
-        n_rc = len(refc_rows)
-        zero = [(q, a) for q, rc, a in refc_rows if rc == 0]
+        # 早期产物（v1.2 续跑功能之前）没有 continue_rounds 字段：那时压根没有续跑，
+        # 按「未续跑」计入，但**单独统计并披露**，不让这个假设隐形。
+        def _ncont(cr):
+            return 0 if cr is None else cr
+        clean = [(q, rc, a) for q, rc, a, cr in refc_rows if _ncont(cr) == 0]
+        cont = [(q, rc, a) for q, rc, a, cr in refc_rows if _ncont(cr) > 0]
+        n_assumed = sum(1 for _, _, _, cr in refc_rows if cr is None)
+        n_rc = len(clean)
+        zero = [(q, a) for q, rc, a in clean if rc == 0]
         bad = [q for q, a in zero if param_memory_answer(0, a)]
         zlo, zhi = wilson(len(zero), n_rc)
         blo, bhi = wilson(len(bad), n_rc)
         print()
         print('--- 主指标①：零召回 / 零召回仍作答（数据源 `usage.referenceCount`）---')
+        print('  分母口径：**只计首轮调用**（续跑轮的 refc 是构造性的 0，已剔除）')
         print('  零召回         %d/%d = %.1f%%   95%% Wilson [%.1f%%, %.1f%%]'
               % (len(zero), n_rc, 100 * len(zero) / n_rc, 100 * zlo, 100 * zhi))
         print('  其中**仍作答** %d/%d = %.1f%%   95%% Wilson [%.1f%%, %.1f%%]  ← 自信的错答案'
@@ -154,6 +169,17 @@ def main():
             cnt = Counter(bad)
             print('  涉及题目：%s'
                   % ', '.join('%s×%d' % (q, n) if n > 1 else q for q, n in cnt.most_common()))
+        if cont:
+            cz = sum(1 for q, rc, a in cont if rc == 0)
+            print('  ⚠️ 已排除 %d 次**续跑轮**：其中 %d 次 refc==0（%.0f%%）——构造性的 0，'
+                  % (len(cont), cz, 100 * cz / len(cont)))
+            print('     不代表零召回，故不计入分母。若把它们算进来，零召回率会被虚增。')
+            print('     ⚠️ 措辞纪律：这些调用属于「**无法判定**」，不是「判定为正常」——')
+            print('        产物只存了最终那一次调用的 usage，首轮 referenceCount 没有单独落盘。')
+            print('        所以修正后的数字读作「**可判定调用中**的零召回率」，不是全体的。')
+        if n_assumed:
+            print('  （%d 次调用来自 v1.2 之前的产物、无 continue_rounds 字段，按「未续跑」计入）'
+                  % n_assumed)
         print('  （`framework_failure` 抓不到这一类——它把「零召回仍作答」判成正常作答）')
 
     # ---- 噪声估计：多轮不一致 ----

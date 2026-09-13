@@ -78,16 +78,34 @@ def zero_recall(tag, bases):
 
     后者（参数记忆作答）是 v1.3 §8.5 认定的**真正危险的失败**：
     `framework_failure` 抓不到它，用户却会拿到一个**自信的错答案**。
+
+    ⚠️ 2026-09-14 口径修正：**只计首轮调用**（continue_rounds == 0）。
+    续跑轮提示词明令「不要再调用任何工具」→ 它的 referenceCount **必然为 0**，
+    是构造性的 0，不是零召回；算进来会虚增零召回率。
+    口径与 `judge_stability.py` 主指标① **必须保持一致**（改一处就要改另一处）。
+
+    注意：这样改之后，本指标测的是「**首轮检索有没有捞到东西**」。
+    续跑把「框架崩了」转成「诚实说不知道」这个效果，看的是框架失败率，不看这个指标。
     """
     for k, it in load(tag).items():
         base = k.split('#')[0]
         if base not in bases:
+            continue
+        if (it.get('continue_rounds') or 0) > 0:
+            # 续跑轮：refc 是构造性的 0。排除 ≠ 判它正常，而是「无法判定」——
+            # 产物只存了最终那次调用的 usage，首轮 referenceCount 没单独落盘。
             continue
         u = it.get('usage') or {}
         rc = u.get('referenceCount')
         if rc is None:
             continue
         yield (k, rc, it.get('answer') or '')
+
+
+def n_continued(tag, bases):
+    """被排除出零召回分母的续跑轮次数（用于披露，避免「静默剔除」）。"""
+    return sum(1 for k, it in load(tag).items()
+               if k.split('#')[0] in bases and (it.get('continue_rounds') or 0) > 0)
 
 
 def main():
@@ -185,8 +203,10 @@ def main():
     print()
     print('--- 主指标③：零召回（usage.referenceCount == 0）与「零召回却仍作答」---')
     print('    ⚠️ 后者=参数记忆作答：framework_failure 判它「正常」，但用户拿到的是**自信的错答案**')
+    print('    ⚠️ 分母只计首轮调用：续跑轮的 refc 是构造性的 0，已剔除（口径同 judge_stability 主指标①）')
     for name, tag in ((arm_a, arm_a), (arm_b, arm_b)):
         rows = [r for r in zero_recall(tag, bases)]
+        ncut = n_continued(tag, bases)
         if not rows:
             print('  %-10s 无数据（usage.referenceCount 缺失）' % name)
             continue
@@ -197,6 +217,8 @@ def main():
               % (name, n, len(zero), 100 * len(zero) / n if n else 0,
                  len(bad), 100 * len(bad) / n if n else 0,
                  ('  ← ' + ','.join(sorted(k for k, _ in bad))) if bad else ''))
+        if ncut:
+            print('             （已剔除 %d 次续跑轮：refc 构造性为 0，属「无法判定」而非「正常」）' % ncut)
     if arm_a != arm_b:
         za = len([1 for k, rc, a in zero_recall(arm_a, bases) if rc == 0 and param_memory_answer(0, a)])
         zb = len([1 for k, rc, a in zero_recall(arm_b, bases) if rc == 0 and param_memory_answer(0, a)])
