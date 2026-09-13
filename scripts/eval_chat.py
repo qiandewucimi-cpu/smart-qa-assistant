@@ -174,6 +174,10 @@ CONTINUE_PROMPT_BASE = (
 )
 CONTINUE_PROMPT = CONTINUE_PROMPT_BASE   # 向后兼容：无首轮引用时的兜底
 CONTINUE_REF_MAX = 10     # 塞进续跑提示语的首轮引用条数上限（防提示语膨胀）
+# ⚠️ 默认关闭（2026-09-14）：A/B 显示方向对但**不显著**，且延迟翻倍，故不上线。
+#   2x2：带引用臂「自陈未找到」4/10 vs 不带 7/10，Fisher 单侧 p = 0.185；
+#   P50 延迟 112s vs 54s。详见 eval/评测报告_v1.3 §12.8。
+CONTINUE_WITH_REFS = False
 
 
 def build_continue_prompt(refs):
@@ -185,8 +189,11 @@ def build_continue_prompt(refs):
     换成「诚实说不知道」，没换来命中率（6/15 vs 5/15，Fisher p=0.775）。
 
     修法：把首轮引用拼进提示语，让模型有据可依，而不是被蒙着眼答题。
+
+    ⚠️ **当前默认不启用**（`CONTINUE_WITH_REFS = False`）：A/B 未达显著且延迟翻倍。
+    调用方用 `chat_resilient(..., with_refs=True)` 显式开启。
     """
-    if not refs:
+    if not refs or not CONTINUE_WITH_REFS:
         return CONTINUE_PROMPT_BASE
     lines = []
     for r in refs[:CONTINUE_REF_MAX]:
@@ -206,16 +213,21 @@ JSON_DUMP_MARKS = ('```json', '{"action"')
 
 # ---------------------------------------------------------------------------
 # 框架失败续跑（v1.2）
-def chat_resilient(message, timeout=180, max_continue=CONTINUE_MAX):
+def chat_resilient(message, timeout=180, max_continue=CONTINUE_MAX, with_refs=None):
     """提问；若框架失败则带 sessionId 补跑，直到拿到答案或用尽补跑次数。
 
-    续跑轮被明令「不要再调用任何工具」，所以必须把**首轮引用**塞进提示语，
+    续跑轮被明令「不要再调用任何工具」，所以可以把**首轮引用**塞进提示语，
     否则模型会以为「没检索到任何东西」（见 build_continue_prompt）。
+
+    with_refs：是否启用「带首轮引用」。默认取全局 `CONTINUE_WITH_REFS`；
+    ⚠️ 该开关**当前默认关闭**——A/B 未达显著（p=0.185）且延迟翻倍，见 v1.3 §12.8。
     """
+    if with_refs is None:
+        with_refs = CONTINUE_WITH_REFS
     data = chat(message, timeout=timeout)
     sid = data.get("sessionId")
     reasons = []
-    first_refs = extract_answer(data).get("references") or []
+    first_refs = extract_answer(data).get("references") or [] if with_refs else []
     while sid and len(reasons) < max_continue:
         why = framework_failure(data)
         if not why:
