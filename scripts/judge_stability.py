@@ -167,11 +167,17 @@ def main():
     n_ok_samples = sum(n_samples[q] for q in ok_q)
     if n_ok_samples:
         ub = 1 - 0.05 ** (1.0 / n_ok_samples)
-        print('  ✅ 其余 %d 道题：%d 次采样、**0 次框架失败**（95%% 置信上界 %.1f%%）'
-              % (len(ok_q), n_ok_samples, 100 * ub))
-        print('     → 失败不是全局随机噪声，而是**集中在少数题上**；')
-        print('       结合 usage.toolEventCount（失败样本中位 26~27 vs 成功 10~17），')
-        print('       成因是这些题需要的步数贴近应用 8 步工具迭代上限。')
+        if not nfail_q:
+            print('  ✅ 本轮**没有任何题**出现框架失败：%d 题、%d 次采样全部正常作答'
+                  % (len(ok_q), n_ok_samples))
+            print('     （0/%d 的 95%% 置信上界 %.1f%% —— 这类题的步数离 8 步上限很远）'
+                  % (n_ok_samples, 100 * ub))
+        else:
+            print('  ✅ 其余 %d 道题：%d 次采样、**0 次框架失败**（95%% 置信上界 %.1f%%）'
+                  % (len(ok_q), n_ok_samples, 100 * ub))
+            print('     → 失败不是全局随机噪声，而是**集中在少数题上**；')
+            print('       结合 usage.toolEventCount（失败样本中位 26~27 vs 成功 10~17），')
+            print('       成因是这些题需要的步数贴近应用 8 步工具迭代上限。')
 
     lat = [x for vs in per_q_latency.values() for x in vs]
     if lat:
@@ -179,6 +185,52 @@ def main():
         print()
         print('--- 延迟：P50 %.1fs / P90 %.1fs / max %.1fs ---'
               % (lat[len(lat) // 2], lat[int(len(lat) * 0.9)], lat[-1]))
+
+    # ---- 步数预算：把「8 步上限」这个假设变成可复算的数字 ----
+    # 说明：usage.toolEventCount 是「用了几步」的**结果**，不是被操纵的变量，
+    # 所以这是**关联**证据；但分桶后若出现明显断崖，就足以否定「全局随机噪声」的解释。
+    steps = []   # [(toolEventCount, verdict)]
+    for tag in tags:
+        p = os.path.join(EVAL, '评测结果_raw_%s.json' % tag)
+        if not os.path.exists(p):
+            continue
+        with open(p, encoding='utf-8') as f:
+            data = json.load(f)
+        for k, it in data.items():
+            n = (it.get('usage') or {}).get('toolEventCount')
+            if n is None:
+                continue
+            base = k.split('#')[0]
+            if base in targets:
+                v = judge(it, targets[base]['page'])
+            else:
+                v = (framework_failure_of_answer(it.get('answer'))
+                     or ('api_error' if it.get('error') else 'answered'))
+            if v in ('api_error',):
+                continue
+            steps.append((n, v))
+    if steps:
+        print()
+        print('--- 步数预算（usage.toolEventCount）---')
+        ok = [n for n, v in steps if v not in FAIL]
+        bad = [n for n, v in steps if v in FAIL]
+        def med(v):
+            v = sorted(v)
+            return v[len(v) // 2] if v else None
+        print('  成功样本 %d 次：中位 %s  最大 %s' % (len(ok), med(ok), max(ok) if ok else '-'))
+        if bad:
+            print('  失败样本 %d 次：中位 %s  最小 %s' % (len(bad), med(bad), min(bad)))
+        print('  分桶失败率：')
+        # ⚠️ 变量名不能叫 lo/hi —— 会把上面算好的 Wilson 区间覆盖掉
+        # （曾导致末尾打印出「区间宽度 97100.0pp」这种荒谬数字）
+        for lo_b, hi_b in [(0, 15), (15, 20), (20, 24), (24, 28), (28, 999)]:
+            b = [n for n, v in steps if lo_b <= n < hi_b]
+            if not b:
+                continue
+            f = sum(1 for n, v in steps if lo_b <= n < hi_b and v in FAIL)
+            print('    %2d~%-3d : %3d 样本  失败 %2d  (%3.0f%%)'
+                  % (lo_b, min(hi_b, 99), len(b), f, 100 * f / len(b)))
+        print('  （8 步 × ≈3.4 事件/步 ≈ 27，与应用内置的工具迭代上限吻合）')
 
     # ---- 结论 ----
     print()

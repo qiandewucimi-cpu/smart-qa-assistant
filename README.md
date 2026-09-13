@@ -101,7 +101,7 @@
 | 模型选型 | `scripts/bench_models.py` | 同一语料对比各模型耗时/吞吐（解释编译慢的根因） |
 | **延迟基准** | `scripts/bench_chat_latency.py` | 端到端对照问答模型（glm-4.7 / glm-4.5-air / glm-4.7 关思考）：P50·覆盖度·拒答，写 `eval/延迟基准_<ts>.json`；`--restore` 还原配置 |
 | 效果评测 | `scripts/eval_chat.py` | 22 题 → `eval/评测结果_raw.json`；`--only`/`--repeat`/`--topk`/`--tag`/`--set` 支持复测、稳定性检查与外部题目集；新增 `framework_failure()` 识别 **limit / 原文直吐 / JSON 直吐** 三种框架失败，`chat_resilient()` 可带 `sessionId` 续跑（`--no-continue` 作对照臂） |
-| **扩展评测集** | `scripts/gen_eval_set.py` | 从 wiki 页生成 45 题稳定性扩展集（固定种子可复现）+ **标题脱敏护栏**（过滤「连续 ≥5 位数字」的页名） |
+| **扩展评测集** | `scripts/gen_eval_set.py` | 从 wiki 页生成 45 题稳定性扩展集（固定种子可复现）+ **两层标题脱敏护栏**（① 含连续 ≥5 位数字；② **纯拉丁标题一律排除**——专挡客户名派生的实体页） |
 | **稳定性分析** | `scripts/judge_stability.py` | 每题命中率 + Wilson 区间 + **失败是否集中在少数题** + 多轮不一致率；`api_error` 单独计数且**排除出分母** |
 | **判定规则** | `scripts/eval_common.py` | 框架失败判定 + Wilson 区间，**全项目唯一一份**（此前 `eval_chat.py` 与 `ab_analysis.py` 各写一份，有漂移风险） |
 | 拒答评测 | `scripts/eval_refusal.py` | 语料外问题（应拒答）+ 语料内冷门模块对照（应回答），量化**拒答率 / 误拒率 / 拒答幻觉率** |
@@ -319,7 +319,9 @@ python scripts/sanitize_eval_results.py --check   # 提交前检查（退出码 
 python scripts/sanitize_eval_results.py --apply   # 就地擦除
 ```
 
-> 擦除词表放在 gitignored 的 `scripts/maps_local.py`（`EVAL_SCRUB`），公开仓库不留明文。
+> 擦除词表**两层**：gitignored 的 `scripts/maps_local.py`（`EVAL_SCRUB`，手工维护、带指定替换文案）
+> **+ 完整真实词表**（来自 `clean_text` 的映射，统一替换为 `<已脱敏>`）。后者是 2026-09-13 补的——
+> 手工清单只覆盖「撞见过的形态」，正是它漏掉了那个真实客户名；ASCII 词用**词边界**匹配，防短词命中长词内部（如 `ABC` 命中 `ABCDEF`）。
 > **经验：改了检索策略，要重新评估"什么信息会出现在输出里"——脱敏闸门得跟着数据流向扩。**
 
 ## 评测方法
@@ -393,7 +395,8 @@ D1 的真实作答率是 **7/15 ≈ 47%**，所以 5 次采样测出 20% 或 60%
 
 为此加了 45 题扩展集（`scripts/gen_eval_set.py`，固定种子可复现；判定用**「引用可溯源」**：
 题目由某一页生成 → 看答案的 `references` 里有没有这一页，客观可自动判定可复算）。
-**结果 40/45 = 88.9%、框架失败 0/45**——单词条定义题（2~3 步）从不撞上限。
+**两轮共 90 次调用：81/90 = 90.0%、框架失败 0/90、多轮不一致率 7/45 = 15.6%**——
+单词条定义题的步数中位只有 **10**（上限约 27），从不撞上限。
 
 > ⚠️ **局限必须连带说明**：扩展集题型单一（概念/实体定义题），**难度低于原 21 题**，
 > 且判定口径是「有没有引用源页」而非「答案对不对」，**不能**用它报告「命中率」。

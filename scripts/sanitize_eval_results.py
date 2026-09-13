@@ -24,8 +24,16 @@
     python sanitize_eval_results.py --apply --include-logs   # 连 *.log 一起擦
 
 被擦的词来自 gitignored 的 `maps_local.py`（`EVAL_SCRUB`），公开仓库里不留明文。
+
+**两层词表**（2026-09-13 补第二层）：
+  ① `EVAL_SCRUB`——手工维护的「已观测到的派生专名」，带指定替换文案；
+  ② 完整真实词表（`clean_text` 的 NAME/COMPANY/CLIENT 映射）——兜住第一批没预料到的
+     形态，统一替换为 `<已脱敏>`。加它的直接原因：`audit_leaks.py` 全量跑发现
+     **入库的 wiki 目录里还留着真实地名/客户名**，而它们不在手工清单里。
+     ASCII 词用词边界匹配，防短词命中长词内部（如 `ABC` 命中 `ABCDEF`）。
 """
 import argparse
+import re
 import sys
 from pathlib import Path
 
@@ -35,6 +43,48 @@ try:
     from maps_local import EVAL_SCRUB
 except ImportError:  # maps_local 缺失时退化为空表（不擦任何东西，但脚本仍可跑）
     EVAL_SCRUB = []
+
+# ---------------------------------------------------------------------------
+# 第二层：通用真实词表（2026-09-13 补）
+#
+# 为什么需要第二层：`EVAL_SCRUB` 是**手工维护**的「已观测到的派生专名」清单——
+# 只有被撞见过一次的泄漏才会进表。而 `audit_leaks.py` 全量跑下来证明
+# **入库的 wiki 目录里还有一批真实地名/客户名**（它们本应由 clean_text 在
+# 抽取阶段替换掉，但那批页面是旧编译产物）。一旦某次检索引用到这些页面，
+# 产物就会带上它们，而**手工清单里没有** → 闸门②会放行。
+#
+# 所以这里直接挂上**完整真实词表**（来自 gitignored 的 maps_local，公开仓库无明文），
+# 兜住第一批没预料到的形态。实测（2026-09-13）：对现有 29 个产物 0 误报。
+#
+# ⚠️ ASCII 词必须用**词边界**：否则短词会命中长词的一部分（如 `ABC` 命中 `ABCDEF`），
+# 造成误报（这是本项目记忆里明确记过的坑）。
+# ---------------------------------------------------------------------------
+GENERIC_REPL = "<已脱敏>"
+
+try:
+    from clean_text import CLIENT_MAP, COMPANY_MAP, NAME_MAP
+    _GENERIC_TERMS = (set(NAME_MAP) | {k for k, _ in COMPANY_MAP} | set(CLIENT_MAP))
+except ImportError:
+    _GENERIC_TERMS = set()
+
+_COVERED = {t for t, _ in EVAL_SCRUB}
+
+
+def generic_terms():
+    """完整真实词表里、且不被 EVAL_SCRUB 覆盖的词（长串优先）。"""
+    return sorted((t for t in _GENERIC_TERMS
+                   if t and len(t.strip()) >= 3 and t not in _COVERED),
+                  key=len, reverse=True)
+
+
+def generic_pattern(term):
+    if re.fullmatch(r"[A-Za-z0-9 _\-\.]+", term):
+        return re.compile(r"(?<![A-Za-z0-9])" + re.escape(term) + r"(?![A-Za-z0-9])",
+                          re.IGNORECASE)
+    return re.compile(re.escape(term))
+
+
+_GENERIC = [(t, generic_pattern(t)) for t in generic_terms()]
 
 EVAL_DIR = BASE / "eval"
 SUFFIXES = (".json", ".md", ".csv")
@@ -49,7 +99,7 @@ def targets(include_logs: bool):
 
 
 def scan(path: Path):
-    """返回 [(term, count, 替换目标)]。"""
+    """返回 [(term, count, 替换目标)]，两层词表合并（EVAL_SCRUB + 通用真实词表）。"""
     try:
         text = path.read_text(encoding="utf-8", errors="replace")
     except OSError:
@@ -59,6 +109,10 @@ def scan(path: Path):
         n = text.count(term)
         if n:
             out.append((term, n, repl))
+    for term, p in _GENERIC:
+        n = len(p.findall(text))
+        if n:
+            out.append((term, n, GENERIC_REPL))
     return out
 
 
@@ -70,6 +124,10 @@ def apply_scrub(path: Path):
         n = text.count(term)
         if n:
             text = text.replace(term, repl)
+            hits[term] = n
+    for term, p in _GENERIC:               # 第二层：正则（ASCII 带词边界）
+        text, n = p.subn(GENERIC_REPL, text)
+        if n:
             hits[term] = n
     if text != before:
         path.write_text(text, encoding="utf-8")
@@ -83,12 +141,13 @@ def main():
     ap.add_argument("--include-logs", action="store_true", help="连 *.log 一起处理")
     args = ap.parse_args()
 
-    if not EVAL_SCRUB:
-        print("!! maps_local.EVAL_SCRUB 为空（词表缺失），未做任何擦除")
+    if not EVAL_SCRUB and not _GENERIC:
+        print("!! 词表为空（maps_local / clean_text 均不可用），未做任何擦除")
         return 1
 
     files = targets(args.include_logs)
-    print(f"擦除词条 {len(EVAL_SCRUB)} 条 ｜ 目标 {len(files)} 个文件"
+    print(f"擦除词条 {len(EVAL_SCRUB)} 条（指定替换） + {len(_GENERIC)} 条（通用真实词表，替换为 {GENERIC_REPL}）"
+          f" ｜ 目标 {len(files)} 个文件"
           f" ｜ 模式 {'apply' if args.apply else 'check'}")
     print("=" * 64)
 

@@ -18,6 +18,17 @@ v1.2 的 A/B 证明：**同配置下 D1 跨时段测出 1/10 与 3/5，差 50pp*
 局限（必须写清楚，不能拿它冒充原集）：
   - 题型单一（概念/实体定义题），**难度低于原 21 题**，不能用于报告「命中率」
   - 它的作用是**测量稳定性与框架失败率**，是原集的补充，不是替代
+
+⚠️ 与已提交题集的关系（2026-09-13）
+-----------------------------------
+标题护栏在 2026-09-13 从「只挡连续 ≥5 位数字」升级为「再加一层：纯拉丁标题一律排除」，
+起因是两个**真实客户名页面**混进了题集（详见下面 `suspicious_title` 的注释）。
+**这会让本脚本现在选出与已提交的 `eval/questions_ext.json` 不同的一组 45 题**
+（新护栏多排除了 26 页）。
+
+已提交的那份题集**保持在现场**，因为 `评测结果_raw_ext_f1/f2.json` 是拿它跑的，
+换掉就会让已有产物不可复算。代价是：**仓库里的题集 ≠ 现在重跑脚本的输出**——
+这是**已知且有意保留**的差异，等下次重跑评测时一并换成新题集（届时要重跑两轮）。
 """
 import json
 import os
@@ -35,11 +46,54 @@ N_ENTITY = 18
 MIN_BODY = 150
 SEED = 20260912
 
-# 标题脱敏护栏：wiki 里有编译期从真实单据派生出来的实体页，标题会直接带上
-# 真实订单号/编号（本项目踩过：v1.1 检索面变宽后这类页就进了产物）。
-# 这里用**通用规则**过滤（连续 ≥5 位数字），不依赖私密词表——
-# 私密词表在 gitignored 的 maps_local.py，公开脚本不能引用。
+# ---------------------------------------------------------------------------
+# 标题脱敏护栏（两层）
+#
+# 背景：wiki 里有编译期从**真实单据/客户名**派生出来的实体页，标题会直接带上
+# 真实订单号或客户名（本项目踩过两次：v1.1 检索面变宽后这类页进了产物；
+# 2026-09-13 又发现两个**纯拉丁的客户名派生页**混进了题集，
+# 而当时的护栏只挡「连续 ≥5 位数字」——**挡不住客户名**）。
+#
+# 第一层（通用、无外部依赖，任何机器都能跑）：
+#   ① 标题含连续 ≥5 位数字 → 单据编号派生物；
+#   ② 标题**一个中文字都没有** → 纯拉丁标题。正常业务概念页几乎都带中文
+#      （如 `FOB贸易术语`/`CP节点`/`DHL`→这条会连 DHL 一起挡掉，属**故意保守**：
+#      宁可少几页覆盖，也不能把真实标识符放进要公开的题集）。
 SUSPICIOUS_TITLE = re.compile(r'\d{5,}')
+HAS_CJK = re.compile(r'[\u4e00-\u9fff]')
+
+# 第二层（可选、本机开发时生效）：标题命中**完整真实词表**也跳过。
+# 词表在 gitignored 的 maps_local.py / clean_text.py，公开仓库里没有，
+# 所以用 try/except 包住——缺失时脚本照常可跑，只是少了这层保险。
+try:
+    from clean_text import CLIENT_MAP, COMPANY_MAP, NAME_MAP
+    _REAL_TERMS = sorted(
+        set(NAME_MAP) | {k for k, _ in COMPANY_MAP} | set(CLIENT_MAP),
+        key=len, reverse=True,
+    )
+except Exception:
+    _REAL_TERMS = []
+
+
+def _term_pattern(t):
+    if re.fullmatch(r'[A-Za-z0-9 _\-\.]+', t):
+        return re.compile(r'(?<![A-Za-z0-9])' + re.escape(t) + r'(?![A-Za-z0-9])', re.I)
+    return re.compile(re.escape(t))
+
+
+_REAL_PATS = [(t, _term_pattern(t)) for t in _REAL_TERMS]
+
+
+def suspicious_title(title):
+    """返回跳过原因；None 表示这个标题可以进题集。"""
+    if SUSPICIOUS_TITLE.search(title):
+        return '连续≥5位数字'
+    if not HAS_CJK.search(title):
+        return '纯拉丁标题（疑为真实标识符/客户名派生）'
+    for t, p in _REAL_PATS:
+        if p.search(title):
+            return '命中私密词表'
+    return None
 
 CONCEPT_TEMPLATES = ['什么是{title}？', '{title}是什么？', '请解释一下{title}']
 ENTITY_TEMPLATES = ['{title}是什么？', '什么是{title}？', '{title}的定义是什么？']
@@ -72,8 +126,9 @@ def collect(sub, limit, skipped):
         title = (meta.get('title') or os.path.splitext(f)[0]).strip()
         if not title:
             continue
-        if SUSPICIOUS_TITLE.search(title):
-            skipped.append((sub, f, title))
+        why = suspicious_title(title)
+        if why:
+            skipped.append((sub, f, title, why))
             continue
         cands.append({
             'title': title,
@@ -121,6 +176,14 @@ def main():
         '- 因此**不能**用它报告「命中率」，它的作用是**测量稳定性与框架失败率**；',
         '- 它是原 `评测集.md` 的补充，不是替代。',
         '',
+        '## 标题护栏（题集只收「不会泄露真实标识符」的页）',
+        '',
+        '生成时跳过两类标题：① 含连续 ≥5 位数字（单据号派生物）；',
+        '② **一个中文字都没有的纯拉丁标题**（几乎都是从真实客户名/品牌/标识符派生的实体页）。',
+        '本机还会额外挂一层完整真实词表（词表在 gitignored 的 `maps_local.py`，仓库里没有）。',
+        '> 这个护栏是踩坑补的：2026-09-13 曾发现两个**真实客户名页面**混进题集，',
+        '> 而当时的护栏只挡数字、挡不住客户名。',
+        '',
         '## 题目清单',
         '',
         '| # | 问题 | 期望来源页 | 类型 |',
@@ -134,9 +197,17 @@ def main():
     print('已生成 %d 题 -> %s' % (len(out), OUT_JSON))
     print('        说明 -> %s' % OUT_MD)
     if skipped:
-        print('⚠️ 已按标题护栏（连续 ≥5 位数字）跳过 %d 页：' % len(skipped))
-        for sub, f, t in skipped:
-            print('   - wiki/%s/%s' % (sub, f))
+        print('⚠️ 已按标题护栏跳过 %d 页（按原因分组）：' % len(skipped))
+        from collections import defaultdict
+        by_why = defaultdict(list)
+        for sub, f, t, why in skipped:
+            by_why[why].append('wiki/%s/%s' % (sub, f))
+        for why, names in by_why.items():
+            print('   [%s] %d 页' % (why, len(names)))
+            for n in names[:8]:
+                print('        - %s' % n)
+            if len(names) > 8:
+                print('        … 另 %d 页' % (len(names) - 8))
     from collections import Counter
     print('类型分布:', Counter(v['type'] for v in out.values()))
     for k in list(out)[:5]:
