@@ -19,6 +19,7 @@ import urllib.request
 import urllib.error
 
 from config import API_BASE, BASE, load_token
+from eval_common import framework_failure  # 判定规则只有一份（见 eval_common.py）
 
 TOKEN = load_token()
 
@@ -61,6 +62,23 @@ QUESTIONS = {
 
 # 不计分项（标准答案待业务确认），跑完人工核对、不计入命中率分母
 NON_SCORING = {"P2"}
+
+# 扩展集：21 题太小，噪声大于任何旋钮的效应量（见 eval/评测报告_v1.2）。
+# 用 `python scripts/gen_eval_set.py` 生成 ≥45 题的自动集，配合 --set 跑。
+_EXT_SET_CACHE = {}
+
+
+def load_question_set(path):
+    """从 JSON 载入题目集。值可以是字符串，也可以是 {"q": ..., ...} 字典。"""
+    with open(path, encoding='utf-8') as f:
+        raw = json.load(f)
+    qs = {}
+    for k, v in raw.items():
+        if isinstance(v, dict):
+            qs[k] = v.get('q') or v.get('question') or ''
+        else:
+            qs[k] = v
+    return qs
 
 
 def _get_json(path):
@@ -147,8 +165,7 @@ def chat(message, timeout=180, session_id=None):
 # 所以正解不是换模型（那要在**所有**题上多付 3.4× 延迟），
 # 而是**只对撞上限的那一小部分题补一轮**。
 # ---------------------------------------------------------------------------
-CONTINUE_MAX = 2          # 撞上限后最多补几轮
-# ⚠️ 提示语必须带「证据不足就说明缺什么」——第一版只写「请直接给出最终答案」，
+CONTINUE_MAX = 2          # 撞上限后最多补几轮# ⚠️ 提示语必须带「证据不足就说明缺什么」——第一版只写「请直接给出最终答案」，
 # A/B 实测把 2 次「框架无答案」变成了 2 次**自信的错答案**（与语料相反）。
 CONTINUE_PROMPT = (
     "请基于上面已检索到的内容直接给出最终答案，不要再调用任何工具。"
@@ -158,32 +175,8 @@ LIMIT_MARK = "tool-iteration limit"
 RAW_DUMP_MARK = "I found the following relevant project context"
 JSON_DUMP_MARKS = ('```json', '{"action"')
 
-
-def _answer_text(data):
-    m = data.get("message") or {}
-    return (m.get("content") or data.get("answer") or "")
-
-
-def framework_failure(data):
-    """判断一次回答是否属于「框架没给出答案」——两种已观测到的模式。
-
-    返回 None 表示正常；否则返回失败类型：
-      - 'limit'    ：撞 8 步工具迭代上限，无答案
-      - 'raw_dump' ：「原文直吐」——把检索片段原样吐出来，没有生成回答
-      - 'json_dump'：把 agent loop 的 {"action":"final",...} 原样吐出来
-                     （内容可能对，但用户看到的是裸 JSON，属失败）
-    """
-    a = _answer_text(data)
-    if LIMIT_MARK in a:
-        return "limit"
-    s = a.lstrip()
-    if s.startswith(RAW_DUMP_MARK):
-        return "raw_dump"
-    if s.startswith(JSON_DUMP_MARKS):
-        return "json_dump"
-    return None
-
-
+# ---------------------------------------------------------------------------
+# 框架失败续跑（v1.2）
 def chat_resilient(message, timeout=180, max_continue=CONTINUE_MAX):
     """提问；若框架失败则带 sessionId 补跑，直到拿到答案或用尽补跑次数。"""
     data = chat(message, timeout=timeout)
@@ -262,6 +255,14 @@ def main():
 
     enable_continue = "--no-continue" not in sys.argv
     print(f"框架失败续跑 = {'开' if enable_continue else '关（对照臂）'}")
+
+    global QUESTIONS, NON_SCORING
+    if "--set" in sys.argv:
+        set_path = sys.argv[sys.argv.index("--set") + 1]
+        QUESTIONS = load_question_set(set_path)
+        # 扩展集是自动生成的，判定口径不同（引用可溯源），没有「待业务确认」项
+        NON_SCORING = set()
+        print(f"题目集 = {set_path}（{len(QUESTIONS)} 题）")
 
     keys = [target] if target else list(QUESTIONS.keys())
     if only:

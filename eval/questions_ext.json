@@ -1,0 +1,317 @@
+{
+  "A01": {
+    "q": "什么是理单？",
+    "page": "wiki/concepts/理单.md",
+    "title": "理单",
+    "type": "concept",
+    "body_len": 806
+  },
+  "A02": {
+    "q": "分码单耗是什么？",
+    "page": "wiki/concepts/分码单耗.md",
+    "title": "分码单耗",
+    "type": "concept",
+    "body_len": 262
+  },
+  "A03": {
+    "q": "请解释一下四种单号类型",
+    "page": "wiki/concepts/四种单号类型.md",
+    "title": "四种单号类型",
+    "type": "concept",
+    "body_len": 1773
+  },
+  "A04": {
+    "q": "什么是节点绑定机制？",
+    "page": "wiki/concepts/节点绑定机制.md",
+    "title": "节点绑定机制",
+    "type": "concept",
+    "body_len": 707
+  },
+  "A05": {
+    "q": "核料指样匹配规则是什么？",
+    "page": "wiki/concepts/核料指样匹配规则.md",
+    "title": "核料指样匹配规则",
+    "type": "concept",
+    "body_len": 592
+  },
+  "A06": {
+    "q": "请解释一下培训资料整合",
+    "page": "wiki/concepts/培训资料整合.md",
+    "title": "培训资料整合",
+    "type": "concept",
+    "body_len": 663
+  },
+  "A07": {
+    "q": "什么是技术资料文件管理？",
+    "page": "wiki/concepts/技术资料文件管理.md",
+    "title": "技术资料文件管理",
+    "type": "concept",
+    "body_len": 197
+  },
+  "A08": {
+    "q": "节点层级结构是什么？",
+    "page": "wiki/concepts/节点层级结构.md",
+    "title": "节点层级结构",
+    "type": "concept",
+    "body_len": 1071
+  },
+  "A09": {
+    "q": "请解释一下核料单时间字段取值规则",
+    "page": "wiki/concepts/核料单时间字段取值规则.md",
+    "title": "核料单时间字段取值规则",
+    "type": "concept",
+    "body_len": 792
+  },
+  "A10": {
+    "q": "什么是样板单复制逻辑？",
+    "page": "wiki/concepts/样板单复制逻辑.md",
+    "title": "样板单复制逻辑",
+    "type": "concept",
+    "body_len": 359
+  },
+  "A11": {
+    "q": "物料合并逻辑是什么？",
+    "page": "wiki/concepts/物料合并逻辑.md",
+    "title": "物料合并逻辑",
+    "type": "concept",
+    "body_len": 562
+  },
+  "A12": {
+    "q": "请解释一下CPI逻辑日期",
+    "page": "wiki/concepts/cpi逻辑日期.md",
+    "title": "CPI逻辑日期",
+    "type": "concept",
+    "body_len": 592
+  },
+  "A13": {
+    "q": "什么是二次加工损耗率？",
+    "page": "wiki/concepts/二次加工损耗率.md",
+    "title": "二次加工损耗率",
+    "type": "concept",
+    "body_len": 279
+  },
+  "A14": {
+    "q": "报关发票状态管理是什么？",
+    "page": "wiki/concepts/报关发票状态管理.md",
+    "title": "报关发票状态管理",
+    "type": "concept",
+    "body_len": 2229
+  },
+  "A15": {
+    "q": "请解释一下成本字段填写标准",
+    "page": "wiki/concepts/成本字段填写标准.md",
+    "title": "成本字段填写标准",
+    "type": "concept",
+    "body_len": 903
+  },
+  "A16": {
+    "q": "什么是物料齐套率？",
+    "page": "wiki/concepts/物料齐套率.md",
+    "title": "物料齐套率",
+    "type": "concept",
+    "body_len": 633
+  },
+  "A17": {
+    "q": "CP节点配置体系是什么？",
+    "page": "wiki/concepts/CP节点配置体系.md",
+    "title": "CP节点配置体系",
+    "type": "concept",
+    "body_len": 3516
+  },
+  "A18": {
+    "q": "请解释一下平均单耗",
+    "page": "wiki/concepts/平均单耗.md",
+    "title": "平均单耗",
+    "type": "concept",
+    "body_len": 1099
+  },
+  "A19": {
+    "q": "什么是业务提效方向？",
+    "page": "wiki/concepts/业务提效方向.md",
+    "title": "业务提效方向",
+    "type": "concept",
+    "body_len": 829
+  },
+  "A20": {
+    "q": "标准小时产是什么？",
+    "page": "wiki/concepts/标准小时产.md",
+    "title": "标准小时产",
+    "type": "concept",
+    "body_len": 1105
+  },
+  "A21": {
+    "q": "请解释一下整款快速报数",
+    "page": "wiki/concepts/整款快速报数.md",
+    "title": "整款快速报数",
+    "type": "concept",
+    "body_len": 510
+  },
+  "A22": {
+    "q": "什么是紧急采购规则？",
+    "page": "wiki/concepts/紧急采购规则.md",
+    "title": "紧急采购规则",
+    "type": "concept",
+    "body_len": 377
+  },
+  "A23": {
+    "q": "订单审核状态是什么？",
+    "page": "wiki/concepts/订单审核状态.md",
+    "title": "订单审核状态",
+    "type": "concept",
+    "body_len": 744
+  },
+  "A24": {
+    "q": "请解释一下加工费工时计算方法",
+    "page": "wiki/concepts/加工费工时计算方法.md",
+    "title": "加工费工时计算方法",
+    "type": "concept",
+    "body_len": 224
+  },
+  "A25": {
+    "q": "什么是学习曲线比例应用？",
+    "page": "wiki/concepts/学习曲线比例应用.md",
+    "title": "学习曲线比例应用",
+    "type": "concept",
+    "body_len": 294
+  },
+  "A26": {
+    "q": "样品数量小数支持是什么？",
+    "page": "wiki/concepts/样品数量小数支持.md",
+    "title": "样品数量小数支持",
+    "type": "concept",
+    "body_len": 202
+  },
+  "A27": {
+    "q": "请解释一下三级单据",
+    "page": "wiki/concepts/三级单据.md",
+    "title": "三级单据",
+    "type": "concept",
+    "body_len": 1244
+  },
+  "A28": {
+    "q": "\"成品待出运清单\"是什么？",
+    "page": "wiki/entities/成品待出运清单.md",
+    "title": "\"成品待出运清单\"",
+    "type": "entity",
+    "body_len": 531
+  },
+  "A29": {
+    "q": "什么是业务协同模板？",
+    "page": "wiki/entities/业务协同模板.md",
+    "title": "业务协同模板",
+    "type": "entity",
+    "body_len": 904
+  },
+  "A30": {
+    "q": "子款的定义是什么？",
+    "page": "wiki/entities/子款.md",
+    "title": "子款",
+    "type": "entity",
+    "body_len": 407
+  },
+  "A31": {
+    "q": "[客户系列]是什么？",
+    "page": "wiki/entities/[客户系列].md",
+    "title": "[客户系列]",
+    "type": "entity",
+    "body_len": 637
+  },
+  "A32": {
+    "q": "什么是更新物料信息？",
+    "page": "wiki/entities/更新物料信息.md",
+    "title": "更新物料信息",
+    "type": "entity",
+    "body_len": 497
+  },
+  "A33": {
+    "q": "发货清单物料池的定义是什么？",
+    "page": "wiki/entities/发货清单物料池.md",
+    "title": "发货清单物料池",
+    "type": "entity",
+    "body_len": 299
+  },
+  "A34": {
+    "q": "物料采购主责方是什么？",
+    "page": "wiki/entities/物料采购主责方.md",
+    "title": "物料采购主责方",
+    "type": "entity",
+    "body_len": 171
+  },
+  "A35": {
+    "q": "什么是翻单纸样合同号？",
+    "page": "wiki/entities/翻单纸样合同号.md",
+    "title": "翻单纸样合同号",
+    "type": "entity",
+    "body_len": 160
+  },
+  "A36": {
+    "q": "业务1组的定义是什么？",
+    "page": "wiki/entities/业务1组.md",
+    "title": "业务1组",
+    "type": "entity",
+    "body_len": 181
+  },
+  "A37": {
+    "q": "客户系数是什么？",
+    "page": "wiki/entities/客户系数.md",
+    "title": "客户系数",
+    "type": "entity",
+    "body_len": 534
+  },
+  "A38": {
+    "q": "什么是打样物料需求单？",
+    "page": "wiki/entities/打样物料需求单.md",
+    "title": "打样物料需求单",
+    "type": "entity",
+    "body_len": 254
+  },
+  "A39": {
+    "q": "ERP Agent的定义是什么？",
+    "page": "wiki/entities/erp-agent.md",
+    "title": "ERP Agent",
+    "type": "entity",
+    "body_len": 593
+  },
+  "A40": {
+    "q": "采购汇率是什么？",
+    "page": "wiki/entities/采购汇率.md",
+    "title": "采购汇率",
+    "type": "entity",
+    "body_len": 436
+  },
+  "A41": {
+    "q": "什么是工艺师？",
+    "page": "wiki/entities/工艺师.md",
+    "title": "工艺师",
+    "type": "entity",
+    "body_len": 404
+  },
+  "A42": {
+    "q": "[姓名]的定义是什么？",
+    "page": "wiki/entities/[姓名].md",
+    "title": "[姓名]",
+    "type": "entity",
+    "body_len": 407
+  },
+  "A43": {
+    "q": "[姓名]是什么？",
+    "page": "wiki/entities/[姓名].md",
+    "title": "[姓名]",
+    "type": "entity",
+    "body_len": 357
+  },
+  "A44": {
+    "q": "什么是[客户]？",
+    "page": "wiki/entities/[客户].md",
+    "title": "[客户]",
+    "type": "entity",
+    "body_len": 245
+  },
+  "A45": {
+    "q": "客户A的定义是什么？",
+    "page": "wiki/entities/客户A.md",
+    "title": "客户A",
+    "type": "entity",
+    "body_len": 243
+  }
+}
