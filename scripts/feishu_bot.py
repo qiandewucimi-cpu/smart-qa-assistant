@@ -42,7 +42,10 @@
         ⑥ 命令：/help（帮助）、/reset（新对话）；
         ⑦ 用量埋点：每次问答追加一行元数据到 data/usage_log.jsonl
            （只记耗时/来源数/拒答标记等，**不记问题原文**），
-           供 scripts/usage_stats.py 统计真实用量。
+           供 scripts/usage_stats.py 统计真实用量；
+        ⑧ 出站擦除（2026-09-14）：答案正文与来源标题在发送前过一遍擦除表
+           （与「评测产物擦除」共用 sanitize_eval_results.scrub_text，规则只有一份）——
+           机器人直接把答案给终端用户，其输出不经过 eval/，闸门② 覆盖不到。
 """
 import hashlib
 import json
@@ -58,6 +61,28 @@ from datetime import datetime
 import lark_oapi as lark
 
 from config import API_BASE, BASE, load_token, load_feishu, load_bot_settings
+
+# 出站擦除（最后一道脱敏闸门）：机器人把答案直接送给终端用户，这条链路
+# 不经过 eval/，闸门② 覆盖不到。规则与「评测产物擦除」共用一份实现
+# （sanitize_eval_results.scrub_text），保证不漂移。
+# 降级策略：擦除模块不可用时**不擦**而不是让机器人起不来——可用性优先。
+try:
+    from sanitize_eval_results import scrub_text as _scrub_text
+except Exception as _ex:                        # pragma: no cover
+    print("[bot] 出站擦除模块不可用，已降级为不擦除:", _ex)
+
+    def _scrub_text(t):
+        return t, {}
+
+
+def scrub_outbound(*texts):
+    """对若干段文本做出站擦除，返回 (擦除后的列表, 命中次数)。"""
+    out, total = [], 0
+    for t in texts:
+        new, hits = _scrub_text(t or "")
+        out.append(new)
+        total += sum(hits.values())
+    return out, total
 
 TOKEN = load_token()
 APP_ID, APP_SECRET = load_feishu()
@@ -345,13 +370,16 @@ def _worker(client):
             answer, refs, sess = ask_wiki(text, sid)
             elapsed = round(time.time() - t0, 1)
             _set_session(chat_id, sess)
+            # 出站擦除：答案正文 + 来源标题（来源页名也可能带编译期派生的真实专名）
+            cleaned, scrubbed = scrub_outbound(answer, *refs)
+            answer, refs = cleaned[0], cleaned[1:]
             card = _card_answer(answer, refs, elapsed)
 
             # 用量埋点（元数据；失败不影响回复）
             _log_usage(source="feishu", chat=_h(chat_id), q_hash=_h(text),
                        q_len=len(text), latency_s=elapsed, n_refs=len(refs),
                        multi_turn=bool(sid), refused=bool(_REFUSAL_HINT.search(answer or "")),
-                       ok=True)
+                       scrubbed=scrubbed, ok=True)
 
             # 3) 原地更新进度卡片；失败则退回「新消息回复」
             if not prog_id or not _patch_card(client, prog_id, card):
@@ -408,6 +436,8 @@ def _ask_once(question):
     t0 = time.time()
     answer, refs, sess = ask_wiki(question)
     elapsed = round(time.time() - t0, 1)
+    cleaned, scrubbed = scrub_outbound(answer, *refs)   # 与线上同一条出站擦除
+    answer, refs = cleaned[0], cleaned[1:]
     print(f"（耗时 {elapsed}s，sessionId={sess}）\n")
     print(answer or "（知识库里没有找到相关内容）")
     if refs:
@@ -415,7 +445,7 @@ def _ask_once(question):
     # 命令行自测也埋点，但标 source=cli，避免与真实群聊用量混在一起
     _log_usage(source="cli", chat=_h(question), q_hash=_h(question), q_len=len(question),
                latency_s=elapsed, n_refs=len(refs), multi_turn=False,
-               refused=bool(_REFUSAL_HINT.search(answer or "")), ok=True)
+               refused=bool(_REFUSAL_HINT.search(answer or "")), scrubbed=scrubbed, ok=True)
 
 
 def main():

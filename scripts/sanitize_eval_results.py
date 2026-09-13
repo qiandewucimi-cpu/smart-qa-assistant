@@ -25,6 +25,11 @@
 
 被擦的词来自 gitignored 的 `maps_local.py`（`EVAL_SCRUB`），公开仓库里不留明文。
 
+**同一条规则也用在「出站」**（2026-09-14 起）：`scripts/feishu_bot.py` 在把答案发回飞书前
+调用本模块的 `scrub_text()` 擦一遍——这是最后一道闸门，因为机器人**直接把答案答给终端用户**，
+其输出不经过 `eval/` 那条链路，闸门②覆盖不到（见 `docs/复盘报告.md` 坑 19 的延伸）。
+擦除规则只有 `scrub_text()` 一份实现，文件擦除与出站擦除共用，避免漂移。
+
 **两层词表**（2026-09-13 补第二层）：
   ① `EVAL_SCRUB`——手工维护的「已观测到的派生专名」，带指定替换文案；
   ② 完整真实词表（`clean_text` 的 NAME/COMPANY/CLIENT 映射）——兜住第一批没预料到的
@@ -69,11 +74,19 @@ except ImportError:
 
 _COVERED = {t for t, _ in EVAL_SCRUB}
 
+# 通用层最短词长。2026-09-14 由 3 降到 2：
+# 起因是给飞书机器人加**出站擦除**时发现，`>=3` 会把 16 个**两字中文词条**
+# （真实姓名 / 简称 / 地名，如两字姓名、`内地`）漏掉——它们在评测产物里恰好没出现，
+# 所以闸门②一直"通过"，但**用户的答案里可能出现**。
+# 降到 2 后对现有 32 个产物复跑仍是 **0 命中**（无新增误报）；
+# 两字中文词条几乎不与正常业务词重叠，误伤风险（如 `内地市`→`内地市`）远小于漏 PII 的代价。
+MIN_TERM_LEN = 2
+
 
 def generic_terms():
     """完整真实词表里、且不被 EVAL_SCRUB 覆盖的词（长串优先）。"""
     return sorted((t for t in _GENERIC_TERMS
-                   if t and len(t.strip()) >= 3 and t not in _COVERED),
+                   if t and len(t.strip()) >= MIN_TERM_LEN and t not in _COVERED),
                   key=len, reverse=True)
 
 
@@ -116,9 +129,12 @@ def scan(path: Path):
     return out
 
 
-def apply_scrub(path: Path):
-    text = path.read_text(encoding="utf-8", errors="replace")
-    before = text
+def scrub_text(text: str):
+    """对一段文本执行两层擦除，返回 ``(新文本, {命中词: 次数})``。
+
+    **单一来源**：文件擦除（`apply_scrub`）与**飞书机器人出站**都走这里——
+    擦除规则只能有一份实现，否则两条链路会漂移（同 `eval_common` 的约定）。
+    """
     hits = {}
     for term, repl in EVAL_SCRUB:          # 顺序即长度优先，见 maps_local 注释
         n = text.count(term)
@@ -129,8 +145,14 @@ def apply_scrub(path: Path):
         text, n = p.subn(GENERIC_REPL, text)
         if n:
             hits[term] = n
-    if text != before:
-        path.write_text(text, encoding="utf-8")
+    return text, hits
+
+
+def apply_scrub(path: Path):
+    text = path.read_text(encoding="utf-8", errors="replace")
+    new, hits = scrub_text(text)
+    if new != text:
+        path.write_text(new, encoding="utf-8")
     return hits
 
 

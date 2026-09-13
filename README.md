@@ -106,7 +106,7 @@
 | **判定规则** | `scripts/eval_common.py` | 框架失败判定 + Wilson 区间，**全项目唯一一份**（此前 `eval_chat.py` 与 `ab_analysis.py` 各写一份，有漂移风险） |
 | 拒答评测 | `scripts/eval_refusal.py` | 语料外问题（应拒答）+ 语料内冷门模块对照（应回答），量化**拒答率 / 误拒率 / 拒答幻觉率** |
 | 拒答题库校验 | `scripts/check_refusal_bank.py` | 验证「语料外」题的关键词在 119 份语料中确实命中为 0（拒答测试成立的前提） |
-| 飞书机器人 | `scripts/feishu_bot.py` | 飞书消息 → LLM-Wiki 问答 → 卡片回复（多轮会话 / 进度更新 / 超时重试 / **用量埋点**；`--selftest`、`--ask` 可离线验证） |
+| 飞书机器人 | `scripts/feishu_bot.py` | 飞书消息 → LLM-Wiki 问答 → 卡片回复（多轮会话 / 进度更新 / 超时重试 / **用量埋点** / **出站擦除**；`--selftest`、`--ask` 可离线验证） |
 | 用量统计 | `scripts/usage_stats.py` | 读 `data/usage_log.jsonl`：提问数 / 去重提问数 / **唯一会话数（人数近似）** / 延迟分位 / 拒答率 / 多轮占比 |
 
 ## 目录结构
@@ -323,6 +323,22 @@ python scripts/sanitize_eval_results.py --apply   # 就地擦除
 > **+ 完整真实词表**（来自 `clean_text` 的映射，统一替换为 `<已脱敏>`）。后者是 2026-09-13 补的——
 > 手工清单只覆盖「撞见过的形态」，正是它漏掉了那个真实客户名；ASCII 词用**词边界**匹配，防短词命中长词内部（如 `ABC` 命中 `ABCDEF`）。
 > **经验：改了检索策略，要重新评估"什么信息会出现在输出里"——脱敏闸门得跟着数据流向扩。**
+
+### 第四层：出站擦除（机器人把答案直接给用户）
+
+前三道闸门管的是**入库的东西**（语料、wiki、`eval/` 产物）。但**飞书机器人直接把答案发给终端用户**，
+这条链路的输出不落在 `eval/`，闸门②覆盖不到——而它恰恰是最接近真实用户的一环。
+因此 `feishu_bot.py` 在发送前对**答案正文 + 来源标题**各过一遍同一张擦除表：
+
+```python
+# feishu_bot.py（发送前）
+cleaned, scrubbed = scrub_outbound(answer, *refs)   # 复用 sanitize_eval_results.scrub_text
+```
+
+> 擦除规则**只有 `sanitize_eval_results.scrub_text()` 一份实现**，文件擦除与出站擦除共用（防漂移）。
+> 2026-09-14 加这一层时顺带发现通用词表有 `len>=3` 过滤，会漏掉**两字中文姓名/地名**——
+> 已降到 `len>=2`；对现有 32 个产物复跑仍 0 命中（无新增误报）。
+> 冒烟：`python scripts/feishu_bot.py --ask "…"` 可端到端验证（答案里若真有派生专名会被替换掉）。
 
 ## 评测方法
 

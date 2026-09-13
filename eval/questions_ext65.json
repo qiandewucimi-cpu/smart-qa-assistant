@@ -1,0 +1,457 @@
+{
+  "A01": {
+    "q": "什么是理单员职责？",
+    "page": "wiki/concepts/理单员职责.md",
+    "title": "理单员职责",
+    "type": "concept",
+    "body_len": 839
+  },
+  "A02": {
+    "q": "分色分码单耗是什么？",
+    "page": "wiki/concepts/分色分码单耗.md",
+    "title": "分色分码单耗",
+    "type": "concept",
+    "body_len": 408
+  },
+  "A03": {
+    "q": "请解释一下多件包",
+    "page": "wiki/concepts/多件包.md",
+    "title": "多件包",
+    "type": "concept",
+    "body_len": 820
+  },
+  "A04": {
+    "q": "什么是非协同节点？",
+    "page": "wiki/concepts/非协同节点.md",
+    "title": "非协同节点",
+    "type": "concept",
+    "body_len": 565
+  },
+  "A05": {
+    "q": "核料纸样可选范围是什么？",
+    "page": "wiki/concepts/核料纸样可选范围.md",
+    "title": "核料纸样可选范围",
+    "type": "concept",
+    "body_len": 767
+  },
+  "A06": {
+    "q": "请解释一下大货技术资料包状态流转",
+    "page": "wiki/concepts/大货技术资料包状态流转.md",
+    "title": "大货技术资料包状态流转",
+    "type": "concept",
+    "body_len": 1084
+  },
+  "A07": {
+    "q": "什么是\"让步接收处理流程\"？",
+    "page": "wiki/concepts/让步接收处理流程.md",
+    "title": "\"让步接收处理流程\"",
+    "type": "concept",
+    "body_len": 1037
+  },
+  "A08": {
+    "q": "节点层级结构是什么？",
+    "page": "wiki/concepts/节点层级结构.md",
+    "title": "节点层级结构",
+    "type": "concept",
+    "body_len": 1071
+  },
+  "A09": {
+    "q": "请解释一下技术资料文件管理",
+    "page": "wiki/concepts/技术资料文件管理.md",
+    "title": "技术资料文件管理",
+    "type": "concept",
+    "body_len": 197
+  },
+  "A10": {
+    "q": "什么是生产损耗率取值规则？",
+    "page": "wiki/concepts/生产损耗率取值规则.md",
+    "title": "生产损耗率取值规则",
+    "type": "concept",
+    "body_len": 586
+  },
+  "A11": {
+    "q": "物料应收款与成品应收款对冲是什么？",
+    "page": "wiki/concepts/物料应收款与成品应收款对冲.md",
+    "title": "物料应收款与成品应收款对冲",
+    "type": "concept",
+    "body_len": 462
+  },
+  "A12": {
+    "q": "请解释一下一级二级核料",
+    "page": "wiki/concepts/一级二级核料.md",
+    "title": "一级二级核料",
+    "type": "concept",
+    "body_len": 415
+  },
+  "A13": {
+    "q": "什么是五段式模板？",
+    "page": "wiki/concepts/五段式模板.md",
+    "title": "五段式模板",
+    "type": "concept",
+    "body_len": 960
+  },
+  "A14": {
+    "q": "拆分报关单证是什么？",
+    "page": "wiki/concepts/拆分报关单证.md",
+    "title": "拆分报关单证",
+    "type": "concept",
+    "body_len": 710
+  },
+  "A15": {
+    "q": "请解释一下成本录入方法",
+    "page": "wiki/concepts/成本录入方法.md",
+    "title": "成本录入方法",
+    "type": "concept",
+    "body_len": 1599
+  },
+  "A16": {
+    "q": "什么是物料单号设置？",
+    "page": "wiki/concepts/物料单号设置.md",
+    "title": "物料单号设置",
+    "type": "concept",
+    "body_len": 474
+  },
+  "A17": {
+    "q": "ERP接口适配是什么？",
+    "page": "wiki/concepts/ERP接口适配.md",
+    "title": "ERP接口适配",
+    "type": "concept",
+    "body_len": 1320
+  },
+  "A18": {
+    "q": "请解释一下核单合并规则",
+    "page": "wiki/concepts/核单合并规则.md",
+    "title": "核单合并规则",
+    "type": "concept",
+    "body_len": 298
+  },
+  "A19": {
+    "q": "什么是二次加工损耗率？",
+    "page": "wiki/concepts/二次加工损耗率.md",
+    "title": "二次加工损耗率",
+    "type": "concept",
+    "body_len": 279
+  },
+  "A20": {
+    "q": "拆分报关发票是什么？",
+    "page": "wiki/concepts/拆分报关发票.md",
+    "title": "拆分报关发票",
+    "type": "concept",
+    "body_len": 2194
+  },
+  "A21": {
+    "q": "请解释一下显示异常物料数据",
+    "page": "wiki/concepts/显示异常物料数据.md",
+    "title": "显示异常物料数据",
+    "type": "concept",
+    "body_len": 534
+  },
+  "A22": {
+    "q": "什么是销售毛利率？",
+    "page": "wiki/concepts/销售毛利率.md",
+    "title": "销售毛利率",
+    "type": "concept",
+    "body_len": 259
+  },
+  "A23": {
+    "q": "订单审核状态是什么？",
+    "page": "wiki/concepts/订单审核状态.md",
+    "title": "订单审核状态",
+    "type": "concept",
+    "body_len": 744
+  },
+  "A24": {
+    "q": "请解释一下加放系数",
+    "page": "wiki/concepts/加放系数.md",
+    "title": "加放系数",
+    "type": "concept",
+    "body_len": 702
+  },
+  "A25": {
+    "q": "什么是审核状态？",
+    "page": "wiki/concepts/审核状态.md",
+    "title": "审核状态",
+    "type": "concept",
+    "body_len": 150
+  },
+  "A26": {
+    "q": "样板单BOM比对是什么？",
+    "page": "wiki/concepts/样板单BOM比对.md",
+    "title": "样板单BOM比对",
+    "type": "concept",
+    "body_len": 440
+  },
+  "A27": {
+    "q": "请解释一下业务场景合同需求",
+    "page": "wiki/concepts/业务场景合同需求.md",
+    "title": "业务场景合同需求",
+    "type": "concept",
+    "body_len": 1411
+  },
+  "A28": {
+    "q": "什么是款式信息校验？",
+    "page": "wiki/concepts/款式信息校验.md",
+    "title": "款式信息校验",
+    "type": "concept",
+    "body_len": 1990
+  },
+  "A29": {
+    "q": "核料单是什么？",
+    "page": "wiki/concepts/核料单.md",
+    "title": "核料单",
+    "type": "concept",
+    "body_len": 1386
+  },
+  "A30": {
+    "q": "请解释一下远期汇率取值逻辑",
+    "page": "wiki/concepts/远期汇率取值逻辑.md",
+    "title": "远期汇率取值逻辑",
+    "type": "concept",
+    "body_len": 368
+  },
+  "A31": {
+    "q": "什么是待合单生成门槛字段？",
+    "page": "wiki/concepts/待合单生成门槛字段.md",
+    "title": "待合单生成门槛字段",
+    "type": "concept",
+    "body_len": 515
+  },
+  "A32": {
+    "q": "BOM复制机制是什么？",
+    "page": "wiki/concepts/BOM复制机制.md",
+    "title": "BOM复制机制",
+    "type": "concept",
+    "body_len": 475
+  },
+  "A33": {
+    "q": "请解释一下分级定价",
+    "page": "wiki/concepts/分级定价.md",
+    "title": "分级定价",
+    "type": "concept",
+    "body_len": 1779
+  },
+  "A34": {
+    "q": "什么是翻单字段自动判定规则？",
+    "page": "wiki/concepts/翻单字段自动判定规则.md",
+    "title": "翻单字段自动判定规则",
+    "type": "concept",
+    "body_len": 885
+  },
+  "A35": {
+    "q": "5.1-5.2业务逻辑关系是什么？",
+    "page": "wiki/concepts/5.1-5.2业务逻辑关系.md",
+    "title": "5.1-5.2业务逻辑关系",
+    "type": "concept",
+    "body_len": 296
+  },
+  "A36": {
+    "q": "请解释一下成品分级分类",
+    "page": "wiki/concepts/成品分级分类.md",
+    "title": "成品分级分类",
+    "type": "concept",
+    "body_len": 945
+  },
+  "A37": {
+    "q": "什么是混色多件包？",
+    "page": "wiki/concepts/混色多件包.md",
+    "title": "混色多件包",
+    "type": "concept",
+    "body_len": 643
+  },
+  "A38": {
+    "q": "面辅是什么？",
+    "page": "wiki/concepts/面辅.md",
+    "title": "面辅",
+    "type": "concept",
+    "body_len": 321
+  },
+  "A39": {
+    "q": "请解释一下节点流转",
+    "page": "wiki/concepts/节点流转.md",
+    "title": "节点流转",
+    "type": "concept",
+    "body_len": 368
+  },
+  "A40": {
+    "q": "什么是合单操作？",
+    "page": "wiki/concepts/合单操作.md",
+    "title": "合单操作",
+    "type": "concept",
+    "body_len": 553
+  },
+  "A41": {
+    "q": "什么是虚拟室？",
+    "page": "wiki/entities/虚拟室.md",
+    "title": "虚拟室",
+    "type": "entity",
+    "body_len": 284
+  },
+  "A42": {
+    "q": "企业主体的定义是什么？",
+    "page": "wiki/entities/企业主体.md",
+    "title": "企业主体",
+    "type": "entity",
+    "body_len": 685
+  },
+  "A43": {
+    "q": "内衣事业部是什么？",
+    "page": "wiki/entities/内衣事业部.md",
+    "title": "内衣事业部",
+    "type": "entity",
+    "body_len": 469
+  },
+  "A44": {
+    "q": "什么是组长？",
+    "page": "wiki/entities/组长.md",
+    "title": "组长",
+    "type": "entity",
+    "body_len": 221
+  },
+  "A45": {
+    "q": "工艺组长的定义是什么？",
+    "page": "wiki/entities/工艺组长.md",
+    "title": "工艺组长",
+    "type": "entity",
+    "body_len": 329
+  },
+  "A46": {
+    "q": "紧急采购是什么？",
+    "page": "wiki/entities/紧急采购.md",
+    "title": "紧急采购",
+    "type": "entity",
+    "body_len": 198
+  },
+  "A47": {
+    "q": "什么是采购预核单？",
+    "page": "wiki/entities/采购预核单.md",
+    "title": "采购预核单",
+    "type": "entity",
+    "body_len": 1028
+  },
+  "A48": {
+    "q": "APS系统的定义是什么？",
+    "page": "wiki/entities/APS系统.md",
+    "title": "APS系统",
+    "type": "entity",
+    "body_len": 474
+  },
+  "A49": {
+    "q": "字段字典是什么？",
+    "page": "wiki/entities/字段字典.md",
+    "title": "字段字典",
+    "type": "entity",
+    "body_len": 1009
+  },
+  "A50": {
+    "q": "什么是学员F（实习）？",
+    "page": "wiki/entities/学员F（实习）.md",
+    "title": "学员F（实习）",
+    "type": "entity",
+    "body_len": 184
+  },
+  "A51": {
+    "q": "工艺师的定义是什么？",
+    "page": "wiki/entities/工艺师.md",
+    "title": "工艺师",
+    "type": "entity",
+    "body_len": 404
+  },
+  "A52": {
+    "q": "物料待出运清单是什么？",
+    "page": "wiki/entities/物料待出运清单.md",
+    "title": "物料待出运清单",
+    "type": "entity",
+    "body_len": 505
+  },
+  "A53": {
+    "q": "什么是物料开发理单？",
+    "page": "wiki/entities/物料开发理单.md",
+    "title": "物料开发理单",
+    "type": "entity",
+    "body_len": 891
+  },
+  "A54": {
+    "q": "板料采购收料单的定义是什么？",
+    "page": "wiki/entities/板料采购收料单.md",
+    "title": "板料采购收料单",
+    "type": "entity",
+    "body_len": 492
+  },
+  "A55": {
+    "q": "样衣质检结果是什么？",
+    "page": "wiki/entities/样衣质检结果.md",
+    "title": "样衣质检结果",
+    "type": "entity",
+    "body_len": 160
+  },
+  "A56": {
+    "q": "什么是学员B（实习）？",
+    "page": "wiki/entities/学员B（实习）.md",
+    "title": "学员B（实习）",
+    "type": "entity",
+    "body_len": 184
+  },
+  "A57": {
+    "q": "CP模板的定义是什么？",
+    "page": "wiki/entities/CP模板.md",
+    "title": "CP模板",
+    "type": "entity",
+    "body_len": 991
+  },
+  "A58": {
+    "q": "订单系数是什么？",
+    "page": "wiki/entities/订单系数.md",
+    "title": "订单系数",
+    "type": "entity",
+    "body_len": 438
+  },
+  "A59": {
+    "q": "什么是已核单？",
+    "page": "wiki/entities/已核单.md",
+    "title": "已核单",
+    "type": "entity",
+    "body_len": 305
+  },
+  "A60": {
+    "q": "\"成品出口报关\"的定义是什么？",
+    "page": "wiki/entities/成品出口报关.md",
+    "title": "\"成品出口报关\"",
+    "type": "entity",
+    "body_len": 560
+  },
+  "A61": {
+    "q": "物料出库单是什么？",
+    "page": "wiki/entities/物料出库单.md",
+    "title": "物料出库单",
+    "type": "entity",
+    "body_len": 456
+  },
+  "A62": {
+    "q": "什么是尺寸代码 11-0602TCX？",
+    "page": "wiki/entities/尺寸代码-11-0602TCX.md",
+    "title": "尺寸代码 11-0602TCX",
+    "type": "entity",
+    "body_len": 683
+  },
+  "A63": {
+    "q": "审核人编号310的定义是什么？",
+    "page": "wiki/entities/审核人编号310.md",
+    "title": "审核人编号310",
+    "type": "entity",
+    "body_len": 318
+  },
+  "A64": {
+    "q": "二次加工物料是什么？",
+    "page": "wiki/entities/二次加工物料.md",
+    "title": "二次加工物料",
+    "type": "entity",
+    "body_len": 555
+  },
+  "A65": {
+    "q": "什么是导师B？",
+    "page": "wiki/entities/导师B.md",
+    "title": "导师B",
+    "type": "entity",
+    "body_len": 1174
+  }
+}

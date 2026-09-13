@@ -29,7 +29,17 @@ v1.2 的 A/B 证明：**同配置下 D1 跨时段测出 1/10 与 3/5，差 50pp*
 已提交的那份题集**保持在现场**，因为 `评测结果_raw_ext_f1/f2.json` 是拿它跑的，
 换掉就会让已有产物不可复算。代价是：**仓库里的题集 ≠ 现在重跑脚本的输出**——
 这是**已知且有意保留**的差异，等下次重跑评测时一并换成新题集（届时要重跑两轮）。
+
+用法（2026-09-14 起支持参数）
+----------------------------
+    python scripts/gen_eval_set.py                 # 默认 45 题 → eval/questions_ext.json
+    python scripts/gen_eval_set.py --concept 40 --entity 25 \
+        --out-json eval/questions_ext60.json --out-md eval/评测集_扩展60.md
+
+扩样本时**新开一份文件**、不覆盖旧 45 题集，这样 `ext_f1/f2` 仍可复算；
+新集用当前（已升级的）护栏生成，因此与旧集**不是**同一批题、两集分数**不可混算**。
 """
+import argparse
 import json
 import os
 import random
@@ -112,7 +122,7 @@ def parse_page(path):
     return meta, body
 
 
-def collect(sub, limit, skipped):
+def collect(sub, limit, skipped, seed=SEED):
     d = os.path.join(WIKI, sub)
     if not os.path.isdir(d):
         return []
@@ -136,13 +146,24 @@ def collect(sub, limit, skipped):
             'type': meta.get('type') or sub,
             'body_len': len(body),
         })
-    random.Random(SEED).shuffle(cands)
+    random.Random(seed).shuffle(cands)
     return cands[:limit]
 
 
 def main():
+    ap = argparse.ArgumentParser(description='生成扩展评测集（固定种子可复现）')
+    ap.add_argument('--concept', type=int, default=N_CONCEPT,
+                    help='概念题数（默认 %d）' % N_CONCEPT)
+    ap.add_argument('--entity', type=int, default=N_ENTITY,
+                    help='实体题数（默认 %d）' % N_ENTITY)
+    ap.add_argument('--seed', type=int, default=SEED, help='随机种子（默认 %d）' % SEED)
+    ap.add_argument('--out-json', default=OUT_JSON, help='输出题集 JSON')
+    ap.add_argument('--out-md', default=OUT_MD, help='输出题集说明 Markdown')
+    args = ap.parse_args()
+
     skipped = []
-    items = collect('concepts', N_CONCEPT, skipped) + collect('entities', N_ENTITY, skipped)
+    items = (collect('concepts', args.concept, skipped, args.seed)
+             + collect('entities', args.entity, skipped, args.seed))
     out = {}
     for i, it in enumerate(items, 1):
         key = 'A%02d' % i
@@ -155,15 +176,16 @@ def main():
             'type': it['type'],
             'body_len': it['body_len'],
         }
-    with open(OUT_JSON, 'w', encoding='utf-8') as f:
+    with open(args.out_json, 'w', encoding='utf-8') as f:
         json.dump(out, f, ensure_ascii=False, indent=2)
 
+    rel_json = os.path.relpath(args.out_json, BASE).replace('\\', '/')
     lines = [
         '# 扩展评测集（自动生成 · 用于稳定性与框架失败率测量）',
         '',
-        '> 生成：`python scripts/gen_eval_set.py`（固定种子 %d，可复现）' % SEED,
-        '> 数据：`eval/questions_ext.json`　|　共 **%d 题**（概念 %d + 实体 %d）' % (
-            len(out), N_CONCEPT, N_ENTITY),
+        '> 生成：`python scripts/gen_eval_set.py`（固定种子 %d，可复现）' % args.seed,
+        '> 数据：`%s`　|　共 **%d 题**（概念 %d + 实体 %d）' % (
+            rel_json, len(out), args.concept, args.entity),
         '',
         '## 判定口径：「引用可溯源」',
         '',
@@ -191,11 +213,11 @@ def main():
     ]
     for k, v in out.items():
         lines.append('| %s | %s | `%s` | %s |' % (k, v['q'], v['page'], v['type']))
-    with open(OUT_MD, 'w', encoding='utf-8') as f:
+    with open(args.out_md, 'w', encoding='utf-8') as f:
         f.write('\n'.join(lines) + '\n')
 
-    print('已生成 %d 题 -> %s' % (len(out), OUT_JSON))
-    print('        说明 -> %s' % OUT_MD)
+    print('已生成 %d 题 -> %s' % (len(out), args.out_json))
+    print('        说明 -> %s' % args.out_md)
     if skipped:
         print('⚠️ 已按标题护栏跳过 %d 页（按原因分组）：' % len(skipped))
         from collections import defaultdict
