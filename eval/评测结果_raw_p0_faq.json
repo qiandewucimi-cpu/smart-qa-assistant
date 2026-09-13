@@ -1,0 +1,2260 @@
+{
+  "D1": {
+    "answer": "根据 [wiki/queries/加放系数与短溢装的区别.md](wiki/queries/加放系数与短溢装的区别.md) 的内容，两者的核心区别如下：\n\n### 一句话概括\n**短溢装**是「客户允许我交多少」——属于客户层面的**交货容差**；\n**加放系数**是「我要做多少才够交」——属于内部与加工厂约定的**生产损耗补偿**。\n\n### 详细对比\n\n| 维度 | 短溢装 | 加放系数 |\n|---|---|---|\n| **层面** | 客户层面 | 内部层面 |\n| **本质** | 客户允许的交货数量浮动范围（容差） | 为应对生产损耗、不良品而增加的比例 |\n| **目的** | 客户给予的交货灵活性 | 保证实际成品数量够交（内部保障） |\n| **影响** | 影响**验收标准** | 影响**生产要求**与物料采购 |\n| **方向** | 双向（可短装也可溢装） | 单向（只做加） |\n| **结果** | 可接受的**交付区间** | 要求工厂实际**生产的成品数量** |\n\n### 数值示例（以100件订单为例）\n- **短溢装 ±5%**：交付 **95 ~ 105 件**客户都应接受。这是验收的上下限。\n- **加放系数 5%**：实际生产数量 = 100 × (1 + 5%) = **105 件**。这是必须做出来的件数，用来损耗后仍能交足100件。\n\n> 关键区别：短溢装的 105 是「最多可以交」，加放系数的 105 是「必须做出来」。\n\n### 配置位置\n两者虽然都在**客户档案**的「**短溢装设置**」里按包装方式配置，但它们是两个独立的字段，用途不同。设置加放系数后，理单界面会显示「原始成品件数」和「加放系数成品件数」两个数值。",
+    "references": [
+      {
+        "path": "wiki/concepts/加放系数.md",
+        "title": "加放系数",
+        "score": 498.0
+      },
+      {
+        "path": "wiki/concepts/加工单加放系数.md",
+        "title": "加工单加放系数",
+        "score": 298.0
+      },
+      {
+        "path": "wiki/concepts/加放系数应用.md",
+        "title": "加放系数应用",
+        "score": 298.0
+      },
+      {
+        "path": "wiki/concepts/加放系数成品件数.md",
+        "title": "加放系数成品件数",
+        "score": 298.0
+      },
+      {
+        "path": "wiki/queries/加放系数与短溢装的区别.md",
+        "title": "加放系数与短溢装的区别",
+        "score": 298.0
+      },
+      {
+        "path": "wiki/concepts/包装方式配置参数.md",
+        "title": "包装方式配置参数",
+        "score": 213.0
+      },
+      {
+        "path": "wiki/sources/DLS系统上线培训手册——0102—合作伙伴——客户档案 20231228.md",
+        "title": "DLS系统上线培训手册——0102—合作伙伴——客户档案 20231228",
+        "score": 173.0
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "title": "理单",
+        "score": 88.0
+      },
+      {
+        "path": "wiki/entities/订单配置状态.md",
+        "title": "订单配置状态",
+        "score": 68.0
+      },
+      {
+        "path": "wiki/findings/理单环节的拆分与系数计算逻辑.md",
+        "title": "理单环节的拆分与系数计算逻辑",
+        "score": 103.0
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/concepts/加放系数.md",
+        "kind": "wiki",
+        "score": 498.0
+      },
+      {
+        "path": "wiki/concepts/加工单加放系数.md",
+        "kind": "wiki",
+        "score": 298.0
+      },
+      {
+        "path": "wiki/concepts/加放系数应用.md",
+        "kind": "wiki",
+        "score": 298.0
+      },
+      {
+        "path": "wiki/concepts/加放系数成品件数.md",
+        "kind": "wiki",
+        "score": 298.0
+      },
+      {
+        "path": "wiki/queries/加放系数与短溢装的区别.md",
+        "kind": "wiki",
+        "score": 298.0
+      },
+      {
+        "path": "wiki/concepts/包装方式配置参数.md",
+        "kind": "wiki",
+        "score": 213.0
+      },
+      {
+        "path": "wiki/sources/DLS系统上线培训手册——0102—合作伙伴——客户档案 20231228.md",
+        "kind": "wiki",
+        "score": 173.0
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "kind": "graph",
+        "score": 88.0
+      },
+      {
+        "path": "wiki/entities/订单配置状态.md",
+        "kind": "graph",
+        "score": 68.0
+      },
+      {
+        "path": "wiki/findings/理单环节的拆分与系数计算逻辑.md",
+        "kind": "graph",
+        "score": 103.0
+      }
+    ],
+    "usage": {
+      "completionChars": 1638,
+      "promptChars": 14600,
+      "referenceCount": 10,
+      "toolEventCount": 13
+    },
+    "elapsed": 102.4,
+    "scoring": true,
+    "base_key": "D1",
+    "continue_rounds": 0,
+    "continue_reasons": []
+  },
+  "D1#2": {
+    "answer": "根据 `wiki/queries/加放系数与短溢装的区别.md` 页面的对照说明，两者的区别主要体现在以下四个方面：\n\n1.  **本质不同**\n    *   **短溢装**是「客户允许我交多少」，属于客户层面的**交货容差**。它设定了交付数量的浮动范围（如 ±5%），在此范围内客户都应接受。\n    *   **加放系数**是「我要做多少才够交」，属于内部与加工厂的约定，用来**补生产损耗**。它是在订单数量上增加的比例，以保证即使有损耗也能交足货。\n\n2.  **方向不同**\n    *   **短溢装**是**双向**的，包含短装（少交）和溢装（多交）两个方向。\n    *   **加放系数**是**单向**的，只做**加**（增加），不做减。\n\n3.  **目的与影响不同**\n    *   **短溢装**影响的是**验收标准**（多退少补或拒收的依据）。\n    *   **加放系数**影响的是**生产要求**与物料采购（决定工厂实际要做多少件、买多少料）。\n\n4.  **数值示例**（以 100 件订单为例）\n    *   **短溢装 ±5%**：表示交付 **95 ~ 105 件**客户都应接受。其中 105 件是「最多可以交」的上限。\n    *   **加放系数 5%**：表示算出 100 × (1 + 5%) = **105 件**。这里的 105 件是「必须做出来」的生产目标，用于抵消损耗以确保能交够 100 件。\n\n此外，两者在系统配置上容易混淆，因为它们**都配置在客户档案的「短溢装设置」页签下**，按包装方式分别设置。",
+    "references": [
+      {
+        "path": "wiki/queries/加放系数与短溢装的区别.md",
+        "title": "加放系数与短溢装的区别",
+        "score": 84.0
+      },
+      {
+        "path": "wiki/concepts/加放系数.md",
+        "title": "加放系数",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/concepts/加放系数应用.md",
+        "title": "加放系数应用",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/concepts/加工单加放系数.md",
+        "title": "加工单加放系数",
+        "score": 50.0
+      },
+      {
+        "path": "wiki/concepts/加放系数成品件数.md",
+        "title": "加放系数成品件数",
+        "score": 48.0
+      },
+      {
+        "path": "wiki/concepts/短溢装.md",
+        "title": "短溢装",
+        "score": 44.0
+      },
+      {
+        "path": "wiki/concepts/短溢装设置.md",
+        "title": "短溢装设置",
+        "score": 44.0
+      },
+      {
+        "path": "wiki/entities/客户档案.md",
+        "title": "客户档案",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "title": "理单",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/entities/订单配置状态.md",
+        "title": "订单配置状态",
+        "score": 8.0
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/queries/加放系数与短溢装的区别.md",
+        "kind": "wiki",
+        "score": 84.0
+      },
+      {
+        "path": "wiki/concepts/加放系数.md",
+        "kind": "wiki",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/concepts/加放系数应用.md",
+        "kind": "wiki",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/concepts/加工单加放系数.md",
+        "kind": "wiki",
+        "score": 50.0
+      },
+      {
+        "path": "wiki/concepts/加放系数成品件数.md",
+        "kind": "wiki",
+        "score": 48.0
+      },
+      {
+        "path": "wiki/concepts/短溢装.md",
+        "kind": "wiki",
+        "score": 44.0
+      },
+      {
+        "path": "wiki/concepts/短溢装设置.md",
+        "kind": "wiki",
+        "score": 44.0
+      },
+      {
+        "path": "wiki/entities/客户档案.md",
+        "kind": "graph",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "kind": "graph",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/entities/订单配置状态.md",
+        "kind": "graph",
+        "score": 8.0
+      }
+    ],
+    "usage": {
+      "completionChars": 1526,
+      "promptChars": 14741,
+      "referenceCount": 10,
+      "toolEventCount": 10
+    },
+    "elapsed": 70.4,
+    "scoring": true,
+    "base_key": "D1",
+    "continue_rounds": 0,
+    "continue_reasons": []
+  },
+  "D1#3": {
+    "answer": "加放系数和短溢装在订单管理中的主要区别如下：\n\n1. **定义与目的不同**\n   - **加放系数**：是一个用于生产计算和成本管理的参数，主要用来补偿生产过程中的损耗。它在理单环节用于计算“加放系数成品件数”，即实际需要投入生产的数量往往比订单数量多，以确保最终交付量达标【wiki/concepts/加放系数.md】【wiki/concepts/加放系数成品件数.md】。\n   - **短溢装**：是客户要求的交货容差范围。它定义了实际交付数量与订单数量之间允许的偏差（如下限%和上限%），属于客户要求的一部分【wiki/concepts/短溢装.md】【wiki/concepts/短溢装设置.md】。\n\n2. **应用阶段不同**\n   - **加放系数**：主要用于**生产准备和采购阶段**。例如在“加工单加放系数”中，它影响采购数量和生产计划的制定【wiki/concepts/加工单加放系数.md】。\n   - **短溢装**：主要用于**交付和验收阶段**。它控制最终的装箱和发货数量是否在客户可接受的范围内【wiki/concepts/短溢装.md】。\n\n3. **计算方式不同**\n   - **加放系数**：通常是一个固定的比例或数值，直接用于增加订单基数（如：订单数量 × (1 + 加放系数)）。\n   - **短溢装**：表现为一个区间（如 ±5%），即交付数量在[订单数量 × (1 - 下限%), 订单数量 × (1 + 上限%)]之间均为合格【wiki/concepts/短溢装设置.md】。\n\n总结来说，加放系数是工厂内部为了应对损耗而主动增加的“备量”，而短溢装是客户对外部实际交付数量允许的“误差范围”。",
+    "references": [
+      {
+        "path": "wiki/queries/加放系数与短溢装的区别.md",
+        "title": "加放系数与短溢装的区别",
+        "score": 90.0
+      },
+      {
+        "path": "wiki/concepts/加放系数.md",
+        "title": "加放系数",
+        "score": 55.0
+      },
+      {
+        "path": "wiki/concepts/加放系数应用.md",
+        "title": "加放系数应用",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/concepts/加工单加放系数.md",
+        "title": "加工单加放系数",
+        "score": 50.0
+      },
+      {
+        "path": "wiki/concepts/加放系数成品件数.md",
+        "title": "加放系数成品件数",
+        "score": 48.0
+      },
+      {
+        "path": "wiki/concepts/短溢装.md",
+        "title": "短溢装",
+        "score": 45.0
+      },
+      {
+        "path": "wiki/concepts/短溢装设置.md",
+        "title": "短溢装设置",
+        "score": 45.0
+      },
+      {
+        "path": "wiki/entities/客户档案.md",
+        "title": "客户档案",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "title": "理单",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/entities/订单配置状态.md",
+        "title": "订单配置状态",
+        "score": 8.0
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/queries/加放系数与短溢装的区别.md",
+        "kind": "wiki",
+        "score": 90.0
+      },
+      {
+        "path": "wiki/concepts/加放系数.md",
+        "kind": "wiki",
+        "score": 55.0
+      },
+      {
+        "path": "wiki/concepts/加放系数应用.md",
+        "kind": "wiki",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/concepts/加工单加放系数.md",
+        "kind": "wiki",
+        "score": 50.0
+      },
+      {
+        "path": "wiki/concepts/加放系数成品件数.md",
+        "kind": "wiki",
+        "score": 48.0
+      },
+      {
+        "path": "wiki/concepts/短溢装.md",
+        "kind": "wiki",
+        "score": 45.0
+      },
+      {
+        "path": "wiki/concepts/短溢装设置.md",
+        "kind": "wiki",
+        "score": 45.0
+      },
+      {
+        "path": "wiki/entities/客户档案.md",
+        "kind": "graph",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "kind": "graph",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/entities/订单配置状态.md",
+        "kind": "graph",
+        "score": 8.0
+      }
+    ],
+    "usage": {
+      "completionChars": 1669,
+      "promptChars": 12899,
+      "referenceCount": 10,
+      "toolEventCount": 6
+    },
+    "elapsed": 45.9,
+    "scoring": true,
+    "base_key": "D1",
+    "continue_rounds": 0,
+    "continue_reasons": []
+  },
+  "D1#4": {
+    "answer": "**加放系数**和**短溢装**的核心区别在于：**短溢装是客户允许的交货容差（验收标准），而加放系数是内部为应对生产损耗而增加的生产数量（生产要求）。**\n\n根据 `wiki/queries/加放系数与短溢装的区别.md` 的详细对比，具体区别如下：\n\n1.  **本质与层面不同**\n    *   **短溢装**：属于**客户层面**。本质是客户允许的交货数量浮动范围（如 ±5%），给予交货灵活性。\n    *   **加放系数**：属于**内部层面**。本质是为了补生产损耗、不良品而在订单数量上增加的比例，以保证最终成品数量足够交付。\n\n2.  **方向不同**\n    *   **短溢装**：是**双向**的，包括短装（少交）和溢装（多交）两个方向。\n    *   **加放系数**：是**单向**的，只做**加**（增加），不会减少。\n\n3.  **计算示例（以100件订单为例）**\n    *   **短溢装 ±5%**：交付 **95 ~ 105 件**客户都应接受。这是验收的上下限。\n    *   **加放系数 5%**：要求生产的数量 = 100 × (1 + 5%) = **105 件**。这是工厂必须做出来的数量，以确保损耗后还能交足100件。\n\n4.  **配置位置**\n    *   两者都配置在**客户档案**的「短溢装设置」页签下，按包装方式分别设置，因此容易混淆。\n\n5.  **对系统的影响**\n    *   设置加放系数后，理单界面会显示**「原始成品件数」**和**「加放系数成品件数」**，后者用于指导实际生产与物料采购。\n\n总结来说，短溢装管的是“能不能交”，加放系数管的是“够不够做”。",
+    "references": [
+      {
+        "path": "wiki/concepts/加放系数.md",
+        "title": "加放系数",
+        "score": 498.0
+      },
+      {
+        "path": "wiki/concepts/加工单加放系数.md",
+        "title": "加工单加放系数",
+        "score": 298.0
+      },
+      {
+        "path": "wiki/concepts/加放系数应用.md",
+        "title": "加放系数应用",
+        "score": 298.0
+      },
+      {
+        "path": "wiki/concepts/加放系数成品件数.md",
+        "title": "加放系数成品件数",
+        "score": 298.0
+      },
+      {
+        "path": "wiki/queries/加放系数与短溢装的区别.md",
+        "title": "加放系数与短溢装的区别",
+        "score": 298.0
+      },
+      {
+        "path": "wiki/concepts/包装方式配置参数.md",
+        "title": "包装方式配置参数",
+        "score": 213.0
+      },
+      {
+        "path": "wiki/sources/DLS系统上线培训手册——0102—合作伙伴——客户档案 20231228.md",
+        "title": "DLS系统上线培训手册——0102—合作伙伴——客户档案 20231228",
+        "score": 173.0
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "title": "理单",
+        "score": 88.0
+      },
+      {
+        "path": "wiki/entities/订单配置状态.md",
+        "title": "订单配置状态",
+        "score": 68.0
+      },
+      {
+        "path": "wiki/findings/理单环节的拆分与系数计算逻辑.md",
+        "title": "理单环节的拆分与系数计算逻辑",
+        "score": 103.0
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/concepts/加放系数.md",
+        "kind": "wiki",
+        "score": 498.0
+      },
+      {
+        "path": "wiki/concepts/加工单加放系数.md",
+        "kind": "wiki",
+        "score": 298.0
+      },
+      {
+        "path": "wiki/concepts/加放系数应用.md",
+        "kind": "wiki",
+        "score": 298.0
+      },
+      {
+        "path": "wiki/concepts/加放系数成品件数.md",
+        "kind": "wiki",
+        "score": 298.0
+      },
+      {
+        "path": "wiki/queries/加放系数与短溢装的区别.md",
+        "kind": "wiki",
+        "score": 298.0
+      },
+      {
+        "path": "wiki/concepts/包装方式配置参数.md",
+        "kind": "wiki",
+        "score": 213.0
+      },
+      {
+        "path": "wiki/sources/DLS系统上线培训手册——0102—合作伙伴——客户档案 20231228.md",
+        "kind": "wiki",
+        "score": 173.0
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "kind": "graph",
+        "score": 88.0
+      },
+      {
+        "path": "wiki/entities/订单配置状态.md",
+        "kind": "graph",
+        "score": 68.0
+      },
+      {
+        "path": "wiki/findings/理单环节的拆分与系数计算逻辑.md",
+        "kind": "graph",
+        "score": 103.0
+      }
+    ],
+    "usage": {
+      "completionChars": 1635,
+      "promptChars": 14541,
+      "referenceCount": 10,
+      "toolEventCount": 10
+    },
+    "elapsed": 103.9,
+    "scoring": true,
+    "base_key": "D1",
+    "continue_rounds": 0,
+    "continue_reasons": []
+  },
+  "D1#5": {
+    "answer": "在订单管理与生产中，加放系数与短溢装是两个作用相反的参数：\n- 一句话答案：短溢装是“客户允许我交多少”（客户层面的交货容差）；加放系数是“我要做多少才够交”（内部与加工厂的约定，用来补生产损耗）。\n- 维度对照：\n  • 层面：短溢装面向客户；加放系数面向内部。\n  • 本质：短溢装为交货数量浮动范围（容差），加放系数为应对损耗、不良品而增加的订单比例。\n  • 目的：短溢装提供交货灵活性；加放系数保证成品够交。\n  • 取值方向：短溢装双向（少或多）；加放系数单向只增。\n  • 影响对象：短溢装影响验收标准；加放系数影响生产要求与物料采购。\n- 数值示例（100件订单）：\n  • 短溢装±5%：可交付95～105件（验收上下限）。\n  • 加放系数5%：需生产105件（必须做出来）。\n- 配置位置：均在客户档案的“短溢装设置”页签，按包装方式分别设置，但用途不同，易混淆。\n上述要点与数值示例来自 wiki/queries/加放系数与短溢装的区别.md，参见页面中的“并排对照”与“数值示例”部分。",
+    "references": [
+      {
+        "path": "wiki/queries/加放系数与短溢装的区别.md",
+        "title": "加放系数与短溢装的区别",
+        "score": 84.0
+      },
+      {
+        "path": "wiki/concepts/加放系数.md",
+        "title": "加放系数",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/concepts/加放系数应用.md",
+        "title": "加放系数应用",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/concepts/加工单加放系数.md",
+        "title": "加工单加放系数",
+        "score": 50.0
+      },
+      {
+        "path": "wiki/concepts/加放系数成品件数.md",
+        "title": "加放系数成品件数",
+        "score": 48.0
+      },
+      {
+        "path": "wiki/concepts/短溢装.md",
+        "title": "短溢装",
+        "score": 44.0
+      },
+      {
+        "path": "wiki/concepts/短溢装设置.md",
+        "title": "短溢装设置",
+        "score": 44.0
+      },
+      {
+        "path": "wiki/entities/客户档案.md",
+        "title": "客户档案",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "title": "理单",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/entities/订单配置状态.md",
+        "title": "订单配置状态",
+        "score": 8.0
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/queries/加放系数与短溢装的区别.md",
+        "kind": "wiki",
+        "score": 84.0
+      },
+      {
+        "path": "wiki/concepts/加放系数.md",
+        "kind": "wiki",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/concepts/加放系数应用.md",
+        "kind": "wiki",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/concepts/加工单加放系数.md",
+        "kind": "wiki",
+        "score": 50.0
+      },
+      {
+        "path": "wiki/concepts/加放系数成品件数.md",
+        "kind": "wiki",
+        "score": 48.0
+      },
+      {
+        "path": "wiki/concepts/短溢装.md",
+        "kind": "wiki",
+        "score": 44.0
+      },
+      {
+        "path": "wiki/concepts/短溢装设置.md",
+        "kind": "wiki",
+        "score": 44.0
+      },
+      {
+        "path": "wiki/entities/客户档案.md",
+        "kind": "graph",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "kind": "graph",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/entities/订单配置状态.md",
+        "kind": "graph",
+        "score": 8.0
+      }
+    ],
+    "usage": {
+      "completionChars": 1221,
+      "promptChars": 14800,
+      "referenceCount": 10,
+      "toolEventCount": 13
+    },
+    "elapsed": 36.1,
+    "scoring": true,
+    "base_key": "D1",
+    "continue_rounds": 0,
+    "continue_reasons": []
+  },
+  "D1#6": {
+    "answer": "根据 `wiki/queries/加放系数与短溢装的区别.md` 的内容，两者的主要区别如下：\n\n### 核心区别\n**短溢装**是「客户允许我交多少」——属于客户层面的**交货容差**；\n**加放系数**是「我要做多少才够交」——属于内部与加工厂的约定，用来**补生产损耗**。\n\n### 详细对照\n\n| 维度 | 短溢装 | 加放系数 |\n| :--- | :--- | :--- |\n| **层面** | 客户层面 | 内部/加工厂层面 |\n| **本质** | 客户允许的交货数量浮动范围（容差） | 为应对损耗而在订单数量上增加的比例 |\n| **目的** | 给予交货灵活性 | 保证实际成品数量足够交付 |\n| **方向** | **双向**：可短装（少）也可溢装（多） | **单向**：只增加，不减 |\n| **影响** | 影响**验收标准**（收多少货） | 影响**生产要求**与物料采购（做多少货） |\n\n### 数值示例（假设订单 100 件）\n- **短溢装 ±5%**：意味着最终交付 **95 ~ 105 件**客户都应接受。这是验收的上下限。\n- **加放系数 5%**：意味着工厂必须生产 100 × (1 + 5%) = **105 件**。这是为了防止损耗导致最后交不够 100 件。\n\n> **关键点**：短溢装的 105 是「**最多可以交**」，加放系数的 105 是「**必须做出来**」。\n\n### 配置提示\n两者在系统中的配置位置都在「客户档案」的「短溢装设置」页签下，按包装方式分别设置，因此容易混淆，但逻辑完全不同。配置加放系数后，理单界面会显示「加放系数成品件数」以指导生产。",
+    "references": [
+      {
+        "path": "wiki/concepts/加放系数.md",
+        "title": "加放系数",
+        "score": 498.0
+      },
+      {
+        "path": "wiki/concepts/加工单加放系数.md",
+        "title": "加工单加放系数",
+        "score": 298.0
+      },
+      {
+        "path": "wiki/concepts/加放系数应用.md",
+        "title": "加放系数应用",
+        "score": 298.0
+      },
+      {
+        "path": "wiki/concepts/加放系数成品件数.md",
+        "title": "加放系数成品件数",
+        "score": 298.0
+      },
+      {
+        "path": "wiki/queries/加放系数与短溢装的区别.md",
+        "title": "加放系数与短溢装的区别",
+        "score": 298.0
+      },
+      {
+        "path": "wiki/concepts/包装方式配置参数.md",
+        "title": "包装方式配置参数",
+        "score": 213.0
+      },
+      {
+        "path": "wiki/sources/DLS系统上线培训手册——0102—合作伙伴——客户档案 20231228.md",
+        "title": "DLS系统上线培训手册——0102—合作伙伴——客户档案 20231228",
+        "score": 173.0
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "title": "理单",
+        "score": 88.0
+      },
+      {
+        "path": "wiki/entities/订单配置状态.md",
+        "title": "订单配置状态",
+        "score": 68.0
+      },
+      {
+        "path": "wiki/findings/理单环节的拆分与系数计算逻辑.md",
+        "title": "理单环节的拆分与系数计算逻辑",
+        "score": 103.0
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/concepts/加放系数.md",
+        "kind": "wiki",
+        "score": 498.0
+      },
+      {
+        "path": "wiki/concepts/加工单加放系数.md",
+        "kind": "wiki",
+        "score": 298.0
+      },
+      {
+        "path": "wiki/concepts/加放系数应用.md",
+        "kind": "wiki",
+        "score": 298.0
+      },
+      {
+        "path": "wiki/concepts/加放系数成品件数.md",
+        "kind": "wiki",
+        "score": 298.0
+      },
+      {
+        "path": "wiki/queries/加放系数与短溢装的区别.md",
+        "kind": "wiki",
+        "score": 298.0
+      },
+      {
+        "path": "wiki/concepts/包装方式配置参数.md",
+        "kind": "wiki",
+        "score": 213.0
+      },
+      {
+        "path": "wiki/sources/DLS系统上线培训手册——0102—合作伙伴——客户档案 20231228.md",
+        "kind": "wiki",
+        "score": 173.0
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "kind": "graph",
+        "score": 88.0
+      },
+      {
+        "path": "wiki/entities/订单配置状态.md",
+        "kind": "graph",
+        "score": 68.0
+      },
+      {
+        "path": "wiki/findings/理单环节的拆分与系数计算逻辑.md",
+        "kind": "graph",
+        "score": 103.0
+      }
+    ],
+    "usage": {
+      "completionChars": 1582,
+      "promptChars": 14541,
+      "referenceCount": 10,
+      "toolEventCount": 10
+    },
+    "elapsed": 61.2,
+    "scoring": true,
+    "base_key": "D1",
+    "continue_rounds": 0,
+    "continue_reasons": []
+  },
+  "D1#7": {
+    "answer": "根据 [`wiki/queries/加放系数与短溢装的区别.md`](wiki/queries/加放系数与短溢装的区别.md) 的内容，两者的核心区别在于：\n\n**短溢装是「客户允许我交多少」——客户层面的交货容差；加放系数是「我要做多少才够交」——内部与加工厂的约定，用来补生产损耗。**\n\n以下是详细的对比：\n\n| 维度 | 短溢装 | 加放系数 |\n| :--- | :--- | :--- |\n| **层面** | 客户层面 | 内部/生产层面 |\n| **本质** | 客户允许的交货数量浮动范围（容差） | 为应对损耗、不良品而增加的比例 |\n| **目的** | 客户给予的交货灵活性 | 保证实际成品数量够交（内部保障） |\n| **取值方向** | 双向（短装少交 & 溢装多交） | 单向（只做加法，增加数量） |\n| **影响范围** | 影响验收标准（能否收货） | 影响生产要求与物料采购（做多少） |\n\n### 数值示例（假设订单 100 件）\n\n*   **短溢装 ±5%**：表示交付 **95 ~ 105 件**客户都应接受。少于 95 件可能拒收，多于 105 件通常不额外收费。这是**验收的上下限**。\n*   **加放系数 5%**：表示实际生产数量 = 100 × (1 + 5%) = **105 件**。这是**必须做出来的件数**，目的是抵消生产损耗，确保最终能交足 100 件。\n\n> **关键区别**：短溢装的 105 是「最多可以交」，加放系数的 105 是「必须做出来」。\n\n### 配置位置\n\n两者通常都在 **客户档案** 的「短溢装设置」中按**包装方式**分别配置，虽然配置位置相同，但用途相反，容易混淆。",
+    "references": [
+      {
+        "path": "wiki/queries/加放系数与短溢装的区别.md",
+        "title": "加放系数与短溢装的区别",
+        "score": 84.0
+      },
+      {
+        "path": "wiki/concepts/加放系数.md",
+        "title": "加放系数",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/concepts/加放系数应用.md",
+        "title": "加放系数应用",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/concepts/加工单加放系数.md",
+        "title": "加工单加放系数",
+        "score": 50.0
+      },
+      {
+        "path": "wiki/concepts/加放系数成品件数.md",
+        "title": "加放系数成品件数",
+        "score": 48.0
+      },
+      {
+        "path": "wiki/concepts/短溢装.md",
+        "title": "短溢装",
+        "score": 44.0
+      },
+      {
+        "path": "wiki/concepts/短溢装设置.md",
+        "title": "短溢装设置",
+        "score": 44.0
+      },
+      {
+        "path": "wiki/entities/客户档案.md",
+        "title": "客户档案",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "title": "理单",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/entities/订单配置状态.md",
+        "title": "订单配置状态",
+        "score": 8.0
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/queries/加放系数与短溢装的区别.md",
+        "kind": "wiki",
+        "score": 84.0
+      },
+      {
+        "path": "wiki/concepts/加放系数.md",
+        "kind": "wiki",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/concepts/加放系数应用.md",
+        "kind": "wiki",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/concepts/加工单加放系数.md",
+        "kind": "wiki",
+        "score": 50.0
+      },
+      {
+        "path": "wiki/concepts/加放系数成品件数.md",
+        "kind": "wiki",
+        "score": 48.0
+      },
+      {
+        "path": "wiki/concepts/短溢装.md",
+        "kind": "wiki",
+        "score": 44.0
+      },
+      {
+        "path": "wiki/concepts/短溢装设置.md",
+        "kind": "wiki",
+        "score": 44.0
+      },
+      {
+        "path": "wiki/entities/客户档案.md",
+        "kind": "graph",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "kind": "graph",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/entities/订单配置状态.md",
+        "kind": "graph",
+        "score": 8.0
+      }
+    ],
+    "usage": {
+      "completionChars": 1612,
+      "promptChars": 14741,
+      "referenceCount": 10,
+      "toolEventCount": 10
+    },
+    "elapsed": 119.7,
+    "scoring": true,
+    "base_key": "D1",
+    "continue_rounds": 0,
+    "continue_reasons": []
+  },
+  "D1#8": {
+    "answer": "根据 `wiki/queries/加放系数与短溢装的区别.md`，两者的核心区别如下：\n\n**一句话区别**\n*   **短溢装**是客户层面的**交货容差**（客户允许我交多少）；\n*   **加放系数**是内部层面的**生产保障**（我要做多少才够交）。\n\n**详细对比**\n\n| 维度 | 短溢装 | 加放系数 |\n|---|---|---|\n| **层面** | 客户层面 | 内部层面 |\n| **方向** | 双向（可少可多） | 单向（只增不减） |\n| **本质** | 交货数量的浮动范围 | 为补生产损耗而增加的比例 |\n| **作用** | 决定**验收标准**（交货区间） | 决定**生产要求**（实际投产数） |\n\n**示例（订单 100 件）**\n*   **短溢装 ±5%**：交付 **95~105 件** 均可被客户接受。\n*   **加放系数 5%**：必须生产 **105 件**，以抵消损耗确保交足 100 件。\n\n关键点在于：短溢装限定的是**交付范围**，加放系数计算的是**实际生产量**。",
+    "references": [
+      {
+        "path": "wiki/queries/加放系数与短溢装的区别.md",
+        "title": "加放系数与短溢装的区别",
+        "score": 84.0
+      },
+      {
+        "path": "wiki/concepts/加放系数.md",
+        "title": "加放系数",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/concepts/加放系数应用.md",
+        "title": "加放系数应用",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/concepts/加工单加放系数.md",
+        "title": "加工单加放系数",
+        "score": 50.0
+      },
+      {
+        "path": "wiki/concepts/加放系数成品件数.md",
+        "title": "加放系数成品件数",
+        "score": 48.0
+      },
+      {
+        "path": "wiki/concepts/短溢装.md",
+        "title": "短溢装",
+        "score": 44.0
+      },
+      {
+        "path": "wiki/concepts/短溢装设置.md",
+        "title": "短溢装设置",
+        "score": 44.0
+      },
+      {
+        "path": "wiki/entities/客户档案.md",
+        "title": "客户档案",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "title": "理单",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/entities/订单配置状态.md",
+        "title": "订单配置状态",
+        "score": 8.0
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/queries/加放系数与短溢装的区别.md",
+        "kind": "wiki",
+        "score": 84.0
+      },
+      {
+        "path": "wiki/concepts/加放系数.md",
+        "kind": "wiki",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/concepts/加放系数应用.md",
+        "kind": "wiki",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/concepts/加工单加放系数.md",
+        "kind": "wiki",
+        "score": 50.0
+      },
+      {
+        "path": "wiki/concepts/加放系数成品件数.md",
+        "kind": "wiki",
+        "score": 48.0
+      },
+      {
+        "path": "wiki/concepts/短溢装.md",
+        "kind": "wiki",
+        "score": 44.0
+      },
+      {
+        "path": "wiki/concepts/短溢装设置.md",
+        "kind": "wiki",
+        "score": 44.0
+      },
+      {
+        "path": "wiki/entities/客户档案.md",
+        "kind": "graph",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "kind": "graph",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/entities/订单配置状态.md",
+        "kind": "graph",
+        "score": 8.0
+      }
+    ],
+    "usage": {
+      "completionChars": 960,
+      "promptChars": 14741,
+      "referenceCount": 10,
+      "toolEventCount": 10
+    },
+    "elapsed": 65.4,
+    "scoring": true,
+    "base_key": "D1",
+    "continue_rounds": 0,
+    "continue_reasons": []
+  },
+  "D1#9": {
+    "answer": "> 「加放系数」和「短溢装」的对比见：[[wiki/queries/加放系数与短溢装的区别]]。按该页说明，两者区别可概括为：\n> - 一句话答案：短溢装是「客户允许我交多少」（客户层面的交货容差）；加放系数是「我要做多少才够交」（内部与加工厂的约定，用于补生产损耗）。前者管验收标准，后者管生产要求。\n> - 层面/本质/目的/来源/影响/取值方向/结果：短溢装为客户层面、交货数量浮动范围（容差）、给予交货灵活性、客户要求、影响验收标准、双向（短装与溢装），得出可接受的交付区间；加放系数为内部层面、为应对损耗在订单数量上增加的比例、保证成品够交、公司内部配置、影响生产要求与物料采购、单向只增，得出要求加工厂实际生产的成品数量。\n> - 示例：100 件订单。短溢装±5% → 交付 95~105 件可接受（最多可交 105）；加放系数5% → 须生产 105 件（必须做出来 105）。\n> - 配置位置：两者均在客户档案的「短溢装设置」中按包装方式分别设置，但用途相反。\n> - 易混淆点：不要因位置相同当成一回事；方向不同；可进一步查阅相关细分页（如 [[wiki/concepts/短溢装设置]]、[[wiki/concepts/加放系数应用]] 等）了解细节。",
+    "references": [
+      {
+        "path": "wiki/queries/加放系数与短溢装的区别.md",
+        "title": "加放系数与短溢装的区别",
+        "score": 84.0
+      },
+      {
+        "path": "wiki/concepts/加放系数.md",
+        "title": "加放系数",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/concepts/加放系数应用.md",
+        "title": "加放系数应用",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/concepts/加工单加放系数.md",
+        "title": "加工单加放系数",
+        "score": 50.0
+      },
+      {
+        "path": "wiki/concepts/加放系数成品件数.md",
+        "title": "加放系数成品件数",
+        "score": 48.0
+      },
+      {
+        "path": "wiki/concepts/短溢装.md",
+        "title": "短溢装",
+        "score": 44.0
+      },
+      {
+        "path": "wiki/concepts/短溢装设置.md",
+        "title": "短溢装设置",
+        "score": 44.0
+      },
+      {
+        "path": "wiki/entities/客户档案.md",
+        "title": "客户档案",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "title": "理单",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/entities/订单配置状态.md",
+        "title": "订单配置状态",
+        "score": 8.0
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/queries/加放系数与短溢装的区别.md",
+        "kind": "wiki",
+        "score": 84.0
+      },
+      {
+        "path": "wiki/concepts/加放系数.md",
+        "kind": "wiki",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/concepts/加放系数应用.md",
+        "kind": "wiki",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/concepts/加工单加放系数.md",
+        "kind": "wiki",
+        "score": 50.0
+      },
+      {
+        "path": "wiki/concepts/加放系数成品件数.md",
+        "kind": "wiki",
+        "score": 48.0
+      },
+      {
+        "path": "wiki/concepts/短溢装.md",
+        "kind": "wiki",
+        "score": 44.0
+      },
+      {
+        "path": "wiki/concepts/短溢装设置.md",
+        "kind": "wiki",
+        "score": 44.0
+      },
+      {
+        "path": "wiki/entities/客户档案.md",
+        "kind": "graph",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "kind": "graph",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/entities/订单配置状态.md",
+        "kind": "graph",
+        "score": 8.0
+      }
+    ],
+    "usage": {
+      "completionChars": 1371,
+      "promptChars": 14741,
+      "referenceCount": 10,
+      "toolEventCount": 10
+    },
+    "elapsed": 41.6,
+    "scoring": true,
+    "base_key": "D1",
+    "continue_rounds": 0,
+    "continue_reasons": []
+  },
+  "D1#10": {
+    "answer": "加放系数是生产数量计算中的参数，用于在订单基础上增加一定比例的数量以覆盖生产损耗、次品等，确保最终交付量满足订单要求；设置通常依据客户要求或工艺标准，可在客户档案、订单配置或加工单中进行配置。\n\n短溢装是交货数量容差，允许实际交货数量与订单数量存在一定上下浮动范围，常因包装、装箱规则或生产效率而设定，常见百分比区间在客户或订单级别的短溢装设置中管理。\n\n两者的区别主要在于：加放系数用于生产计划与采购计算，直接影响备料与生产量；短溢装用于交货数量与验收，影响最终交付的容许波动范围。\n\n相关Wiki页面：\n- wiki/queries/加放系数与短溢装的区别.md\n- wiki/concepts/加放系数.md\n- wiki/concepts/短溢装.md\n- wiki/concepts/加放系数应用.md\n- wiki/concepts/加工单加放系数.md\n- wiki/concepts/加放系数成品件数.md\n- wiki/concepts/短溢装设置.md\n- wiki/entities/客户档案.md\n- wiki/concepts/理单.md\n- wiki/entities/订单配置状态.md",
+    "references": [
+      {
+        "path": "wiki/queries/加放系数与短溢装的区别.md",
+        "title": "加放系数与短溢装的区别",
+        "score": 84.0
+      },
+      {
+        "path": "wiki/concepts/加放系数.md",
+        "title": "加放系数",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/concepts/加放系数应用.md",
+        "title": "加放系数应用",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/concepts/加工单加放系数.md",
+        "title": "加工单加放系数",
+        "score": 50.0
+      },
+      {
+        "path": "wiki/concepts/加放系数成品件数.md",
+        "title": "加放系数成品件数",
+        "score": 48.0
+      },
+      {
+        "path": "wiki/concepts/短溢装.md",
+        "title": "短溢装",
+        "score": 44.0
+      },
+      {
+        "path": "wiki/concepts/短溢装设置.md",
+        "title": "短溢装设置",
+        "score": 44.0
+      },
+      {
+        "path": "wiki/entities/客户档案.md",
+        "title": "客户档案",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "title": "理单",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/entities/订单配置状态.md",
+        "title": "订单配置状态",
+        "score": 8.0
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/queries/加放系数与短溢装的区别.md",
+        "kind": "wiki",
+        "score": 84.0
+      },
+      {
+        "path": "wiki/concepts/加放系数.md",
+        "kind": "wiki",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/concepts/加放系数应用.md",
+        "kind": "wiki",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/concepts/加工单加放系数.md",
+        "kind": "wiki",
+        "score": 50.0
+      },
+      {
+        "path": "wiki/concepts/加放系数成品件数.md",
+        "kind": "wiki",
+        "score": 48.0
+      },
+      {
+        "path": "wiki/concepts/短溢装.md",
+        "kind": "wiki",
+        "score": 44.0
+      },
+      {
+        "path": "wiki/concepts/短溢装设置.md",
+        "kind": "wiki",
+        "score": 44.0
+      },
+      {
+        "path": "wiki/entities/客户档案.md",
+        "kind": "graph",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/concepts/理单.md",
+        "kind": "graph",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/entities/订单配置状态.md",
+        "kind": "graph",
+        "score": 8.0
+      }
+    ],
+    "usage": {
+      "completionChars": 1106,
+      "promptChars": 13183,
+      "referenceCount": 10,
+      "toolEventCount": 9
+    },
+    "elapsed": 84.6,
+    "scoring": true,
+    "base_key": "D1",
+    "continue_rounds": 0,
+    "continue_reasons": []
+  },
+  "D2": {
+    "answer": "根据 Wiki 页面【wiki/queries/待核单与已核单的区别.md】，待核单和已核单的主要区别如下：\n\n**1. 核心定义与作用**\n- **待核单**：系统在订单审核通过后，按制款维度自动生成的“原始核验单据”。它是理单流程的中间状态，为后续合并提供基础数据。\n- **已核单**：将多条待核单按指定条件合并后生成的“最终核验单据”。它获得唯一的**内部合同号**，成为后续采购、生产等环节流转的核心标识。\n\n**2. 详细维度对比**\n- **生成方式**：待核单由系统自动生成；已核单由待核单按规则合并生成。\n- **数量关系**：单款订单对应一条待核单，套装订单对应多条；多条待核单合并为一条已核单。\n- **生成时机**：订单审核通过后生成待核单；待核单产生后进行合并生成已核单。\n- **标识符**：待核单关联原始订单号；已核单拥有唯一的内部合同号。\n\n**3. 流程流转**\n意向/正式订单审核通过 → 自动生成待核单 → 按核单合并规则合并 → 生成已核单（获取内部合同号）。",
+    "references": [
+      {
+        "path": "wiki/queries/待核单与已核单的区别.md",
+        "title": "待核单与已核单的区别",
+        "score": 60.0
+      },
+      {
+        "path": "wiki/entities/已核单.md",
+        "title": "已核单",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/entities/待核单.md",
+        "title": "待核单",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/concepts/核单合并规则.md",
+        "title": "核单合并规则",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/concepts/核单条件.md",
+        "title": "核单条件",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/entities/采购预核单.md",
+        "title": "采购预核单",
+        "score": 19.0
+      },
+      {
+        "path": "wiki/concepts/核价单状态流转逻辑.md",
+        "title": "核价单状态流转逻辑",
+        "score": 16.0
+      },
+      {
+        "path": "wiki/entities/内部合同号.md",
+        "title": "内部合同号",
+        "score": 7.0
+      },
+      {
+        "path": "wiki/index.md",
+        "title": "Wiki Index",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/queries/订单审核与采购核料单数据流转.md",
+        "title": "订单审核通过后数据如何流转到采购核料单",
+        "score": 12.0
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/queries/待核单与已核单的区别.md",
+        "kind": "wiki",
+        "score": 60.0
+      },
+      {
+        "path": "wiki/entities/已核单.md",
+        "kind": "wiki",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/entities/待核单.md",
+        "kind": "wiki",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/concepts/核单合并规则.md",
+        "kind": "wiki",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/concepts/核单条件.md",
+        "kind": "wiki",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/entities/采购预核单.md",
+        "kind": "wiki",
+        "score": 19.0
+      },
+      {
+        "path": "wiki/concepts/核价单状态流转逻辑.md",
+        "kind": "wiki",
+        "score": 16.0
+      },
+      {
+        "path": "wiki/entities/内部合同号.md",
+        "kind": "graph",
+        "score": 7.0
+      },
+      {
+        "path": "wiki/index.md",
+        "kind": "graph",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/queries/订单审核与采购核料单数据流转.md",
+        "kind": "graph",
+        "score": 12.0
+      }
+    ],
+    "usage": {
+      "completionChars": 1144,
+      "promptChars": 14070,
+      "referenceCount": 10,
+      "toolEventCount": 10
+    },
+    "elapsed": 92.1,
+    "scoring": true,
+    "base_key": "D2",
+    "continue_rounds": 0,
+    "continue_reasons": []
+  },
+  "D2#2": {
+    "answer": "根据项目文档 [wiki/queries/待核单与已核单的区别.md](wiki/queries/待核单与已核单的区别.md)，待核单和已核单的主要区别如下：\n\n**一句话概括：**\n待核单是订单审核通过后系统自动生成的**中间状态单据**；已核单是将多个待核单按规则**合并**后生成的**最终单据**，并拥有唯一的内部合同号。\n\n**详细对照表：**\n\n| 维度 | 待核单 | 已核单 |\n| :--- | :--- | :--- |\n| **来源** | 系统**自动生成** | 由待核单**按指定条件合并**生成 |\n| **生成时机** | 意向、正式订单**审核通过后** | 待核单产生之后 |\n| **生成维度** | 按**制款维度**生成 | 按合并条件归集（如客系列、客季节等） |\n| **数量关系** | 单款订单1条；套装订单多条 | 多条待核单合并为**一条** |\n| **数据角色** | 理单流程的**中间状态** | 后续流转的**核心标识** |\n| **唯一标识** | 关联原始订单号 | 生成唯一的**内部合同号** |\n\n**流程关系：**\n1. 意向/正式订单审核通过 → 系统生成**待核单**；\n2. 依据 [[核单合并规则]](wiki/concepts/核单合并规则.md) 将待核单合并 → 生成**已核单**；\n3. 已核单获得 [[内部合同号]](wiki/entities/内部合同号.md)，用于后续采购、生产等环节。\n\n**易混淆点：**\n* 待核单中的“待”不是指“等待审核”，而是指“等待被合并/核验”。\n* 已核单并非“一张订单一张已核单”，而是同一客户下多个符合条件的待核单合并为一张。\n\n相关概念：[[待核单]](wiki/entities/待核单.md)、[[已核单]](wiki/entities/已核单.md)、[[核单合并规则]](wiki/concepts/核单合并规则.md)。",
+    "references": [
+      {
+        "path": "wiki/entities/待核单.md",
+        "title": "待核单",
+        "score": 446.0
+      },
+      {
+        "path": "wiki/queries/待核单与已核单的区别.md",
+        "title": "待核单与已核单的区别",
+        "score": 286.0
+      },
+      {
+        "path": "wiki/concepts/核单条件.md",
+        "title": "核单条件",
+        "score": 201.0
+      },
+      {
+        "path": "wiki/entities/已核单.md",
+        "title": "已核单",
+        "score": 121.0
+      },
+      {
+        "path": "wiki/sources/逐字稿-dls项目实习培训5-理单.md",
+        "title": "逐字稿-dls项目实习培训5-理单",
+        "score": 111.0
+      },
+      {
+        "path": "wiki/concepts/核单合并规则.md",
+        "title": "核单合并规则",
+        "score": 101.0
+      },
+      {
+        "path": "wiki/sources/dls项目实习培训5-理单.md",
+        "title": "DLS项目实习培训5-理单",
+        "score": 71.0
+      },
+      {
+        "path": "wiki/concepts/合单规则.md",
+        "title": "合单规则",
+        "score": 8.0
+      },
+      {
+        "path": "wiki/concepts/物料合并逻辑.md",
+        "title": "物料合并逻辑",
+        "score": 2.0
+      },
+      {
+        "path": "wiki/concepts/理单员职责.md",
+        "title": "理单员职责",
+        "score": 7.0
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/entities/待核单.md",
+        "kind": "wiki",
+        "score": 446.0
+      },
+      {
+        "path": "wiki/queries/待核单与已核单的区别.md",
+        "kind": "wiki",
+        "score": 286.0
+      },
+      {
+        "path": "wiki/concepts/核单条件.md",
+        "kind": "wiki",
+        "score": 201.0
+      },
+      {
+        "path": "wiki/entities/已核单.md",
+        "kind": "wiki",
+        "score": 121.0
+      },
+      {
+        "path": "wiki/sources/逐字稿-dls项目实习培训5-理单.md",
+        "kind": "wiki",
+        "score": 111.0
+      },
+      {
+        "path": "wiki/concepts/核单合并规则.md",
+        "kind": "wiki",
+        "score": 101.0
+      },
+      {
+        "path": "wiki/sources/dls项目实习培训5-理单.md",
+        "kind": "wiki",
+        "score": 71.0
+      },
+      {
+        "path": "wiki/concepts/合单规则.md",
+        "kind": "graph",
+        "score": 8.0
+      },
+      {
+        "path": "wiki/concepts/物料合并逻辑.md",
+        "kind": "graph",
+        "score": 2.0
+      },
+      {
+        "path": "wiki/concepts/理单员职责.md",
+        "kind": "graph",
+        "score": 7.0
+      }
+    ],
+    "usage": {
+      "completionChars": 1743,
+      "promptChars": 13643,
+      "referenceCount": 10,
+      "toolEventCount": 10
+    },
+    "elapsed": 88.5,
+    "scoring": true,
+    "base_key": "D2",
+    "continue_rounds": 0,
+    "continue_reasons": []
+  },
+  "D2#3": {
+    "answer": "待核单和已核单的主要区别如下：\n\n## 一句话总结\n待核单是系统自动生成的「原始核验单据」，是理单流程的中间状态；已核单是把待核单按指定条件「合并」之后生成的最终核验单据，并拿到唯一的内部合同号，成为后续单据流转的核心标识。\n\n## 详细对比\n\n| 维度 | 待核单 | 已核单 |\n|---|---|---|\n| **怎么来的** | 系统**自动生成** | 由待核单**按指定条件合并**生成 |\n| **生成时机** | 意向/正式订单**审核通过后** | 待核单产生之后，合并而成 |\n| **生成维度** | 按**制款维度**生成 | 按合并条件归集（同一客户下多个待核单） |\n| **数量关系** | 单款订单1条；套装订单对应**多条**制款数据 | 多条待核单合并为**一条** |\n| **数据角色** | 理单流程的**中间状态** | **最终单据**，后续流转的**核心标识** |\n| **标识** | 关联原始订单号 | 生成唯一的**内部合同号** |\n\n## 流程顺序\n1. 订单审核通过 → 系统自动生成**待核单**\n2. 按合并条件把待核单合并 → 生成**已核单**\n3. 已核单拿到**内部合同号**，贯穿采购、生产等环节\n\n## 易混淆点\n- **「待核单」的「待」不是「等待审核」**：它是订单审核通过后才生成的，指的是「等待被合并/核验」\n- **不是「一张订单一张已核单」**：是以合并条件归集的，同一客户下多个待核单可合并为一张\n\n## 相关页面\n详细说明请参考：[待核单与已核单的区别](wiki/queries/待核单与已核单的区别.md)、[待核单](wiki/entities/待核单.md)、[已核单](wiki/entities/已核单.md)、[核单合并规则](wiki/concepts/核单合并规则.md)、[内部合同号](wiki/entities/内部合同号.md)",
+    "references": [
+      {
+        "path": "wiki/queries/待核单与已核单的区别.md",
+        "title": "待核单与已核单的区别",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/entities/已核单.md",
+        "title": "已核单",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/entities/待核单.md",
+        "title": "待核单",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/concepts/核单合并规则.md",
+        "title": "核单合并规则",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/concepts/核单条件.md",
+        "title": "核单条件",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/entities/采购预核单.md",
+        "title": "采购预核单",
+        "score": 19.0
+      },
+      {
+        "path": "wiki/concepts/核价单状态流转逻辑.md",
+        "title": "核价单状态流转逻辑",
+        "score": 16.0
+      },
+      {
+        "path": "wiki/entities/内部合同号.md",
+        "title": "内部合同号",
+        "score": 7.0
+      },
+      {
+        "path": "wiki/index.md",
+        "title": "Wiki Index",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/queries/订单审核与采购核料单数据流转.md",
+        "title": "订单审核通过后数据如何流转到采购核料单",
+        "score": 12.0
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/queries/待核单与已核单的区别.md",
+        "kind": "wiki",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/entities/已核单.md",
+        "kind": "wiki",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/entities/待核单.md",
+        "kind": "wiki",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/concepts/核单合并规则.md",
+        "kind": "wiki",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/concepts/核单条件.md",
+        "kind": "wiki",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/entities/采购预核单.md",
+        "kind": "wiki",
+        "score": 19.0
+      },
+      {
+        "path": "wiki/concepts/核价单状态流转逻辑.md",
+        "kind": "wiki",
+        "score": 16.0
+      },
+      {
+        "path": "wiki/entities/内部合同号.md",
+        "kind": "graph",
+        "score": 7.0
+      },
+      {
+        "path": "wiki/index.md",
+        "kind": "graph",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/queries/订单审核与采购核料单数据流转.md",
+        "kind": "graph",
+        "score": 12.0
+      }
+    ],
+    "usage": {
+      "completionChars": 1808,
+      "promptChars": 14064,
+      "referenceCount": 10,
+      "toolEventCount": 10
+    },
+    "elapsed": 31.4,
+    "scoring": true,
+    "base_key": "D2",
+    "continue_rounds": 0,
+    "continue_reasons": []
+  },
+  "D2#4": {
+    "answer": "根据项目文档 `wiki/queries/待核单与已核单的区别.md`，两者的主要区别如下：\n\n**一句话总结：**\n待核单是系统自动生成的「原始核验单据」，是理单流程的中间状态；已核单是把待核单按指定条件「合并」之后生成的最终核验单据，并拿到唯一的内部合同号，成为后续单据流转的核心标识。\n\n**关键区别对照：**\n\n| 维度 | 待核单 | 已核单 |\n| :--- | :--- | :--- |\n| **生成方式** | 系统**自动生成** | 由待核单**按指定条件合并**生成 |\n| **生成时机** | 意向/正式订单**审核通过后** | 待核单产生之后，合并而成 |\n| **生成维度** | 按**制款维度**生成（单款1条，套装多条） | 按合并条件归集（同一客户下多条待核单合并为1条） |\n| **数据角色** | 理单流程的**中间状态** | **最终单据**，后续流转的**核心标识** |\n| **唯一标识** | 关联原始订单号 | 生成唯一的**内部合同号** |\n\n**流程顺序：**\n1. 意向/正式订单审核通过 → 系统自动生成待核单；\n2. 按[[核单合并规则]]把待核单合并 → 生成已核单；\n3. 已核单拿到内部合同号，往后贯穿采购、生产等环节。\n\n**注意事项：**\n* 「待核单」的「待」不是「等待审核」，而是指「等待被合并/核验」。\n* 并不是「一张订单一张已核单」，而是根据合并条件（如客系列、自系列等）归集的。",
+    "references": [
+      {
+        "path": "wiki/queries/待核单与已核单的区别.md",
+        "title": "待核单与已核单的区别",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/entities/已核单.md",
+        "title": "已核单",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/entities/待核单.md",
+        "title": "待核单",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/concepts/核单合并规则.md",
+        "title": "核单合并规则",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/concepts/核单条件.md",
+        "title": "核单条件",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/entities/采购预核单.md",
+        "title": "采购预核单",
+        "score": 19.0
+      },
+      {
+        "path": "wiki/concepts/核价单状态流转逻辑.md",
+        "title": "核价单状态流转逻辑",
+        "score": 16.0
+      },
+      {
+        "path": "wiki/entities/内部合同号.md",
+        "title": "内部合同号",
+        "score": 7.0
+      },
+      {
+        "path": "wiki/index.md",
+        "title": "Wiki Index",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/queries/订单审核与采购核料单数据流转.md",
+        "title": "订单审核通过后数据如何流转到采购核料单",
+        "score": 12.0
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/queries/待核单与已核单的区别.md",
+        "kind": "wiki",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/entities/已核单.md",
+        "kind": "wiki",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/entities/待核单.md",
+        "kind": "wiki",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/concepts/核单合并规则.md",
+        "kind": "wiki",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/concepts/核单条件.md",
+        "kind": "wiki",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/entities/采购预核单.md",
+        "kind": "wiki",
+        "score": 19.0
+      },
+      {
+        "path": "wiki/concepts/核价单状态流转逻辑.md",
+        "kind": "wiki",
+        "score": 16.0
+      },
+      {
+        "path": "wiki/entities/内部合同号.md",
+        "kind": "graph",
+        "score": 7.0
+      },
+      {
+        "path": "wiki/index.md",
+        "kind": "graph",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/queries/订单审核与采购核料单数据流转.md",
+        "kind": "graph",
+        "score": 12.0
+      }
+    ],
+    "usage": {
+      "completionChars": 1477,
+      "promptChars": 14064,
+      "referenceCount": 10,
+      "toolEventCount": 10
+    },
+    "elapsed": 68.2,
+    "scoring": true,
+    "base_key": "D2",
+    "continue_rounds": 0,
+    "continue_reasons": []
+  },
+  "D2#5": {
+    "answer": "根据项目文档 `wiki/queries/待核单与已核单的区别.md`，待核单和已核单的主要区别如下：\n\n**一句话总结**\n待核单是系统自动生成的「原始核验单据」，是理单流程的中间状态；已核单是把待核单按指定条件「合并」之后生成的最终核验单据，并拿到唯一的内部合同号，成为后续单据流转的核心标识。\n\n**详细对照**\n\n| 维度 | 待核单 | 已核单 |\n|---|---|---|\n| **怎么来的** | 系统**自动生成** | 由待核单**按指定条件合并**生成 |\n| **生成时机** | 意向/正式订单**审核通过后** | 待核单产生之后，合并而成 |\n| **生成维度** | 按**制款维度**生成 | 按合并条件归集（同一客户下多个待核单） |\n| **数量关系** | 单款订单 1 条数据；套装订单对应**多条**制款数据 | 多条待核单合并为**一条** |\n| **数据角色** | 理单流程的**中间状态**，为合并提供基础数据 | **最终单据**，后续流转的**核心标识** |\n| **标识** | 关联原始订单号 | 生成唯一的**内部合同号** |\n\n**链路上的先后关系**\n1. 订单审核通过 → 系统自动生成**待核单**。\n2. 按[[核单合并规则]]合并待核单 → 生成**已核单**。\n3. 已核单拿到[[内部合同号]]，贯穿采购、生产等后续环节。\n\n**易混淆点**\n*   「待核单」的「待」并非指「等待审核」，而是指订单审核通过后「等待被合并/核验」。\n*   已核单并非一一对应原始订单，而是按规则合并的结果。\n\n以上内容整理自 `wiki/queries/待核单与已核单的区别.md` 及其关联的 `wiki/entities/待核单.md`、`wiki/entities/已核单.md` 页面。",
+    "references": [
+      {
+        "path": "wiki/concepts/核单合并规则.md",
+        "title": "核单合并规则",
+        "score": 256.0
+      },
+      {
+        "path": "wiki/concepts/核单条件.md",
+        "title": "核单条件",
+        "score": 256.0
+      },
+      {
+        "path": "wiki/entities/已核单.md",
+        "title": "已核单",
+        "score": 256.0
+      },
+      {
+        "path": "wiki/entities/待核单.md",
+        "title": "待核单",
+        "score": 256.0
+      },
+      {
+        "path": "wiki/entities/采购预核单.md",
+        "title": "采购预核单",
+        "score": 256.0
+      },
+      {
+        "path": "wiki/queries/待核单与已核单的区别.md",
+        "title": "待核单与已核单的区别",
+        "score": 256.0
+      },
+      {
+        "path": "wiki/entities/内部合同号.md",
+        "title": "内部合同号",
+        "score": 201.0
+      },
+      {
+        "path": "wiki/index.md",
+        "title": "Wiki Index",
+        "score": 121.0
+      },
+      {
+        "path": "wiki/queries/订单审核与采购核料单数据流转.md",
+        "title": "订单审核通过后数据如何流转到采购核料单",
+        "score": 0.0039812646370023415
+      },
+      {
+        "path": "wiki/entities/款式档案.md",
+        "title": "款式档案",
+        "score": 0.003278688524590164
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/concepts/核单合并规则.md",
+        "kind": "wiki",
+        "score": 256.0
+      },
+      {
+        "path": "wiki/concepts/核单条件.md",
+        "kind": "wiki",
+        "score": 256.0
+      },
+      {
+        "path": "wiki/entities/已核单.md",
+        "kind": "wiki",
+        "score": 256.0
+      },
+      {
+        "path": "wiki/entities/待核单.md",
+        "kind": "wiki",
+        "score": 256.0
+      },
+      {
+        "path": "wiki/entities/采购预核单.md",
+        "kind": "wiki",
+        "score": 256.0
+      },
+      {
+        "path": "wiki/queries/待核单与已核单的区别.md",
+        "kind": "wiki",
+        "score": 256.0
+      },
+      {
+        "path": "wiki/entities/内部合同号.md",
+        "kind": "wiki",
+        "score": 201.0
+      },
+      {
+        "path": "wiki/index.md",
+        "kind": "graph",
+        "score": 121.0
+      },
+      {
+        "path": "wiki/queries/订单审核与采购核料单数据流转.md",
+        "kind": "graph",
+        "score": 0.0039812646370023415
+      },
+      {
+        "path": "wiki/entities/款式档案.md",
+        "kind": "graph",
+        "score": 0.003278688524590164
+      }
+    ],
+    "usage": {
+      "completionChars": 1728,
+      "promptChars": 14405,
+      "referenceCount": 10,
+      "toolEventCount": 10
+    },
+    "elapsed": 68.0,
+    "scoring": true,
+    "base_key": "D2",
+    "continue_rounds": 0,
+    "continue_reasons": []
+  },
+  "D2#6": {
+    "answer": "根据 [`wiki/queries/待核单与已核单的区别.md`](wiki/queries/待核单与已核单的区别.md) 页面，两者的主要区别如下：\n\n**一句话总结**\n待核单是系统自动生成的「原始核验单据」，是理单流程的中间状态；已核单是把待核单按指定条件「合并」之后生成的最终核验单据，并拿到唯一的内部合同号，成为后续单据流转的核心标识。\n\n**核心区别对照**\n\n| 维度 | 待核单 | 已核单 |\n| :--- | :--- | :--- |\n| **生成方式** | 系统**自动生成** | 由待核单**按指定条件合并**生成 |\n| **生成时机** | 意向/正式订单**审核通过后** | 待核单产生之后 |\n| **生成维度** | 按**制款维度**生成 | 按合并条件归集（同一客户下多个待核单） |\n| **数量关系** | 单款订单 1 条；套装订单对应**多条**制款数据 | 多条待核单合并为**一条**已核单 |\n| **数据角色** | 理单流程的**中间状态**，为合并提供基础数据 | **最终单据**，后续流转的**核心标识** |\n| **标识** | 关联原始订单号 | 生成唯一的**内部合同号** |\n\n**流程关系**\n1.  **订单审核通过** → 系统按制款维度自动生成**待核单**；\n2.  **合并** → 按[[核单合并规则]]（如客系列、自系列等）将待核单合并，生成**已核单**；\n3.  **流转** → 已核单拿到**内部合同号**，往后贯穿采购、生产等环节。\n\n**易混淆点**\n*   **「待核单」的「待」不是「等待审核」**：它是订单审核通过之后才生成的，指的是「等待被合并/核验」。\n*   **不是「一张订单一张已核单」**：是以合并条件归集的，同一客户下多个待核单可合并为一张。",
+    "references": [
+      {
+        "path": "wiki/concepts/核单合并规则.md",
+        "title": "核单合并规则",
+        "score": 256.0
+      },
+      {
+        "path": "wiki/concepts/核单条件.md",
+        "title": "核单条件",
+        "score": 256.0
+      },
+      {
+        "path": "wiki/entities/已核单.md",
+        "title": "已核单",
+        "score": 256.0
+      },
+      {
+        "path": "wiki/entities/待核单.md",
+        "title": "待核单",
+        "score": 256.0
+      },
+      {
+        "path": "wiki/entities/采购预核单.md",
+        "title": "采购预核单",
+        "score": 256.0
+      },
+      {
+        "path": "wiki/queries/待核单与已核单的区别.md",
+        "title": "待核单与已核单的区别",
+        "score": 256.0
+      },
+      {
+        "path": "wiki/entities/内部合同号.md",
+        "title": "内部合同号",
+        "score": 201.0
+      },
+      {
+        "path": "wiki/index.md",
+        "title": "Wiki Index",
+        "score": 121.0
+      },
+      {
+        "path": "wiki/queries/订单审核与采购核料单数据流转.md",
+        "title": "订单审核通过后数据如何流转到采购核料单",
+        "score": 0.0039812646370023415
+      },
+      {
+        "path": "wiki/entities/款式档案.md",
+        "title": "款式档案",
+        "score": 0.003278688524590164
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/concepts/核单合并规则.md",
+        "kind": "wiki",
+        "score": 256.0
+      },
+      {
+        "path": "wiki/concepts/核单条件.md",
+        "kind": "wiki",
+        "score": 256.0
+      },
+      {
+        "path": "wiki/entities/已核单.md",
+        "kind": "wiki",
+        "score": 256.0
+      },
+      {
+        "path": "wiki/entities/待核单.md",
+        "kind": "wiki",
+        "score": 256.0
+      },
+      {
+        "path": "wiki/entities/采购预核单.md",
+        "kind": "wiki",
+        "score": 256.0
+      },
+      {
+        "path": "wiki/queries/待核单与已核单的区别.md",
+        "kind": "wiki",
+        "score": 256.0
+      },
+      {
+        "path": "wiki/entities/内部合同号.md",
+        "kind": "wiki",
+        "score": 201.0
+      },
+      {
+        "path": "wiki/index.md",
+        "kind": "graph",
+        "score": 121.0
+      },
+      {
+        "path": "wiki/queries/订单审核与采购核料单数据流转.md",
+        "kind": "graph",
+        "score": 0.0039812646370023415
+      },
+      {
+        "path": "wiki/entities/款式档案.md",
+        "kind": "graph",
+        "score": 0.003278688524590164
+      }
+    ],
+    "usage": {
+      "completionChars": 1754,
+      "promptChars": 14405,
+      "referenceCount": 10,
+      "toolEventCount": 10
+    },
+    "elapsed": 81.5,
+    "scoring": true,
+    "base_key": "D2",
+    "continue_rounds": 0,
+    "continue_reasons": []
+  },
+  "D2#7": {
+    "answer": "当前项目上下文不包含与“待核单”或“已核单”相关的页面或证据，无法基于现有知识给出区别说明。如需回答该问题，请提供业务背景、所属系统或定义来源，我可以据此创建或更新相关页面。",
+    "references": [],
+    "event_refs": [],
+    "usage": {
+      "completionChars": 261,
+      "promptChars": 8967,
+      "referenceCount": 0,
+      "toolEventCount": 2
+    },
+    "elapsed": 6.5,
+    "scoring": true,
+    "base_key": "D2",
+    "continue_rounds": 0,
+    "continue_reasons": []
+  },
+  "D2#8": {
+    "answer": "根据 `wiki/queries/待核单与已核单的区别.md` 页面内容，两者的主要区别如下：\n\n**1. 定义与状态**\n- **待核单**：是订单（意向或正式）审核通过后，系统**自动按制款维度**生成的原始核验单据。它属于理单流程的**中间状态**，用于为后续合并提供基础数据。\n- **已核单**：是将多条待核单按指定条件（如客系列、自系列等，详见[[核单合并规则]]）**合并**后生成的最终核验单据。它属于**最终单据**，是后续采购、生产等环节流转的核心标识。\n\n**2. 生成逻辑与数量关系**\n- **待核单**：单款订单生成1条数据，套装订单对应多条制款数据。\n- **已核单**：同一客户下的多条待核单可合并为1条数据。\n\n**3. 标识字段**\n- **待核单**：关联的是**原始订单号**。\n- **已核单**：生成唯一的**内部合同号**，该ID贯穿后续所有业务环节。\n\n**4. 业务流程**\n订单审核通过 → 生成待核单 → 按规则合并 → 生成已核单（分配内部合同号）。\n\n**易混淆点**：\n- “待核单”的“待”并非指“等待审核”，而是指“等待被合并/核验”，因为它是在订单审核通过后才生成的。\n- 并不是“一张订单一张已核单”，而是按合并条件归集生成的。",
+    "references": [
+      {
+        "path": "wiki/concepts/核单合并规则.md",
+        "title": "核单合并规则",
+        "score": 256.0
+      },
+      {
+        "path": "wiki/concepts/核单条件.md",
+        "title": "核单条件",
+        "score": 256.0
+      },
+      {
+        "path": "wiki/entities/已核单.md",
+        "title": "已核单",
+        "score": 256.0
+      },
+      {
+        "path": "wiki/entities/待核单.md",
+        "title": "待核单",
+        "score": 256.0
+      },
+      {
+        "path": "wiki/entities/采购预核单.md",
+        "title": "采购预核单",
+        "score": 256.0
+      },
+      {
+        "path": "wiki/queries/待核单与已核单的区别.md",
+        "title": "待核单与已核单的区别",
+        "score": 256.0
+      },
+      {
+        "path": "wiki/entities/内部合同号.md",
+        "title": "内部合同号",
+        "score": 201.0
+      },
+      {
+        "path": "wiki/index.md",
+        "title": "Wiki Index",
+        "score": 121.0
+      },
+      {
+        "path": "wiki/queries/订单审核与采购核料单数据流转.md",
+        "title": "订单审核通过后数据如何流转到采购核料单",
+        "score": 0.0039812646370023415
+      },
+      {
+        "path": "wiki/entities/款式档案.md",
+        "title": "款式档案",
+        "score": 0.003278688524590164
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/concepts/核单合并规则.md",
+        "kind": "wiki",
+        "score": 256.0
+      },
+      {
+        "path": "wiki/concepts/核单条件.md",
+        "kind": "wiki",
+        "score": 256.0
+      },
+      {
+        "path": "wiki/entities/已核单.md",
+        "kind": "wiki",
+        "score": 256.0
+      },
+      {
+        "path": "wiki/entities/待核单.md",
+        "kind": "wiki",
+        "score": 256.0
+      },
+      {
+        "path": "wiki/entities/采购预核单.md",
+        "kind": "wiki",
+        "score": 256.0
+      },
+      {
+        "path": "wiki/queries/待核单与已核单的区别.md",
+        "kind": "wiki",
+        "score": 256.0
+      },
+      {
+        "path": "wiki/entities/内部合同号.md",
+        "kind": "wiki",
+        "score": 201.0
+      },
+      {
+        "path": "wiki/index.md",
+        "kind": "graph",
+        "score": 121.0
+      },
+      {
+        "path": "wiki/queries/订单审核与采购核料单数据流转.md",
+        "kind": "graph",
+        "score": 0.0039812646370023415
+      },
+      {
+        "path": "wiki/entities/款式档案.md",
+        "kind": "graph",
+        "score": 0.003278688524590164
+      }
+    ],
+    "usage": {
+      "completionChars": 1344,
+      "promptChars": 14405,
+      "referenceCount": 10,
+      "toolEventCount": 10
+    },
+    "elapsed": 61.1,
+    "scoring": true,
+    "base_key": "D2",
+    "continue_rounds": 0,
+    "continue_reasons": []
+  },
+  "D2#9": {
+    "answer": "根据 [wiki/queries/待核单与已核单的区别.md](wiki/queries/待核单与已核单的区别.md) 的内容，待核单与已核单的主要区别如下：\n\n### 核心区别\n- **待核单**：是系统自动生成的「原始核验单据」，属于理单流程的**中间状态**，主要用于为后续合并提供基础数据。\n- **已核单**：是把待核单按指定条件「合并」之后生成的最终核验单据，并拥有唯一的**内部合同号**，是后续采购、生产等环节流转的核心标识。\n\n### 详细对照\n\n| 维度 | 待核单 | 已核单 |\n| :--- | :--- | :--- |\n| **怎么来的** | 系统**自动生成** | 由待核单**按指定条件合并**生成 |\n| **生成时机** | 意向/正式订单**审核通过后** | 待核单产生之后，经合并而成 |\n| **生成维度** | 按**制款维度**生成 | 按合并条件归集（同一客户下多个待核单） |\n| **数量关系** | 单款订单1条；套装订单对应**多条** | 多条待核单合并为**一条** |\n| **数据角色** | 理单流程的**中间状态** | **最终单据**，后续流转的**核心标识** |\n| **标识** | 关联原始订单号 | 生成唯一的**内部合同号** |\n\n### 链路上的先后关系\n1.  订单审核通过 → 系统按制款维度自动生成**待核单**；\n2.  按[[核单合并规则]](wiki/concepts/核单合并规则.md)把待核单合并 → 生成**已核单**；\n3.  已核单拿到[[内部合同号]](wiki/entities/内部合同号.md)，往后贯穿后续环节。\n\n### 易混淆点\n- **「待核单」的「待」不是「等待审核」**：它是订单审核通过**之后**才自动生成的，指的是「等待被合并/核验」，**不是**「还没审核」。\n- **并非「一张订单一张已核单」**：同一客户下多个待核单可根据条件合并为一张已核单。\n\n您可以参考 [wiki/queries/待核单与已核单的区别.md](wiki/queries/待核单与已核单的区别.md) 获取更多细节。",
+    "references": [
+      {
+        "path": "wiki/queries/待核单与已核单的区别.md",
+        "title": "待核单与已核单的区别",
+        "score": 60.0
+      },
+      {
+        "path": "wiki/entities/已核单.md",
+        "title": "已核单",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/entities/待核单.md",
+        "title": "待核单",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/concepts/核单合并规则.md",
+        "title": "核单合并规则",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/concepts/核单条件.md",
+        "title": "核单条件",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/entities/采购预核单.md",
+        "title": "采购预核单",
+        "score": 19.0
+      },
+      {
+        "path": "wiki/concepts/核价单状态流转逻辑.md",
+        "title": "核价单状态流转逻辑",
+        "score": 16.0
+      },
+      {
+        "path": "wiki/entities/内部合同号.md",
+        "title": "内部合同号",
+        "score": 7.0
+      },
+      {
+        "path": "wiki/index.md",
+        "title": "Wiki Index",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/queries/订单审核与采购核料单数据流转.md",
+        "title": "订单审核通过后数据如何流转到采购核料单",
+        "score": 12.0
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/queries/待核单与已核单的区别.md",
+        "kind": "wiki",
+        "score": 60.0
+      },
+      {
+        "path": "wiki/entities/已核单.md",
+        "kind": "wiki",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/entities/待核单.md",
+        "kind": "wiki",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/concepts/核单合并规则.md",
+        "kind": "wiki",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/concepts/核单条件.md",
+        "kind": "wiki",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/entities/采购预核单.md",
+        "kind": "wiki",
+        "score": 19.0
+      },
+      {
+        "path": "wiki/concepts/核价单状态流转逻辑.md",
+        "kind": "wiki",
+        "score": 16.0
+      },
+      {
+        "path": "wiki/entities/内部合同号.md",
+        "kind": "graph",
+        "score": 7.0
+      },
+      {
+        "path": "wiki/index.md",
+        "kind": "graph",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/queries/订单审核与采购核料单数据流转.md",
+        "kind": "graph",
+        "score": 12.0
+      }
+    ],
+    "usage": {
+      "completionChars": 1989,
+      "promptChars": 14070,
+      "referenceCount": 10,
+      "toolEventCount": 10
+    },
+    "elapsed": 117.4,
+    "scoring": true,
+    "base_key": "D2",
+    "continue_rounds": 0,
+    "continue_reasons": []
+  },
+  "D2#10": {
+    "answer": "待核单指尚未完成核单操作的原始单据，用于后续合并与审核，见 wiki/entities/待核单.md 与 wiki/queries/待核单与已核单的区别.md。已核单指已完成核单操作的单据，通常已按规则合并并进入后续流转或归档，见 wiki/entities/已核单.md 与 wiki/queries/待核单与已核单的区别.md。二者在核单合并规则和流转上存在差异，见 wiki/concepts/核单合并规则.md；内部合同号等业务标识影响核单条件与合并操作，见 wiki/entities/内部合同号.md 与 wiki/concepts/核单条件.md。",
+    "references": [
+      {
+        "path": "wiki/queries/待核单与已核单的区别.md",
+        "title": "待核单与已核单的区别",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/entities/已核单.md",
+        "title": "已核单",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/entities/待核单.md",
+        "title": "待核单",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/concepts/核单合并规则.md",
+        "title": "核单合并规则",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/concepts/核单条件.md",
+        "title": "核单条件",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/entities/采购预核单.md",
+        "title": "采购预核单",
+        "score": 19.0
+      },
+      {
+        "path": "wiki/concepts/核价单状态流转逻辑.md",
+        "title": "核价单状态流转逻辑",
+        "score": 16.0
+      },
+      {
+        "path": "wiki/entities/内部合同号.md",
+        "title": "内部合同号",
+        "score": 7.0
+      },
+      {
+        "path": "wiki/index.md",
+        "title": "Wiki Index",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/queries/订单审核与采购核料单数据流转.md",
+        "title": "订单审核通过后数据如何流转到采购核料单",
+        "score": 12.0
+      }
+    ],
+    "event_refs": [
+      {
+        "path": "wiki/queries/待核单与已核单的区别.md",
+        "kind": "wiki",
+        "score": 54.0
+      },
+      {
+        "path": "wiki/entities/已核单.md",
+        "kind": "wiki",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/entities/待核单.md",
+        "kind": "wiki",
+        "score": 39.0
+      },
+      {
+        "path": "wiki/concepts/核单合并规则.md",
+        "kind": "wiki",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/concepts/核单条件.md",
+        "kind": "wiki",
+        "score": 24.0
+      },
+      {
+        "path": "wiki/entities/采购预核单.md",
+        "kind": "wiki",
+        "score": 19.0
+      },
+      {
+        "path": "wiki/concepts/核价单状态流转逻辑.md",
+        "kind": "wiki",
+        "score": 16.0
+      },
+      {
+        "path": "wiki/entities/内部合同号.md",
+        "kind": "graph",
+        "score": 7.0
+      },
+      {
+        "path": "wiki/index.md",
+        "kind": "graph",
+        "score": 9.0
+      },
+      {
+        "path": "wiki/queries/订单审核与采购核料单数据流转.md",
+        "kind": "graph",
+        "score": 12.0
+      }
+    ],
+    "usage": {
+      "completionChars": 589,
+      "promptChars": 12502,
+      "referenceCount": 10,
+      "toolEventCount": 6
+    },
+    "elapsed": 121.4,
+    "scoring": true,
+    "base_key": "D2",
+    "continue_rounds": 0,
+    "continue_reasons": []
+  }
+}

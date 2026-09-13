@@ -74,6 +74,26 @@ NEG_TERMS = {
     "D2": ["尚未经过审核", "尚未审核", "等待审核", "待审核订单"],
 }
 
+# ---------------------------------------------------------------------------
+# 否定语境识别（2026-09-13 修，p0_faq 暴露的误报）
+#
+# 问题：`NEG_TERMS` 原来只做**子串包含**判断。但 D2 的**正确**答法恰恰是
+# **主动纠正误解**——答案里会写「"待核单"的"待"**不是指**"等待审核"」。
+# 这句话里 `等待审核` 明明被否定了，却会被判成 hallucination。
+#
+# 实测代价：p0_faq 臂因此把 **7/10** 条正确答案判成 hallucination →
+# 会得出一条**完全错误**的结论（「注入对照页把 D2 搞坏了」），而真相是
+# 注入后答案**更对**（它会主动注明「不是等待审核」）。
+#
+# 所以负向标记必须**先看它有没有被否定**。
+# ---------------------------------------------------------------------------
+NEG_CUES = ("不是", "并非", "而非", "而不是", "不属于", "不代表", "≠", "误以为", "并非指")
+
+
+def _negated(text, pos, window=14):
+    """`pos` 处的词是否处在否定语境里（往回看 window 个字符有没有否定词）。"""
+    return any(c in text[max(0, pos - window):pos] for c in NEG_CUES)
+
 
 def judge_keyword(key, answer):
     """原 21 题的关键词判定。返回 hit / miss / hallucination / refuse / 框架失败类型。
@@ -92,8 +112,14 @@ def judge_keyword(key, answer):
     if not all(t in a for t in KEY_TERMS.get(base, [])):
         return "miss"
     for n in NEG_TERMS.get(base, []):
-        if n in a:
-            return "hallucination"
+        start = 0
+        while True:
+            i = a.find(n, start)
+            if i < 0:
+                break
+            if not _negated(a, i):        # 被否定的提及不算（见 NEG_CUES 注释）
+                return "hallucination"
+            start = i + len(n)
     return "hit"
 
 
