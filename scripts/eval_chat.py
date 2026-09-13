@@ -165,12 +165,41 @@ def chat(message, timeout=180, session_id=None):
 # 所以正解不是换模型（那要在**所有**题上多付 3.4× 延迟），
 # 而是**只对撞上限的那一小部分题补一轮**。
 # ---------------------------------------------------------------------------
-CONTINUE_MAX = 2          # 撞上限后最多补几轮# ⚠️ 提示语必须带「证据不足就说明缺什么」——第一版只写「请直接给出最终答案」，
+CONTINUE_MAX = 2          # 撞上限后最多补几轮
+# ⚠️ 提示语必须带「证据不足就说明缺什么」——第一版只写「请直接给出最终答案」，
 # A/B 实测把 2 次「框架无答案」变成了 2 次**自信的错答案**（与语料相反）。
-CONTINUE_PROMPT = (
+CONTINUE_PROMPT_BASE = (
     "请基于上面已检索到的内容直接给出最终答案，不要再调用任何工具。"
     "如果已检索到的内容不足以回答，请明确说明缺少什么，不要推测或编造。"
 )
+CONTINUE_PROMPT = CONTINUE_PROMPT_BASE   # 向后兼容：无首轮引用时的兜底
+CONTINUE_REF_MAX = 10     # 塞进续跑提示语的首轮引用条数上限（防提示语膨胀）
+
+
+def build_continue_prompt(refs):
+    """构造续跑提示语：把**首轮检索到的引用**带给续跑轮。
+
+    2026-09-14 修的问题：续跑提示语明令「不要再调用任何工具」，但首轮 references
+    没有跟着传下去 → 模型在续跑轮里自陈「wiki 中没有找到相关资料」，
+    可**首轮明明检索到了 10 条**（v1.3 §12.4）。结果续跑只把「框架崩了」
+    换成「诚实说不知道」，没换来命中率（6/15 vs 5/15，Fisher p=0.775）。
+
+    修法：把首轮引用拼进提示语，让模型有据可依，而不是被蒙着眼答题。
+    """
+    if not refs:
+        return CONTINUE_PROMPT_BASE
+    lines = []
+    for r in refs[:CONTINUE_REF_MAX]:
+        p = (r.get("path") or "").strip()
+        t = (r.get("title") or "").strip()
+        if not (p or t):
+            continue
+        lines.append("- " + (f"{t}（{p}）" if t and p and t != p else (t or p)))
+    if not lines:
+        return CONTINUE_PROMPT_BASE
+    return (CONTINUE_PROMPT_BASE
+            + "\n\n首轮已检索到以下资料，请优先依据它们作答：\n"
+            + "\n".join(lines))
 LIMIT_MARK = "tool-iteration limit"
 RAW_DUMP_MARK = "I found the following relevant project context"
 JSON_DUMP_MARKS = ('```json', '{"action"')
@@ -178,17 +207,23 @@ JSON_DUMP_MARKS = ('```json', '{"action"')
 # ---------------------------------------------------------------------------
 # 框架失败续跑（v1.2）
 def chat_resilient(message, timeout=180, max_continue=CONTINUE_MAX):
-    """提问；若框架失败则带 sessionId 补跑，直到拿到答案或用尽补跑次数。"""
+    """提问；若框架失败则带 sessionId 补跑，直到拿到答案或用尽补跑次数。
+
+    续跑轮被明令「不要再调用任何工具」，所以必须把**首轮引用**塞进提示语，
+    否则模型会以为「没检索到任何东西」（见 build_continue_prompt）。
+    """
     data = chat(message, timeout=timeout)
     sid = data.get("sessionId")
     reasons = []
+    first_refs = extract_answer(data).get("references") or []
     while sid and len(reasons) < max_continue:
         why = framework_failure(data)
         if not why:
             break
         reasons.append(why)
-        print(f"    ↻ 框架失败（{why}），带 sessionId 补第 {len(reasons)} 轮")
-        data = chat(CONTINUE_PROMPT, timeout=timeout, session_id=sid)
+        print(f"    ↻ 框架失败（{why}），带 sessionId + 首轮 {len(first_refs)} 条引用"
+              f"补第 {len(reasons)} 轮")
+        data = chat(build_continue_prompt(first_refs), timeout=timeout, session_id=sid)
         sid = data.get("sessionId") or sid
     return data, reasons
 
