@@ -63,7 +63,19 @@ Desktop.ini
 *.bak
 
 # 排查/监控产生的临时脚本与输出（下划线前缀，非项目正式内容）
+# ⚠️ 每加一种产物扩展名都要在这里补一行：2026-09-14 曾因只覆盖 .py/.txt，
+#    导致模型冒烟测试产物 eval/评测结果_raw_modelsmoke_glm-4.6.json 未被忽略、
+#    险些被 git add -A 带进公开仓库。
+/_*.py
 /_*.txt
+/_*.json
+/_*.log
 /scripts/_*.py
 /scripts/_*.txt
+/scripts/_*.json
+/scripts/_*.log
+/eval/_*.py
+/eval/_*.txt
+/eval/_*.json
+/eval/_*.log
 !/scripts/_probe_state.py
