@@ -87,7 +87,7 @@ def judge_keyword(key, answer):
     a = answer or ""
     if not a.strip():
         return "empty"
-    if "我没有足够的信息" in a or ("没有找到" in a and len(a) < 200):
+    if is_clean_refusal(a):
         return "refuse"
     if not all(t in a for t in KEY_TERMS.get(base, [])):
         return "miss"
@@ -95,6 +95,38 @@ def judge_keyword(key, answer):
         if n in a:
             return "hallucination"
     return "hit"
+
+
+# ---------------------------------------------------------------------------
+# 零召回后的「参数记忆作答」（v1.3 §8.5）
+#
+# 实测形态（`p0_base` 的 D2#4）：检索返回 **0 条引用**（`usage.referenceCount == 0`），
+# 模型却仍给出**实体性答案**，且答案里自己写明
+# 「…wiki 中没有找到…以下是基于通用业务流程知识的解释」。
+#
+# 为什么必须单独成一类：`framework_failure` 判它**正常**（没有 limit / raw_dump /
+# json_dump），于是它被计成「正常作答」——**但用户拿到的是一个自信的错答案**，
+# 比「答不出来」更坏。所以它必须是**独立的硬失败**，不能混进「正常」。
+# ---------------------------------------------------------------------------
+REFUSE_MARK = "我没有足够的信息"
+
+
+def is_clean_refusal(answer):
+    """干净拒答（可接受）：明说信息不足，且不长篇展开。"""
+    a = answer or ""
+    if REFUSE_MARK in a:
+        return True
+    return "没有找到" in a and len(a) < 200
+
+
+def param_memory_answer(reference_count, answer):
+    """检索 0 引用、却给出实质性答案 → 参数记忆作答（危险）。"""
+    if reference_count:
+        return False
+    a = (answer or "").strip()
+    if not a:
+        return False
+    return not is_clean_refusal(a)
 
 
 def wilson(k, n, z=1.96):

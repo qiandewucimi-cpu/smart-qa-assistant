@@ -35,7 +35,7 @@ from collections import Counter, defaultdict
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from eval_common import (KEY_TERMS, fisher, framework_failure_of_answer,
-                         judge_keyword, wilson)
+                         judge_keyword, param_memory_answer, wilson)
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 EVAL = os.path.join(BASE, 'eval')
@@ -71,6 +71,23 @@ def fmt_steps(vals):
         return '无数据'
     vals.sort()
     return '中位 %g  区间 [%g, %g]' % (vals[len(vals) // 2], vals[0], vals[-1])
+
+
+def zero_recall(tag, bases):
+    """零召回统计：`usage.referenceCount == 0` 的次数，以及其中「仍作答」的次数。
+
+    后者（参数记忆作答）是 v1.3 §8.5 认定的**真正危险的失败**：
+    `framework_failure` 抓不到它，用户却会拿到一个**自信的错答案**。
+    """
+    for k, it in load(tag).items():
+        base = k.split('#')[0]
+        if base not in bases:
+            continue
+        u = it.get('usage') or {}
+        rc = u.get('referenceCount')
+        if rc is None:
+            continue
+        yield (k, rc, it.get('answer') or '')
 
 
 def main():
@@ -164,10 +181,38 @@ def main():
         print('  %-10s %d/%d = %.1f%%   95%% Wilson [%.1f%%, %.1f%%]'
               % (name, h, n, 100 * h / n if n else 0, 100 * lo, 100 * hi))
 
+    # ---- 主指标 ③：零召回 / 参数记忆作答（v1.3 §8.5 新增）----
+    print()
+    print('--- 主指标③：零召回（usage.referenceCount == 0）与「零召回却仍作答」---')
+    print('    ⚠️ 后者=参数记忆作答：framework_failure 判它「正常」，但用户拿到的是**自信的错答案**')
+    for name, tag in ((arm_a, arm_a), (arm_b, arm_b)):
+        rows = [r for r in zero_recall(tag, bases)]
+        if not rows:
+            print('  %-10s 无数据（usage.referenceCount 缺失）' % name)
+            continue
+        zero = [(k, a) for k, rc, a in rows if rc == 0]
+        bad = [(k, a) for k, a in zero if param_memory_answer(0, a)]
+        n = len(rows)
+        print('  %-10s n=%d  零召回 %d (%.0f%%)  其中**仍作答** %d (%.0f%%)%s'
+              % (name, n, len(zero), 100 * len(zero) / n if n else 0,
+                 len(bad), 100 * len(bad) / n if n else 0,
+                 ('  ← ' + ','.join(sorted(k for k, _ in bad))) if bad else ''))
+    if arm_a != arm_b:
+        za = len([1 for k, rc, a in zero_recall(arm_a, bases) if rc == 0 and param_memory_answer(0, a)])
+        zb = len([1 for k, rc, a in zero_recall(arm_b, bases) if rc == 0 and param_memory_answer(0, a)])
+        na = len([1 for k, rc, a in zero_recall(arm_a, bases)])
+        nb = len([1 for k, rc, a in zero_recall(arm_b, bases)])
+        if na and nb:
+            p = fisher(na - za, za, nb - zb, zb)
+            print('  Fisher 单侧 p = %.3f  %s（H1：注入后「零召回仍作答」更少）'
+                  % (p, '不显著' if p > 0.05 else '显著'))
+
     print()
     print('=' * 66)
     print('读法：若注入后「24~28 桶」样本明显减少、且失败率下降，则假设成立；')
     print('      若步数没降 → 说明对照页没被检索到（回去查 references 里有没有它）。')
+    print('      ⚠️ 若两臂框架失败都是 0 → **主指标没有可改善空间**，'
+          '该看主指标③（零召回仍作答）而不是硬凑命中率。')
     return 0
 
 
