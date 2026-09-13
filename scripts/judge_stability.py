@@ -23,7 +23,7 @@ import sys
 from collections import Counter, defaultdict
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from eval_common import framework_failure_of_answer, wilson
+from eval_common import framework_failure_of_answer, param_memory_answer, wilson
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 EVAL = os.path.join(BASE, 'eval')
@@ -60,6 +60,7 @@ def main():
     targets = load_targets()
     per_q = defaultdict(list)          # key -> [verdict, ...]
     per_q_latency = defaultdict(list)
+    per_q_refc = defaultdict(list)     # base -> [(referenceCount, answer), ...]  见「主指标①」
     n_calls = 0
     for tag in tags:
         p = os.path.join(EVAL, '评测结果_raw_%s.json' % tag)
@@ -70,6 +71,10 @@ def main():
             data = json.load(f)
         for k, it in data.items():
             base = k.split('#')[0]
+            # 零召回指标的数据源（两个分支都要收，故放在分流之前）
+            _rc = (it.get('usage') or {}).get('referenceCount')
+            if _rc is not None:
+                per_q_refc[base].append((_rc, it.get('answer') or ''))
             if base not in targets:
                 # 原 21 题没有「目标页」这种可自动判定的标准答案，
                 # 这里只做客观判定：框架失败 / API 报错 / 正常作答（不评判答案对错）。
@@ -124,6 +129,32 @@ def main():
     flo, fhi = wilson(fw, len(allv))
     print('  => 框架失败合计    %d/%d = %.1f%%   95%% Wilson [%.1f%%, %.1f%%]'
           % (fw, len(allv), 100 * fw / len(allv), 100 * flo, 100 * fhi))
+
+    # ---- 主指标①：零召回 / 零召回仍作答（2026-09-14 起改为主指标）----
+    #
+    # 为什么换：`framework_failure` 只抓「框架没给答案」（limit / raw_dump / json_dump）。
+    # 但实测真正危险的是**另一个形态**——检索返回 0 条引用（`usage.referenceCount == 0`），
+    # 模型却仍给出一段像模像样的答案（常自陈「wiki 中没有找到…以下是基于通用业务流程知识的解释」）。
+    # 这种「零召回仍作答」是**自信的错答案**：`framework_failure` 判它「正常」，
+    # 而用户会拿它当依据。详见 `eval/评测报告_v1.3` §8.5 / §8.7。
+    refc_rows = [(q, rc, a) for q, rows in per_q_refc.items() for rc, a in rows]
+    if refc_rows:
+        n_rc = len(refc_rows)
+        zero = [(q, a) for q, rc, a in refc_rows if rc == 0]
+        bad = [q for q, a in zero if param_memory_answer(0, a)]
+        zlo, zhi = wilson(len(zero), n_rc)
+        blo, bhi = wilson(len(bad), n_rc)
+        print()
+        print('--- 主指标①：零召回 / 零召回仍作答（数据源 `usage.referenceCount`）---')
+        print('  零召回         %d/%d = %.1f%%   95%% Wilson [%.1f%%, %.1f%%]'
+              % (len(zero), n_rc, 100 * len(zero) / n_rc, 100 * zlo, 100 * zhi))
+        print('  其中**仍作答** %d/%d = %.1f%%   95%% Wilson [%.1f%%, %.1f%%]  ← 自信的错答案'
+              % (len(bad), n_rc, 100 * len(bad) / n_rc, 100 * blo, 100 * bhi))
+        if bad:
+            cnt = Counter(bad)
+            print('  涉及题目：%s'
+                  % ', '.join('%s×%d' % (q, n) if n > 1 else q for q, n in cnt.most_common()))
+        print('  （`framework_failure` 抓不到这一类——它把「零召回仍作答」判成正常作答）')
 
     # ---- 噪声估计：多轮不一致 ----
     multi = {q: valid(vs) for q, vs in per_q.items() if len(valid(vs)) > 1}
