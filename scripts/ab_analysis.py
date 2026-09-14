@@ -3,17 +3,18 @@
 import json
 import os
 import sys
+from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from eval_common import fisher, judge_keyword as judge  # 判定规则只有一份（见 eval_common.py）
 
-B = r'C:\Users\31114\WorkBuddy\智能问答助手\eval'
+B = Path(__file__).resolve().parent.parent / "eval"
 
 
 VERDICT = {'hit'}
 res = {}
 for tag in ['ab_cont_on', 'ab_cont_off']:
-    d = json.load(open(os.path.join(B, '评测结果_raw_%s.json' % tag), encoding='utf-8'))
+    d = json.loads((B / ('评测结果_raw_%s.json' % tag)).read_text(encoding='utf-8'))
     res[tag] = {k: judge(k, v.get('answer')) for k, v in d.items()}
 
 print('%-8s %-14s %-14s' % ('题', '续跑开', '续跑关'))

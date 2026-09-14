@@ -44,9 +44,9 @@ import urllib.error
 import urllib.request
 from datetime import datetime
 
-from config import API_BASE, BASE, load_token
+from config import API_BASE, BASE, load_app_state_path, load_token
 
-STATE_FILE = r"C:\Users\31114\AppData\Roaming\com.llmwiki.app\app-state.json"
+STATE_FILE = str(load_app_state_path())
 PROGRESS = BASE / "data" / "vector_index_state.json"
 WIKI_DIR = BASE / "projects" / "training-qa" / "training-qa" / "wiki"
 

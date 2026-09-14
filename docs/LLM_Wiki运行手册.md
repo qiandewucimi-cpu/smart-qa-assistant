@@ -81,7 +81,7 @@ https://open.bigmodel.cn
 1. 左侧「项目」→ **新建项目**（选模板，或空白项目）。
 2. 进入 **资料源 / Sources → 导入文件夹**，选择：
    ```
-   C:\Users\31114\WorkBuddy\智能问答助手\data\clean\
+   <项目根目录>\data\clean\
    ```
    （共 64 份已脱敏语料：40 txt/md + 24 docx 转出的 txt）
 3. 观察右侧 **活动面板（Activity Panel）**：LLM 会逐份读取 → 生成 wiki 页面（实体页 / 概念页 / 来源摘要），并自动更新 `index.md`、`log.md`、`overview.md`。
@@ -128,7 +128,6 @@ https://open.bigmodel.cn
 | 文件校验 | 42.9MB，SHA256 `d9e3df...f8e6` 与官方一致 ✅ |
 | 解压位置 | `tools/llm-wiki/`（含 `LLM Wiki.exe` + `mcp-server/` + `pdfium/`） |
 | 启动 | 双击 `tools/llm-wiki/LLM Wiki.exe` 即弹出窗口（Tauri WebView2 渲染） |
-| 应用数据目录 | `C:\Users\31114\AppData\Local\com.llmwiki.app`（项目/设置存于此） |
+| 应用数据目录 | `%LOCALAPPDATA%\com.llmwiki.app`（项目数据）；`%APPDATA%\com.llmwiki.app`（应用状态，具体位置可因版本而异） |
 | 本地 HTTP API | `http://127.0.0.1:19828`，**默认关闭**，需在设置里手动开启（阶段 3/5 用） |
 | MCP server | 随包附带 `mcp-server/`（`llm-wiki-mcp`，v0.4.26，Node≥20），阶段 5 接入用 |
-

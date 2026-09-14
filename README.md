@@ -1,6 +1,17 @@
 # 智能问答助手（Smart QA Assistant）
 
+[![Public release check](https://github.com/qiandewucimi-cpu/smart-qa-assistant/actions/workflows/public-release-check.yml/badge.svg)](https://github.com/qiandewucimi-cpu/smart-qa-assistant/actions/workflows/public-release-check.yml)
+
 > 基于 LLM-Wiki 的企业知识库问答系统：把散落的工作文档清洗、脱敏、分批导入知识库，通过对话式检索回答业务问题，最终以**飞书机器人**落地到真实聊天场景，并用一套评测集量化问答质量。
+
+招聘方快速入口：[`架构与三分钟演示`](docs/架构与演示.md) · [`评测证据索引`](eval/README.md) · [`完整复盘`](docs/复盘报告.md)
+
+无需私有语料和模型即可运行离线验收：
+
+```bash
+python scripts/project_acceptance.py
+python -m unittest discover -s tests -v
+```
 
 ## 项目简介
 
@@ -27,7 +38,7 @@
 |---|---|---|
 | 语料 | **121 份 / 105.2 万字符**（源 173 份 / 153MB） | `corpus_stats.py` |
 | 脱敏 | 命中 **4,667 处**；输入侧（`data/clean`）残留 **0**；评测产物残留 **0** | `corpus_stats.py` / `audit_leaks.py` / `sanitize_eval_results.py` |
-| 知识库 | **119/119** 编译完成，**819 页**结构化 Wiki | `wiki_status.py` |
+| 知识库 | **119/119** 编译完成，**822 页**结构化 Wiki（含 3 页人工固化高频查询） | `wiki_status.py` / `check_coverage.py` |
 | 向量索引 | 索引 **764/817 页（93.5%）已建**，但**当前未生效**（embedding 额度耗尽） | `vector_index.py status` / `vector_index.py probe` |
 | 命中率 | **18~19 / 21（85.7%~90.5%）**——单轮最好 90.5%（19/21，95% Wilson 71.1~97.3%），但**同配置再跑两轮均为 18/21（85.7%，95% CI 65.4~95.0%）**，故报区间不报单点 | `eval/评测报告_v1.1_知识固化与稳定性.md` §5 |
 | 幻觉 | **0/21**（95% 置信上界 **13.3%**）※ 口径限定见该报告 §4.1 | 同上 |
@@ -112,7 +123,7 @@
 ## 目录结构
 
 ```text
-智能问答助手/
+smart-qa-local/
 ├── scripts/            # 核心代码（数据处理与评测）
 │   ├── config.py       # 项目路径 + 密钥加载（密钥不入库）
 │   ├── extract_docx.py # docx 抽文字 + 脱敏（零依赖）
@@ -142,8 +153,8 @@
 │   ├── usage_stats.py  # 用量统计（读机器人埋点，出真实用量）
 │   └── feishu_bot.py   # 飞书机器人（需 pip install lark-oapi）
 ├── wiki-patches/       # 人工沉淀的 wiki 页原文（知识固化；由 apply_faq_patch.py 注入知识库）
-├── docs/               # 需求、计划、运行手册、复盘报告等文档
-├── eval/               # 评测集、评测报告
+├── docs/               # 需求、计划、运行手册、复盘报告及文档导航
+├── eval/               # 评测集、原始结果、评测报告及版本导航
 └── README.md
 ```
 
@@ -158,14 +169,18 @@
 
 ### 1. 配置 API Token
 
-在 `scripts/.env` 里填入 LLM-Wiki 的 API Token（该文件已被 `.gitignore` 忽略，不会入库）：
+先把公开模板复制为本地配置，再在 `scripts/.env` 里填入 LLM-Wiki 的 API Token（该文件已被 `.gitignore` 忽略，不会入库）：
 
-```bash
-# scripts/.env
+```powershell
+Copy-Item scripts/.env.example scripts/.env
+# 然后编辑 scripts/.env
 LLM_WIKI_API_TOKEN=你的token
 ```
 
 也可用环境变量代替：`export LLM_WIKI_API_TOKEN=你的token`。
+
+本地完整版与 GitHub 发布版的边界及发布前检查见 [`docs/GITHUB发布清单.md`](docs/GITHUB发布清单.md)。
+运行 `py scripts/build_github_release.py` 会先在本地生成安全预览；运行 `py scripts/sync_github_repo.py` 可在检查通过后同步到同级的 `../smart-qa-assistant/` 独立 Git 仓库。发布仓库只用于检查、提交和推送，不在其中单独维护代码。
 
 ### 2. 运行流程
 

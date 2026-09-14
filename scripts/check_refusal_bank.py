@@ -7,8 +7,9 @@
 """
 import os
 import re
+from pathlib import Path
 
-P = r"C:\Users\31114\WorkBuddy\智能问答助手\projects\training-qa\training-qa\raw\sources"
+P = Path(__file__).resolve().parent.parent / "projects" / "training-qa" / "training-qa" / "raw" / "sources"
 
 # 候选：语料外问题涉及的关键词
 CANDIDATES = {
@@ -29,8 +30,9 @@ CANDIDATES = {
 }
 
 texts = {}
-for f in os.listdir(P):
-    texts[f] = open(os.path.join(P, f), encoding="utf-8", errors="ignore").read()
+for path in P.iterdir():
+    if path.is_file():
+        texts[path.name] = path.read_text(encoding="utf-8", errors="ignore")
 
 print("=" * 70)
 print("拒答测试题库验证：关键词在 119 份语料中的命中情况")

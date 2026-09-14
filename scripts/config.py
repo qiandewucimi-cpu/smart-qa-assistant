@@ -44,6 +44,20 @@ def load_zhipu() -> tuple:
     return _env("ZHIPU_API_KEY"), base
 
 
+def load_app_state_path() -> Path:
+    """定位 LLM-Wiki 的 app-state.json，允许环境变量覆盖默认位置。"""
+    configured = _env("LLM_WIKI_STATE_FILE")
+    if configured:
+        return Path(configured).expanduser()
+
+    appdata = os.environ.get("APPDATA", "").strip()
+    if appdata:
+        return Path(appdata) / "com.llmwiki.app" / "app-state.json"
+
+    # 非 Windows 环境下保留一个明确、可诊断的回退路径。
+    return Path.home() / ".config" / "com.llmwiki.app" / "app-state.json"
+
+
 def _int_env(key: str, default: int) -> int:
     """读取整数型环境变量，非法值回退默认。"""
     raw = _env(key)

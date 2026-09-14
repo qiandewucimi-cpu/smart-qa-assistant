@@ -26,9 +26,9 @@ import urllib.error
 import urllib.request
 from datetime import datetime
 
-from config import API_BASE, BASE, load_token
+from config import API_BASE, BASE, load_app_state_path, load_token
 
-STATE = r"C:\Users\31114\AppData\Roaming\com.llmwiki.app\app-state.json"
+STATE = str(load_app_state_path())
 RETRY_STATUS = {429, 500, 502, 503, 504}
 
 # 被测配置：(标签, model, reasoning_mode)

@@ -12,6 +12,7 @@ import json
 import sys
 import time
 import urllib.request
+from collections import Counter
 from pathlib import Path
 
 from config import BASE, API_BASE, load_token
@@ -19,6 +20,7 @@ from config import BASE, API_BASE, load_token
 PROJ = BASE / "projects" / "training-qa" / "training-qa"
 LLM = PROJ / ".llm-wiki"
 SOURCES = PROJ / "raw" / "sources"
+WIKI = PROJ / "wiki"
 STATE = Path.home() / "AppData" / "Roaming" / "com.llmwiki.app" / "app-state.json"
 
 
@@ -59,6 +61,16 @@ def progress():
     return entries, processing, pending, total
 
 
+def wiki_pages():
+    """按 Wiki 一级目录统计 Markdown 页数。"""
+    counts = Counter()
+    if WIKI.exists():
+        for path in WIKI.rglob("*.md"):
+            rel = path.relative_to(WIKI)
+            counts[rel.parts[0] if len(rel.parts) > 1 else "(root)"] += 1
+    return counts
+
+
 def ingest_model():
     if not STATE.exists():
         return "(app-state.json 不存在)"
@@ -74,9 +86,13 @@ def ingest_model():
 def sample():
     h = health()
     entries, processing, pending, total = progress()
+    pages = wiki_pages()
     print(f"[{time.strftime('%H:%M:%S')}] health={h.get('status', h.get('error'))} "
           f"auth={h.get('authConfigured')} | 进度 {entries}/{total} "
+          f"| wiki={sum(pages.values())} 页 "
           f"| processing={processing} pending={pending} | 入库模型={ingest_model()}")
+    if pages:
+        print("  Wiki 分类：" + " | ".join(f"{name}={count}" for name, count in sorted(pages.items())))
     return entries, total
 
 
