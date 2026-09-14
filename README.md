@@ -164,8 +164,22 @@ smart-qa-local/
 
 ### 环境要求
 
-- Python 3.10+
+- Python 3.10+（Windows 推荐 3.12）
 - 本地运行中的 LLM-Wiki（默认 API `http://127.0.0.1:19828`，需在设置里开启「本地 HTTP API」）
+
+Windows 首次使用可在项目根目录一键创建隔离环境、安装依赖并执行离线验收：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\setup_windows.ps1
+```
+
+手动方式：
+
+```powershell
+py -3.12 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r scripts\requirements.txt
+.\.venv\Scripts\python.exe scripts\project_acceptance.py
+```
 
 ### 1. 配置 API Token
 

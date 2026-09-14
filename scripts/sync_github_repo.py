@@ -29,14 +29,20 @@ def verify_destination() -> None:
         raise RuntimeError(f"目标不是独立 Git 仓库：{destination}")
 
     result = subprocess.run(
-        ["git", "remote", "get-url", "origin"],
+        [
+            "git",
+            "-c",
+            f"safe.directory={destination.as_posix()}",
+            "remote",
+            "get-url",
+            "origin",
+        ],
         cwd=destination,
         check=True,
         capture_output=True,
-        text=True,
-        encoding="utf-8",
     )
-    if not result.stdout.strip().rstrip("/").endswith(EXPECTED_REMOTE_SUFFIX):
+    remote_url = result.stdout.decode("utf-8", errors="replace").strip().rstrip("/")
+    if not remote_url.endswith(EXPECTED_REMOTE_SUFFIX):
         raise RuntimeError("目标仓库的 origin 不是预期的 smart-qa-assistant.git")
 
 

@@ -55,6 +55,7 @@ def check_public_files(result: Acceptance) -> None:
         "eval/README.md",
         "scripts/.env.example",
         "scripts/check_public_release.py",
+        "scripts/setup_windows.ps1",
         "tests/test_core.py",
     )
     missing = [item for item in required if not (BASE / item).is_file()]

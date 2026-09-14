@@ -75,6 +75,8 @@ def candidate_files() -> list[Path]:
         [
             "git",
             "-c",
+            f"safe.directory={BASE.resolve().as_posix()}",
+            "-c",
             "core.quotepath=false",
             "ls-files",
             "--cached",

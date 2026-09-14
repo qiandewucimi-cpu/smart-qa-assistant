@@ -48,7 +48,7 @@ git diff --check
 ## 新电脑恢复
 
 1. 克隆 GitHub 仓库。
-2. 安装 `scripts/requirements.txt` 中的可选依赖。
+2. Windows 运行 `powershell -ExecutionPolicy Bypass -File scripts/setup_windows.ps1`，或手动创建 `.venv` 并安装 `scripts/requirements.txt`。
 3. 将 `scripts/.env.example` 复制为 `scripts/.env`，再填写本地凭据。
 4. 单独放回 `工作内容/`、`data/`、`projects/` 等私有内容；这些内容不从 GitHub 恢复。
 

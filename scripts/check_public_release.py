@@ -57,6 +57,7 @@ REQUIRED_FILES = {
     "scripts/config.py",
     "scripts/requirements.txt",
     "scripts/project_acceptance.py",
+    "scripts/setup_windows.ps1",
     "tests/test_core.py",
 }
 
@@ -70,7 +71,14 @@ PLACEHOLDER_PREFIXES = ("你的", "xxxx", "<", "${", "$env:")
 
 
 def git_files(include_untracked: bool = False) -> list[str]:
-    args = ["git", "-c", "core.quotepath=false", "ls-files"]
+    args = [
+        "git",
+        "-c",
+        f"safe.directory={BASE.resolve().as_posix()}",
+        "-c",
+        "core.quotepath=false",
+        "ls-files",
+    ]
     if include_untracked:
         args.extend(["--cached", "--others", "--exclude-standard"])
     result = subprocess.run(
@@ -78,10 +86,9 @@ def git_files(include_untracked: bool = False) -> list[str]:
         cwd=BASE,
         check=True,
         capture_output=True,
-        text=True,
-        encoding="utf-8",
     )
-    return [line.strip() for line in result.stdout.splitlines() if line.strip()]
+    output = result.stdout.decode("utf-8", errors="strict")
+    return [line.strip() for line in output.splitlines() if line.strip()]
 
 
 def read_public_text(path: Path) -> str | None:
