@@ -40,7 +40,11 @@ def check_artifacts(result: Acceptance) -> None:
     groups = {name: sum(1 for item in refusal.values() if item.get("group") == name) for name in ("X", "N")}
 
     result.check("主评测产物可读取", isinstance(primary, dict), f"{len(primary)} 题")
-    result.check("评测规模符合口径", len(primary) == 22 and len(scored) == 21, "22 题 / 21 题计分")
+    result.check(
+        "评测规模符合口径",
+        len(primary) == 22 and len(scored) == 21,
+        "共 22 题（计分 21 题，1 题因业务口径冲突单列）",
+    )
     result.check("主评测回答完整", len(answered) == 22, f"{len(answered)}/22")
     result.check("引用链完整", len(traceable) == 22, f"{len(traceable)}/22")
     result.check("拒答专项规模符合口径", groups == {"X": 8, "N": 5}, f"语料外 {groups['X']} / 语料内 {groups['N']}")
