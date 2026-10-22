@@ -14,17 +14,9 @@
 
 ## 工作链路
 
-```mermaid
-flowchart LR
-    D[文档 / 截图] --> E[正文抽取 / OCR]
-    E --> S[清洗与输入侧脱敏]
-    S --> W[LLM-Wiki 编译]
-    W --> R[关键词 + 知识图谱检索]
-    R --> A[模型回答 + 来源]
-    A --> O[输出侧擦除]
-    O --> F[飞书机器人]
-    A --> V[评测与失败复盘]
-```
+![企业问答：历史实例的处理链路](docs/architecture-overview.svg)
+
+[架构图源码](docs/architecture-overview.mmd)
 
 历史评测实例使用关键词与知识图谱。向量索引虽已构建，查询期 embedding 因额度不足未生效；**不把向量检索计入历史效果归因**。恢复后必须重新 probe 和评测，配置开启不等于实际参与召回。
 
