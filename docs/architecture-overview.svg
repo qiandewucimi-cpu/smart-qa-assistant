@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="400" viewBox="0 0 980 400" role="img">
+<title>企业问答：历史实例的处理链路</title>
+<desc>文档抽取 / 截图OCR → 输入清洗与脱敏 → LLM-Wiki编译 → 关键词 + 图谱检索 → 模型回答与来源 → 输出擦除 / 飞书。评测与失败复盘贯穿链路；历史查询期向量未生效。</desc>
+<rect width="980" height="400" rx="16" fill="#f6f8fa"/>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="none" stroke="#57606a" stroke-width="1.5"/></marker></defs>
+<text x="25" y="38" font-size="25" font-weight="700" fill="#1f2328" font-family="Microsoft YaHei,Arial,sans-serif">企业问答：历史实例的处理链路</text>
+<path d="M305 115 H337" fill="none" stroke="#57606a" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M625 115 H657" fill="none" stroke="#57606a" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M805 160 V212" fill="none" stroke="#57606a" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M665 265 H633" fill="none" stroke="#57606a" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M345 265 H313" fill="none" stroke="#57606a" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="25" y="70" width="280" height="90" rx="10" fill="#ffffff" stroke="#8c959f"/>
+<text x="165" y="124" text-anchor="middle" font-size="25" fill="#0969da" font-family="Microsoft YaHei,Arial,sans-serif">文档抽取 / 截图OCR</text>
+<rect x="345" y="70" width="280" height="90" rx="10" fill="#ffffff" stroke="#8c959f"/>
+<text x="485" y="124" text-anchor="middle" font-size="25" fill="#0969da" font-family="Microsoft YaHei,Arial,sans-serif">输入清洗与脱敏</text>
+<rect x="665" y="70" width="280" height="90" rx="10" fill="#ffffff" stroke="#8c959f"/>
+<text x="805" y="124" text-anchor="middle" font-size="25" fill="#0969da" font-family="Microsoft YaHei,Arial,sans-serif">LLM-Wiki编译</text>
+<rect x="665" y="220" width="280" height="90" rx="10" fill="#ffffff" stroke="#8c959f"/>
+<text x="805" y="274" text-anchor="middle" font-size="25" fill="#0969da" font-family="Microsoft YaHei,Arial,sans-serif">关键词 + 图谱检索</text>
+<rect x="345" y="220" width="280" height="90" rx="10" fill="#ffffff" stroke="#8c959f"/>
+<text x="485" y="274" text-anchor="middle" font-size="25" fill="#0969da" font-family="Microsoft YaHei,Arial,sans-serif">模型回答与来源</text>
+<rect x="25" y="220" width="280" height="90" rx="10" fill="#ffffff" stroke="#8c959f"/>
+<text x="165" y="274" text-anchor="middle" font-size="25" fill="#0969da" font-family="Microsoft YaHei,Arial,sans-serif">输出擦除 / 飞书</text>
+<text x="25" y="355" font-size="20" fill="#57606a" font-family="Microsoft YaHei,Arial,sans-serif">评测与失败复盘贯穿链路；历史查询期向量未生效。</text>
+</svg>
